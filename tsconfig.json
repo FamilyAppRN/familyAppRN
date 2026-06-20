@@ -8,6 +8,18 @@
       ],
       "@/assets/*": [
         "./assets/*"
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ],
+      "@features/*": [
+        "./src/features/*"
+      ],
+      "@tests/*": [
+        "./tests/*"
       ]
     }
   },
@@ -15,6 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
   ]
 }

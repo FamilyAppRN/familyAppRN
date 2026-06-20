@@ -1,9 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tokens semánticos de color (light/dark). Los consume tailwind.config.js
+   como rgb(var(--...) / <alpha>). Switch de dark mode: clase `dark` en root. */
+@layer base {
+  :root {
+    --color-bg-base: 250 250 248; /* neutral-50 */
+    --color-bg-surface: 255 255 255; /* neutral-0 */
+    --color-text-primary: 23 21 16; /* neutral-950 */
+    --color-text-secondary: 92 89 79; /* neutral-600 */
+    --color-border: 228 226 219; /* neutral-200 */
+  }
+  .dark:root {
+    --color-bg-base: 23 21 16; /* neutral-950 */
+    --color-bg-surface: 51 47 40; /* neutral-800 */
+    --color-text-primary: 250 250 248; /* neutral-50 */
+    --color-text-secondary: 156 152 142; /* neutral-400 */
+    --color-border: 51 47 40; /* neutral-800 */
+  }
+}
+
+/* Familias de fuente para web (RN usa las registradas en useFonts). */
 :root {
   --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
+    'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
 }
