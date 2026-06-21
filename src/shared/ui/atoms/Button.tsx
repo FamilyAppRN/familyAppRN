@@ -1,10 +1,10 @@
-import { ActivityIndicator, Pressable, Text } from 'react-native';
+import type { ReactNode } from 'react';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { palette } from '@shared/theme/tokens';
 
 /**
  * Primitive de botón (token-driven, NativeWind). No conoce el dominio.
- * TODO: respaldar internamente con gluestack-ui v3 cuando se inicialice
- * (`npx gluestack-ui init`); la API pública no debería cambiar.
+ * TODO: respaldar internamente con gluestack-ui v3 cuando se inicialice.
  */
 export type ButtonVariant = 'primary' | 'secondary';
 
@@ -14,6 +14,7 @@ interface ButtonProps {
   variant?: ButtonVariant;
   isLoading?: boolean;
   disabled?: boolean;
+  rightIcon?: ReactNode;
 }
 
 const containerByVariant: Record<ButtonVariant, string> = {
@@ -37,6 +38,7 @@ export function Button({
   variant = 'primary',
   isLoading = false,
   disabled = false,
+  rightIcon,
 }: ButtonProps) {
   const isDisabled = disabled || isLoading;
 
@@ -49,7 +51,10 @@ export function Button({
       {isLoading ? (
         <ActivityIndicator color={spinnerColorByVariant[variant]} />
       ) : (
-        <Text className={`text-button font-jakarta-semibold ${labelByVariant[variant]}`}>{title}</Text>
+        <View className="flex-row items-center justify-center gap-2">
+          <Text className={`text-button font-jakarta-semibold ${labelByVariant[variant]}`}>{title}</Text>
+          {rightIcon}
+        </View>
       )}
     </Pressable>
   );

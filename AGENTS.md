@@ -80,6 +80,19 @@ Detalle completo en **`docs/UI-UX.md`** (principios, tokens, componentes, pantal
 - **Fuente:** Plus Jakarta Sans (`@expo-google-fonts/plus-jakarta-sans`). ⏳ Cargar con `useFonts` en el root layout.
 - **Iconos:** `lucide-react-native`. **Creación de contenido** en `ActionSheet` (bottom sheet), nunca pantalla nueva (excepto onboarding). **Destructivas:** swipe/long-press + confirmación.
 
+---
+
+## Internacionalización (i18n) — OBLIGATORIA
+
+La app es **bilingüe ES/EN**. Stack: `i18next` + `react-i18next` + `expo-localization` (config en `@core/i18n`).
+
+- ❌ **Cero texto hardcodeado de cara al usuario.** Todo string visible va por `t('clave')` (`useTranslation`).
+- ✅ **Toda clave nueva se agrega a AMBOS** `src/core/i18n/locales/es.json` y `en.json`. No dejar una sola sin su par.
+- **Namespaces por feature/pantalla** (`welcome.*`, `login.*`, `register.*`, `home.*`, `validation.*`).
+- **Mensajes de validación (Zod):** el schema guarda la **clave** (`'validation.email'`), y se traduce al mostrarse: `error={error?.message ? t(error.message) : undefined}`.
+- Idioma inicial = locale del dispositivo (fallback `es`). Cambio en runtime con `useLanguage()` (`@core/i18n/useLanguage`) o el primitive `LanguageSwitch`.
+- El idioma se inicializa importando `@core/i18n/i18n` en el root layout (ya hecho).
+
 ## Scaffolding del template (no construir encima)
 `src/components/`, `src/hooks/`, `src/constants/`, `src/global.css` son del template de arranque (demo).
 No bases features en ellos; migra a `shared/` lo que sirva cuando trabajes las vistas.

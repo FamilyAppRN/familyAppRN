@@ -1,0 +1,48 @@
+{
+  "welcome": {
+    "brand": "Family Assistant",
+    "title": "Organize your home effortlessly",
+    "subtitle": "The warm, safe digital space to coordinate tasks and connect with your family.",
+    "login": "Log In",
+    "register": "Sign Up"
+  },
+  "login": {
+    "brand": "Family Home",
+    "title": "Welcome back",
+    "subtitle": "We're glad to see you here",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "forgot": "Forgot my password",
+    "submit": "Log in",
+    "divider": "Or continue with",
+    "noAccount": "Don't have an account? ",
+    "createFamily": "Create family"
+  },
+  "register": {
+    "title": "Create your family account",
+    "subtitle": "Start organizing your home today.",
+    "nameLabel": "Full name",
+    "namePlaceholder": "E.g. Ana García",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "terms": "I accept the Terms of Service and the Privacy Policy.",
+    "submit": "Create account",
+    "haveAccount": "Already have an account? ",
+    "login": "Log in"
+  },
+  "home": {
+    "title": "You're home! 🏡",
+    "subtitle": "Home placeholder — the Shopping List will live here (Stage 2).",
+    "logout": "Log out"
+  },
+  "validation": {
+    "email": "Enter a valid email",
+    "passwordMin": "Minimum 8 characters",
+    "nameRequired": "Name is required",
+    "termsRequired": "You must accept the terms"
+  }
+}

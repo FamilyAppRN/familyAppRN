@@ -1,4 +1,5 @@
 import '@/global.css';
+import '@core/i18n/i18n';
 
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';

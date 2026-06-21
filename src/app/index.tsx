@@ -1,7 +1,8 @@
 import { Redirect } from 'expo-router';
+import { useAuthStore } from '@features/auth/store/useAuthStore';
 
-// Sin auth todavía: la app entra directo a Welcome tras el splash.
-// TODO: cuando exista sesión, decidir aquí entre /(auth)/welcome y /(main).
+// Gate de entrada tras el splash: a home si hay sesión, si no a Welcome.
 export default function Index() {
-  return <Redirect href="/(auth)/welcome" />;
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  return <Redirect href={isAuthenticated ? '/(main)/home' : '/(auth)/welcome'} />;
 }

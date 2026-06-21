@@ -1,0 +1,48 @@
+{
+  "welcome": {
+    "brand": "Asistente Familiar",
+    "title": "Organiza tu hogar sin esfuerzo",
+    "subtitle": "El espacio digital cálido y seguro para coordinar las tareas y conectar con tu familia.",
+    "login": "Iniciar Sesión",
+    "register": "Registrarme"
+  },
+  "login": {
+    "brand": "Hogar Familia",
+    "title": "Hola de nuevo",
+    "subtitle": "Nos alegra verte por aquí",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "forgot": "Olvidé mi contraseña",
+    "submit": "Entrar",
+    "divider": "O continúa con",
+    "noAccount": "¿No tienes una cuenta? ",
+    "createFamily": "Crear familia"
+  },
+  "register": {
+    "title": "Crea tu cuenta familiar",
+    "subtitle": "Comienza a organizar tu hogar hoy mismo.",
+    "nameLabel": "Nombre completo",
+    "namePlaceholder": "Ej. Ana García",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "terms": "Acepto los Términos de servicio y la Política de privacidad.",
+    "submit": "Crear cuenta",
+    "haveAccount": "¿Ya tienes una cuenta? ",
+    "login": "Iniciar sesión"
+  },
+  "home": {
+    "title": "¡Estás en casa! 🏡",
+    "subtitle": "Home placeholder — aquí irá la Lista de Compras (Etapa 2).",
+    "logout": "Cerrar sesión"
+  },
+  "validation": {
+    "email": "Ingresa un email válido",
+    "passwordMin": "Mínimo 8 caracteres",
+    "nameRequired": "Nombre requerido",
+    "termsRequired": "Debes aceptar los términos"
+  }
+}
