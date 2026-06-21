@@ -40,9 +40,11 @@ module.exports = {
         line: 'rgb(var(--color-border) / <alpha-value>)',
       },
       fontFamily: {
+        // 'sans' = default; usar font-jakarta-semibold / font-jakarta-bold para pesos
+        // (no usar font-semibold/font-bold: en RN no cambian el archivo de fuente).
         sans: ['PlusJakartaSans_400Regular'],
-        semibold: ['PlusJakartaSans_600SemiBold'],
-        bold: ['PlusJakartaSans_700Bold'],
+        'jakarta-semibold': ['PlusJakartaSans_600SemiBold'],
+        'jakarta-bold': ['PlusJakartaSans_700Bold'],
       },
       fontSize: {
         display: ['32px', { lineHeight: '40px' }],
