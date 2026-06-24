@@ -21,10 +21,14 @@ export function useLogin() {
 
   const mutation = useMutation({
     mutationFn: ({ email, password }: LoginFormData) => authRepo.login(email, password),
-    onSuccess: (user) => {
+    onSuccess: ({ user, households }) => {
       queryClient.setQueryData(authQueryKeys.currentUser(), user);
-      setUser(user);
-      router.replace('/(main)/home');
+      setUser(user, households);
+      if (households && households.length > 0) {
+        router.replace('/(main)/shopping');
+      } else {
+        router.replace('/(auth)/household-onboarding');
+      }
     },
   });
 
