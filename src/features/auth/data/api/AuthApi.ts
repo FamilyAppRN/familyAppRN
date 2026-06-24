@@ -4,14 +4,14 @@ export class AuthApi {
   constructor(private client: ApiClient) {}
 
   login(body: { email: string; password: string }) {
-    return this.client.post<unknown>('/auth/login', body);
+    return this.client.post<unknown>('/api/auth/login', body);
   }
 
   register(body: { name: string; email: string; password: string }) {
-    return this.client.post<unknown>('/auth/register', body);
+    return this.client.post<unknown>('/api/auth/register', body);
   }
 
   getMe() {
-    return this.client.get<unknown>('/auth/me');
+    return this.client.get<unknown>('/api/users/me');
   }
 }

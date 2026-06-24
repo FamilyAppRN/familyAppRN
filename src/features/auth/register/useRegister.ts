@@ -22,10 +22,14 @@ export function useRegister() {
   const mutation = useMutation({
     mutationFn: ({ name, email, password }: RegisterFormData) =>
       authRepo.register(name, email, password),
-    onSuccess: (user) => {
+    onSuccess: ({ user, households }) => {
       queryClient.setQueryData(authQueryKeys.currentUser(), user);
-      setUser(user);
-      router.replace('/(main)/home');
+      setUser(user, households);
+      if (households && households.length > 0) {
+        router.replace('/(main)/shopping');
+      } else {
+        router.replace('/(auth)/household-onboarding');
+      }
     },
   });
 

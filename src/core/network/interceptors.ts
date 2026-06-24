@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { normalizeError } from '@core/errors/AppError';
+import { Logger } from '@core/logger/Logger';
 
 /** Clave única donde se persiste el token de sesión. */
 export const AUTH_TOKEN_KEY = '@auth_token';
@@ -8,6 +9,8 @@ export const AUTH_TOKEN_KEY = '@auth_token';
 export function setupInterceptors(instance: AxiosInstance): void {
   // Request: inyecta el accessToken si existe.
   instance.interceptors.request.use(async (config) => {
+    Logger.debug(`[API Request] ${config.method?.toUpperCase()} ${config.url}`);
+    
     const raw = await AsyncStorage.getItem(AUTH_TOKEN_KEY);
     if (raw) {
       try {
@@ -15,8 +18,8 @@ export function setupInterceptors(instance: AxiosInstance): void {
         if (accessToken) {
           config.headers.Authorization = `Bearer ${accessToken}`;
         }
-      } catch {
-        // token corrupto: lo ignoramos, la request sale sin auth.
+      } catch (err) {
+        Logger.warn('El token de sesión estaba corrupto en AsyncStorage', err);
       }
     }
     return config;
@@ -24,7 +27,13 @@ export function setupInterceptors(instance: AxiosInstance): void {
 
   // Response: normaliza cualquier error a AppError antes de propagarlo.
   instance.interceptors.response.use(
-    (response) => response,
-    (error) => Promise.reject(normalizeError(error)),
+    (response) => {
+      Logger.debug(`[API Response] ${response.config.method?.toUpperCase()} ${response.config.url} - Status: ${response.status}`);
+      return response;
+    },
+    (error) => {
+      Logger.error(`[API Error] ${error.config?.method?.toUpperCase()} ${error.config?.url}`, error);
+      return Promise.reject(normalizeError(error));
+    },
   );
 }

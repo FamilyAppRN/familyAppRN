@@ -14,7 +14,7 @@ export function LoginScreen() {
     useLogin();
 
   return (
-    <SafeAreaView className="flex-1 bg-base">
+    <SafeAreaView className="flex-1 bg-brand-50">
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         keyboardShouldPersistTaps="handled">

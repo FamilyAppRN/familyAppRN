@@ -1,6 +1,19 @@
-import { Stack } from 'expo-router';
+import { Tabs } from 'expo-router';
+import { CustomTabBar } from '@shared/ui/organisms/CustomTabBar';
 
-// Placeholder del área autenticada. En Etapa 2 pasa a tabs (shopping/tasks/notes).
 export default function MainLayout() {
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Tabs
+      tabBar={(props) => <CustomTabBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen name="shopping" />
+      <Tabs.Screen name="tasks" />
+      <Tabs.Screen name="notes" />
+      <Tabs.Screen name="family" />
+      <Tabs.Screen name="settings" />
+    </Tabs>
+  );
 }

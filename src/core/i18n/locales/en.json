@@ -39,6 +39,26 @@
     "subtitle": "Home placeholder — the Shopping List will live here (Stage 2).",
     "logout": "Log out"
   },
+  "tabs": {
+    "shopping": "Shopping",
+    "tasks": "Tasks",
+    "notes": "Notes",
+    "family": "Family",
+    "settings": "Settings"
+  },
+  "householdOnboarding": {
+    "title": "Welcome home!",
+    "subtitle": "To get started, create a new family group or join an existing one.",
+    "createCardTitle": "Create my household",
+    "createCardDesc": "Be the admin and organize your family's tasks, groceries, and notes.",
+    "createPlaceholder": "Name of your household (e.g. Garcia Family)",
+    "createBtnStart": "Start now",
+    "createBtnSubmit": "Create and start →",
+    "joinCardTitle": "Join a household",
+    "joinCardDesc": "Ask the administrator for the 6-digit code and enter it below.",
+    "joinBtnSubmit": "Join",
+    "joinPlaceholder": "Invitation code"
+  },
   "validation": {
     "email": "Enter a valid email",
     "passwordMin": "Minimum 8 characters",

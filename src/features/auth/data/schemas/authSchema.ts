@@ -1,18 +1,33 @@
 import { z } from 'zod';
 
-const authUserSchema = z.object({
-  user_id: z.string(),
-  email_address: z.email(),
-  first_name: z.string(),
-  last_name: z.string(),
-  avatar_url: z.string().nullable(),
+/** Respuesta de /api/auth/login y /api/auth/register */
+export const authTokensSchema = z.object({
+  success: z.boolean(),
+  message: z.string().optional(),
+  data: z.object({
+    accessToken: z.string(),
+    refreshToken: z.string(),
+  }),
 });
 
-/** Respuesta de /auth/login y /auth/register (el schema reemplaza al DTO). */
-export const authResponseSchema = z.object({
-  access_token: z.string(),
-  refresh_token: z.string(),
-  user: authUserSchema,
+export type AuthTokensResponse = z.infer<typeof authTokensSchema>;
+
+const meUserSchema = z.object({
+  id: z.string(),
+  email: z.string().email(),
+  name: z.string(),
+  plan: z.string().optional(),
+  notifications_enabled: z.boolean().optional(),
 });
 
-export type AuthResponse = z.infer<typeof authResponseSchema>;
+/** Respuesta de /api/users/me */
+export const meResponseSchema = z.object({
+  success: z.boolean(),
+  message: z.string().optional(),
+  data: z.object({
+    user: meUserSchema,
+    households: z.array(z.any()), // Se puede refinar el schema de household más adelante
+  }),
+});
+
+export type MeResponse = z.infer<typeof meResponseSchema>;

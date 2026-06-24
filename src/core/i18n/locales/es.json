@@ -37,7 +37,28 @@
   "home": {
     "title": "¡Estás en casa! 🏡",
     "subtitle": "Home placeholder — aquí irá la Lista de Compras (Etapa 2).",
+    "createFamily": "Crear nueva familia",
     "logout": "Cerrar sesión"
+  },
+  "tabs": {
+    "shopping": "Compras",
+    "tasks": "Tareas",
+    "notes": "Notas",
+    "family": "Familia",
+    "settings": "Ajustes"
+  },
+  "householdOnboarding": {
+    "title": "¡Bienvenidos a casa!",
+    "subtitle": "Para comenzar, crea un nuevo grupo familiar o únete a uno existente.",
+    "createCardTitle": "Crear mi hogar",
+    "createCardDesc": "Sé el administrador y organiza las tareas, compras y notas de tu familia.",
+    "createPlaceholder": "Nombre de tu hogar (ej: Familia García)",
+    "createBtnStart": "Comenzar ahora",
+    "createBtnSubmit": "Crear e iniciar →",
+    "joinCardTitle": "Unirme a un hogar",
+    "joinCardDesc": "Pide el código de 6 dígitos al administrador e ingrésalo abajo.",
+    "joinBtnSubmit": "Unirme",
+    "joinPlaceholder": "Código de invitación"
   },
   "validation": {
     "email": "Ingresa un email válido",
