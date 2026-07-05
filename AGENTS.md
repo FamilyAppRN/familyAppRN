@@ -15,6 +15,25 @@ nvm use 24
 
 Con Node 20.12 (el default del sistema) los comandos de Expo fallan.
 
+## Instalar sin Expo Go (build local)
+
+Dos scripts (lógica común en `scripts/lib/expo-build.sh`):
+
+```bash
+# Emulador Android / Simulador iOS (iOS NO requiere firma)
+npm run emulator:android
+npm run emulator:ios
+npm run emulator:both
+
+# Teléfono físico por USB (iOS requiere Xcode + Apple ID para firma)
+npm run device:android
+npm run device:ios
+npm run device:both
+```
+
+Añade `:release` para un build standalone (empaqueta el JS, sin Metro): p. ej. `npm run device:android:release`.
+Un DEV build necesita Metro aparte: `npx expo start --dev-client`. Android requiere adb.
+
 ---
 
 ## Arquitectura
