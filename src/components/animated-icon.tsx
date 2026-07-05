@@ -1,16 +1,23 @@
 import { Image } from 'expo-image';
 import { useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, useColorScheme, View } from 'react-native';
 import Animated, { Easing, Keyframe } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 
 const INITIAL_SCALE_FACTOR = Dimensions.get('screen').height / 90;
 const DURATION = 600;
 
+// Color de marca del splash (coincide con app.json para evitar parpadeo).
+const SPLASH_BG_LIGHT = '#DCEFE2';
+const SPLASH_BG_DARK = '#171510';
+
 export function AnimatedSplashOverlay() {
   const [visible, setVisible] = useState(true);
+  const scheme = useColorScheme();
 
   if (!visible) return null;
+
+  const backgroundColor = scheme === 'dark' ? SPLASH_BG_DARK : SPLASH_BG_LIGHT;
 
   const splashKeyframe = new Keyframe({
     0: {
@@ -39,7 +46,7 @@ export function AnimatedSplashOverlay() {
           scheduleOnRN(setVisible, false);
         }
       })}
-      style={styles.backgroundSolidColor}
+      style={[styles.backgroundSolidColor, { backgroundColor }]}
     />
   );
 }

@@ -42,18 +42,28 @@ export const palette = {
  */
 export const semanticColors = {
   light: {
-    bgBase: palette.neutral[50],
-    bgSurface: palette.neutral[0],
-    textPrimary: palette.neutral[950],
-    textSecondary: palette.neutral[600],
-    border: palette.neutral[200],
+    bgBase: '#FAFAF8',
+    bgSurface: '#FFFFFF',
+    surface2: '#F2F1ED',
+    textPrimary: '#171510',
+    textSecondary: '#5C594F',
+    textFaint: '#9C988E',
+    emphasis: '#2E6240',
+    chip: '#DCEFE2',
+    border: '#E4E2DB',
+    borderStrong: '#E4E2DB',
   },
   dark: {
-    bgBase: palette.neutral[950],
-    bgSurface: palette.neutral[800],
-    textPrimary: palette.neutral[50],
-    textSecondary: palette.neutral[400],
-    border: palette.neutral[800],
+    bgBase: '#171510',
+    bgSurface: '#211E17', // tarjeta elevada (no plana)
+    surface2: '#332F28',
+    textPrimary: '#FAFAF8',
+    textSecondary: '#9C988E',
+    textFaint: '#6F6A5D',
+    emphasis: '#9BCFAE',
+    chip: '#212E20',
+    border: '#332F28',
+    borderStrong: '#46413A',
   },
 } as const;
 

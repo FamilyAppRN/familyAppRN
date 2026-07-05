@@ -6,18 +6,30 @@
    como rgb(var(--...) / <alpha>). Switch de dark mode: clase `dark` en root. */
 @layer base {
   :root {
-    --color-bg-base: 250 250 248; /* neutral-50 */
-    --color-bg-surface: 255 255 255; /* neutral-0 */
-    --color-text-primary: 23 21 16; /* neutral-950 */
-    --color-text-secondary: 92 89 79; /* neutral-600 */
-    --color-border: 228 226 219; /* neutral-200 */
+    --color-bg-base: 250 250 248; /* #FAFAF8 */
+    --color-bg-surface: 255 255 255; /* #FFFFFF */
+    --color-surface-2: 242 241 237; /* #F2F1ED */
+    --color-text-primary: 23 21 16; /* #171510 */
+    --color-text-secondary: 92 89 79; /* #5C594F */
+    --color-text-faint: 156 152 142; /* #9C988E */
+    --color-emphasis: 46 98 64; /* #2E6240 verde enfatizado */
+    --color-chip: 220 239 226; /* #DCEFE2 verde suave */
+    --color-border: 228 226 219; /* #E4E2DB */
+    --color-border-strong: 228 226 219; /* #E4E2DB */
   }
-  .dark:root {
-    --color-bg-base: 23 21 16; /* neutral-950 */
-    --color-bg-surface: 51 47 40; /* neutral-800 */
-    --color-text-primary: 250 250 248; /* neutral-50 */
-    --color-text-secondary: 156 152 142; /* neutral-400 */
-    --color-border: 51 47 40; /* neutral-800 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg-base: 23 21 16; /* #171510 */
+      --color-bg-surface: 33 30 23; /* #211E17 tarjeta elevada (no plana) */
+      --color-surface-2: 51 47 40; /* #332F28 */
+      --color-text-primary: 250 250 248; /* #FAFAF8 */
+      --color-text-secondary: 156 152 142; /* #9C988E */
+      --color-text-faint: 111 106 93; /* #6F6A5D */
+      --color-emphasis: 155 207 174; /* #9BCFAE verde en oscuro */
+      --color-chip: 33 46 32; /* ~#212E20 (verde 18% sobre base) */
+      --color-border: 51 47 40; /* #332F28 */
+      --color-border-strong: 70 65 58; /* #46413A */
+    }
   }
 }
 

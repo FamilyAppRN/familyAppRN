@@ -1,13 +1,13 @@
 {
   "welcome": {
-    "brand": "Family Assistant",
+    "brand": "Gestia",
     "title": "Organize your home effortlessly",
     "subtitle": "The warm, safe digital space to coordinate tasks and connect with your family.",
     "login": "Log In",
     "register": "Sign Up"
   },
   "login": {
-    "brand": "Family Home",
+    "brand": "Gestia",
     "title": "Welcome back",
     "subtitle": "We're glad to see you here",
     "emailLabel": "Email",

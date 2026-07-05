@@ -1,13 +1,13 @@
 {
   "welcome": {
-    "brand": "Asistente Familiar",
+    "brand": "Gestia",
     "title": "Organiza tu hogar sin esfuerzo",
     "subtitle": "El espacio digital cálido y seguro para coordinar las tareas y conectar con tu familia.",
     "login": "Iniciar Sesión",
     "register": "Registrarme"
   },
   "login": {
-    "brand": "Hogar Familia",
+    "brand": "Gestia",
     "title": "Hola de nuevo",
     "subtitle": "Nos alegra verte por aquí",
     "emailLabel": "Email",

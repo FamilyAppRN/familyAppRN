@@ -84,6 +84,26 @@ Form schema          → solo zod.
 
 ---
 
+## Componentes: Expo antes que React Native (OBLIGATORIO)
+
+Expo trae componentes/APIs **optimizados por plataforma**. **Usa el de Expo si existe;**
+recurre a RN **solo** cuando Expo no ofrezca equivalente.
+
+| En vez de (RN) | Usa (Expo) | Nota |
+| --- | --- | --- |
+| `Image` de `react-native` | **`expo-image`** (`import { Image } from 'expo-image'`) | Caché y perf superiores. Usa `contentFit` (no `resizeMode`) y `transition`. |
+| `StatusBar` de RN | **`expo-status-bar`** | |
+| Gradientes manuales | **`expo-linear-gradient`** | |
+| Blur | **`expo-blur`** | |
+| `@react-navigation/*` directo | **`expo-router`** (y `expo-router/ui` para tab bars custom) | Ya es la base del proyecto. |
+| Video / audio | **`expo-video`** / `expo-audio` | |
+| Haptics, fonts, linking, localization | `expo-haptics`, `expo-font`, `expo-linking`, `expo-localization` | |
+
+Primitivos sin equivalente en Expo (`View`, `Text`, `Pressable`, `ScrollView`, `FlatList`,
+`TextInput`, `useColorScheme`, `Appearance`…) → RN, correcto.
+
+Antes de usar un componente de RN, comprueba si hay un paquete `expo-*` que lo cubra.
+
 ## Sistema de diseño / UI
 
 Detalle completo en **`docs/UI-UX.md`** (principios, tokens, componentes, pantallas, patrones).

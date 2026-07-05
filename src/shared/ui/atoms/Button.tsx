@@ -19,17 +19,17 @@ interface ButtonProps {
 
 const containerByVariant: Record<ButtonVariant, string> = {
   primary: 'bg-brand-500 active:bg-brand-600',
-  secondary: 'bg-brand-50 active:bg-brand-100',
+  secondary: 'bg-surface-2 active:bg-line', // theme-aware (light/dark)
 };
 
 const labelByVariant: Record<ButtonVariant, string> = {
   primary: 'text-white',
-  secondary: 'text-brand-700',
+  secondary: 'text-emphasis',
 };
 
 const spinnerColorByVariant: Record<ButtonVariant, string> = {
   primary: palette.neutral[0],
-  secondary: palette.brand[700],
+  secondary: palette.brand[500],
 };
 
 export function Button({

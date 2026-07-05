@@ -2,7 +2,8 @@
 // Fuente canónica de tokens para estilos por className (NativeWind).
 // Mantener en sync con src/shared/theme/tokens/*.ts (usados en estilos imperativos).
 module.exports = {
-  darkMode: 'class',
+  // 'media' = sigue el esquema del sistema (los tokens semánticos cambian solos).
+  darkMode: 'media',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
@@ -32,12 +33,18 @@ module.exports = {
           950: '#171510',
         },
         // Semánticos — resuelven light/dark vía CSS vars (ver src/global.css).
-        // Uso: bg-base, bg-surface, text-foreground, text-muted, border-line.
-        base: 'rgb(var(--color-bg-base) / <alpha-value>)',
-        surface: 'rgb(var(--color-bg-surface) / <alpha-value>)',
-        foreground: 'rgb(var(--color-text-primary) / <alpha-value>)',
-        muted: 'rgb(var(--color-text-secondary) / <alpha-value>)',
-        line: 'rgb(var(--color-border) / <alpha-value>)',
+        // Uso: bg-base, bg-surface, bg-surface-2, text-foreground, text-muted,
+        //      text-faint, text-emphasis, bg-chip, border-line, border-line-strong.
+        base: 'rgb(var(--color-bg-base) / <alpha-value>)', // fondo de pantalla
+        surface: 'rgb(var(--color-bg-surface) / <alpha-value>)', // tarjetas (elevado)
+        'surface-2': 'rgb(var(--color-surface-2) / <alpha-value>)', // inputs / fills secundarios
+        foreground: 'rgb(var(--color-text-primary) / <alpha-value>)', // texto primario
+        muted: 'rgb(var(--color-text-secondary) / <alpha-value>)', // texto secundario
+        faint: 'rgb(var(--color-text-faint) / <alpha-value>)', // terciario / placeholder
+        emphasis: 'rgb(var(--color-emphasis) / <alpha-value>)', // texto/ícono de marca (flip)
+        chip: 'rgb(var(--color-chip) / <alpha-value>)', // fondo verde suave (chips)
+        line: 'rgb(var(--color-border) / <alpha-value>)', // bordes
+        'line-strong': 'rgb(var(--color-border-strong) / <alpha-value>)', // bordes visibles
       },
       fontFamily: {
         // 'sans' = default; usar font-jakarta-semibold / font-jakarta-bold para pesos

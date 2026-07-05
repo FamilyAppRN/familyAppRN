@@ -13,7 +13,7 @@ export function RegisterScreen() {
   const { control, onSubmit, isPending, errorMessage, goToLogin } = useRegister();
 
   return (
-    <SafeAreaView className="flex-1 bg-brand-50">
+    <SafeAreaView className="flex-1 bg-base">
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         keyboardShouldPersistTaps="handled">
