@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { Controller, type Control } from 'react-hook-form';
+import { Controller, useWatch, type Control } from 'react-hook-form';
 import { Lock, Mail, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -8,16 +8,19 @@ import { Checkbox } from '@shared/ui/atoms/Checkbox';
 import { Button } from '@shared/ui/atoms/Button';
 import { palette } from '@shared/theme/tokens';
 import type { RegisterFormData } from '@features/auth/register/registerFormSchema';
+import { PasswordStrengthMeter } from '@features/auth/register/organisms/PasswordStrengthMeter';
 
 interface Props {
   control: Control<RegisterFormData>;
   onSubmit: () => void;
   isPending: boolean;
+  isValid: boolean;
   errorMessage?: string;
 }
 
-export function RegisterForm({ control, onSubmit, isPending, errorMessage }: Props) {
+export function RegisterForm({ control, onSubmit, isPending, isValid, errorMessage }: Props) {
   const { t } = useTranslation();
+  const password = useWatch({ control, name: 'password' }) ?? '';
 
   return (
     <View className="gap-4">
@@ -58,17 +61,39 @@ export function RegisterForm({ control, onSubmit, isPending, errorMessage }: Pro
         )}
       />
 
+      <View>
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+            <TextField
+              label={t('register.passwordLabel')}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={error?.message ? t(error.message) : undefined}
+              placeholder={t('register.passwordPlaceholder')}
+              secureTextEntry
+              autoCapitalize="none"
+              autoComplete="password-new"
+              leftIcon={<Lock size={20} color={palette.neutral[400]} />}
+            />
+          )}
+        />
+        <PasswordStrengthMeter password={password} />
+      </View>
+
       <Controller
         control={control}
-        name="password"
+        name="confirmPassword"
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <TextField
-            label={t('register.passwordLabel')}
+            label={t('register.confirmPasswordLabel')}
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
             error={error?.message ? t(error.message) : undefined}
-            placeholder={t('register.passwordPlaceholder')}
+            placeholder={t('register.confirmPasswordPlaceholder')}
             secureTextEntry
             autoCapitalize="none"
             autoComplete="password-new"
@@ -99,7 +124,12 @@ export function RegisterForm({ control, onSubmit, isPending, errorMessage }: Pro
         <Text className="text-caption font-sans text-danger-500">{errorMessage}</Text>
       ) : null}
 
-      <Button title={t('register.submit')} onPress={onSubmit} isLoading={isPending} />
+      <Button
+        title={t('register.submit')}
+        onPress={onSubmit}
+        isLoading={isPending}
+        disabled={!isValid}
+      />
     </View>
   );
 }

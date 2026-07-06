@@ -16,7 +16,8 @@ export function useRegister() {
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
-    defaultValues: { name: '', email: '', password: '', terms: false },
+    defaultValues: { name: '', email: '', password: '', confirmPassword: '', terms: false },
+    mode: 'onChange', // valida en vivo: borde rojo + botón disabled/enabled reactivos
   });
 
   const mutation = useMutation({
@@ -37,7 +38,10 @@ export function useRegister() {
     control: form.control,
     onSubmit: form.handleSubmit((data) => mutation.mutate(data)),
     isPending: mutation.isPending,
+    isValid: form.formState.isValid,
     errorMessage: mutation.error?.message,
+    // El back siempre va a Welcome (no se anida Login↔Register entre sí).
+    goBack: () => router.replace('/(auth)/welcome'),
     goToLogin: () => router.navigate('/(auth)/login'),
   };
 }

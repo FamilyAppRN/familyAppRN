@@ -14,6 +14,7 @@ import {
 } from '@expo-google-fonts/plus-jakarta-sans';
 
 import { QueryProvider } from '@core/providers/QueryProvider';
+import { initFirebase } from '@core/firebase/firebaseApp';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 
 SplashScreen.preventAutoHideAsync();
@@ -25,6 +26,10 @@ export default function RootLayout() {
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_700Bold,
   });
+
+  useEffect(() => {
+    initFirebase();
+  }, []);
 
   useEffect(() => {
     if (loaded || error) {

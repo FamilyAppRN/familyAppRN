@@ -132,6 +132,24 @@ La app es **bilingüe ES/EN**. Stack: `i18next` + `react-i18next` + `expo-locali
 - Idioma inicial = locale del dispositivo (fallback `es`). Cambio en runtime con `useLanguage()` (`@core/i18n/useLanguage`) o el primitive `LanguageSwitch`.
 - El idioma se inicializa importando `@core/i18n/i18n` en el root layout (ya hecho).
 
+## Firebase (`@react-native-firebase/app`)
+
+- Config nativa vía `google-services.json` / `GoogleService-Info.plist` (raíz del repo) +
+  `googleServicesFile` en `app.json` (ios/android) + plugins `@react-native-firebase/app` y
+  `expo-build-properties` (con `forceStaticLinking: ["RNFBApp"]` en iOS).
+- **Bundle ID / package** deben coincidir **exactamente** (case-sensitive) con lo registrado en la
+  consola de Firebase: `com.familycollab.gestia` en ambas plataformas.
+- Firebase se autoinicializa nativamente al leer esos archivos — no hace falta `initializeApp()`.
+  `initFirebase()` (`@core/firebase/firebaseApp`) solo confirma el arranque por log.
+- **Split por plataforma:** `src/core/firebase/firebaseApp.ts` (nativo, default) +
+  `firebaseApp.web.ts` (no-op) — RNFirebase no corre en `react-native-web`. Sigue el mismo patrón
+  ya usado en `use-color-scheme.ts`/`.web.ts`: el archivo sin sufijo es el que resuelve TypeScript;
+  Metro prioriza `.web.ts` en ese target.
+- ❌ **No importar `@react-native-firebase/*` en código que corra también en web** sin el split
+  `.web.ts` — el módulo nativo no existe ahí y rompe el bundle.
+- ⚠️ **No funciona en Expo Go.** Requiere dev build: `npm run device:android` / `device:ios` /
+  `emulator:android` / `emulator:ios` (ver sección de arriba), o `npx expo prebuild`.
+
 ## Scaffolding del template (no construir encima)
 `src/components/`, `src/hooks/`, `src/constants/`, `src/global.css` son del template de arranque (demo).
 No bases features en ellos; migra a `shared/` lo que sirva cuando trabajes las vistas.

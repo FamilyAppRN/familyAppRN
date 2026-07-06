@@ -1,14 +1,16 @@
 {
   "expo": {
     "name": "Gestia",
-    "slug": "familyCollabApp",
+    "slug": "familycollab",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "familycollabapp",
+    "scheme": "gestia",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.familycollab.gestia",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +20,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.familyCollabApp"
+      "package": "com.familycollab.gestia",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "output": "static",
@@ -42,7 +45,17 @@
         }
       ],
       "expo-font",
-      "expo-localization"
+      "expo-localization",
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static",
+            "forceStaticLinking": ["RNFBApp"]
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

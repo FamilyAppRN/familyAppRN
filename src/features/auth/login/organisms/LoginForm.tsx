@@ -13,6 +13,7 @@ interface Props {
   control: Control<LoginFormData>;
   onSubmit: () => void;
   isPending: boolean;
+  isValid: boolean;
   errorMessage?: string;
   onForgot: () => void;
   onGoogle: () => void;
@@ -23,6 +24,7 @@ export function LoginForm({
   control,
   onSubmit,
   isPending,
+  isValid,
   errorMessage,
   onForgot,
   onGoogle,
@@ -71,7 +73,7 @@ export function LoginForm({
           )}
         />
         <Pressable onPress={onForgot} className="mt-1 self-end" hitSlop={8}>
-          <Text className="text-caption font-jakarta-semibold text-brand-600">
+          <Text className="text-caption font-jakarta-semibold text-emphasis">
             {t('login.forgot')}
           </Text>
         </Pressable>
@@ -85,6 +87,7 @@ export function LoginForm({
         title={t('login.submit')}
         onPress={onSubmit}
         isLoading={isPending}
+        disabled={!isValid}
         rightIcon={<ArrowRight size={20} color={palette.neutral[0]} />}
       />
 
@@ -100,7 +103,7 @@ export function LoginForm({
         <Pressable
           accessibilityRole="button"
           onPress={onGoogle}
-          className="h-12 w-full flex-row items-center justify-center gap-3 rounded-button border border-line bg-surface active:opacity-90">
+          className="h-12 w-full flex-row items-center justify-center gap-3 rounded-button border border-line bg-surface-2 active:opacity-90">
           <GoogleIcon />
           <Text className="text-button font-jakarta-semibold text-foreground">Google</Text>
         </Pressable>

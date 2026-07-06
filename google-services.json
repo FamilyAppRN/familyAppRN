@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1090295928841",
+    "project_id": "gestia-530cc",
+    "storage_bucket": "gestia-530cc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090295928841:android:b8194b9ec4f3a59f7e40d8",
+        "android_client_info": {
+          "package_name": "com.familycollab.gestia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmoPh1engtWEQsUhdrmQFePv7BHuCN-XA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

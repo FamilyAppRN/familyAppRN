@@ -17,6 +17,7 @@ export function useLogin() {
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: { email: '', password: '' },
+    mode: 'onChange', // valida en vivo: mismo comportamiento que Register
   });
 
   const mutation = useMutation({
@@ -36,7 +37,10 @@ export function useLogin() {
     control: form.control,
     onSubmit: form.handleSubmit((data) => mutation.mutate(data)),
     isPending: mutation.isPending,
+    isValid: form.formState.isValid,
     errorMessage: mutation.error?.message,
+    // El back siempre va a Welcome (no se anida Login↔Register entre sí).
+    goBack: () => router.replace('/(auth)/welcome'),
     goToRegister: () => router.navigate('/(auth)/register'),
     goToForgot: () => {}, // TODO: flujo de recuperar contraseña
     onGoogle: () => {}, // TODO: OAuth Google

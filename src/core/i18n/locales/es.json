@@ -21,6 +21,7 @@
     "createFamily": "Crear familia"
   },
   "register": {
+    "brand": "Gestia",
     "title": "Crea tu cuenta familiar",
     "subtitle": "Comienza a organizar tu hogar hoy mismo.",
     "nameLabel": "Nombre completo",
@@ -29,6 +30,14 @@
     "emailPlaceholder": "tu@email.com",
     "passwordLabel": "Contraseña",
     "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "••••••••",
+    "strength": {
+      "weak": "Débil",
+      "fair": "Regular",
+      "good": "Buena",
+      "strong": "Fuerte"
+    },
     "terms": "Acepto los Términos de servicio y la Política de privacidad.",
     "submit": "Crear cuenta",
     "haveAccount": "¿Ya tienes una cuenta? ",
@@ -63,6 +72,10 @@
   "validation": {
     "email": "Ingresa un email válido",
     "passwordMin": "Mínimo 8 caracteres",
+    "passwordRequired": "Contraseña requerida",
+    "passwordRequirements": "Debe tener más de 5 caracteres, una mayúscula, un número y un símbolo",
+    "confirmPasswordRequired": "Confirma tu contraseña",
+    "passwordMismatch": "Las contraseñas no coinciden",
     "nameRequired": "Nombre requerido",
     "termsRequired": "Debes aceptar los términos"
   }
