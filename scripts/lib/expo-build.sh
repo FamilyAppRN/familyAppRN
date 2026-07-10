@@ -42,34 +42,80 @@ ensure_dev_client() {
   fi
 }
 
+# --- Android SDK (ANDROID_HOME) ---
+# ~/.zshrc solo se carga en shells interactivos; este script puede correr en
+# uno no-interactivo (CI, subprocess) donde ANDROID_HOME no llega aunque esté
+# exportado ahí. Lo resolvemos nosotros mismos, con fallback a la ruta default.
+ensure_android_home() {
+  if [ -z "${ANDROID_HOME:-}" ] && [ -z "${ANDROID_SDK_ROOT:-}" ]; then
+    for candidate in "$HOME/Library/Android/sdk" "$HOME/Android/Sdk"; do
+      if [ -d "$candidate" ]; then
+        export ANDROID_HOME="$candidate"
+        break
+      fi
+    done
+  fi
+  : "${ANDROID_HOME:=${ANDROID_SDK_ROOT:-}}"
+  if [ -n "${ANDROID_HOME:-}" ]; then
+    export ANDROID_SDK_ROOT="$ANDROID_HOME"
+    export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
+    info "Android SDK: $ANDROID_HOME"
+  else
+    err "No encontré el Android SDK. Instálalo o exporta ANDROID_HOME manualmente."
+    exit 1
+  fi
+}
+
+_android_device_lines() {
+  adb devices -l | sed -n '2,$p' | awk '$2=="device"'
+}
+
 _has_android_target() {
-  [ -n "$(adb devices | sed -n '2,$p' | awk '$2=="device"{print $1}')" ]
+  [ -n "$(_android_device_lines)" ]
 }
 
 _build_android() {
   local release="$1"
+  ensure_android_home
   if ! command -v adb >/dev/null 2>&1; then
     err "adb no está en el PATH. Instala Android SDK / Platform-Tools."
     exit 1
   fi
 
-  local device_flag=""
+  # Array (no palabra-split) para el flag --device: `expo run:android --device`
+  # sin valor abre un picker interactivo, que cuelga en un shell no-TTY.
+  # Expo empareja por el NOMBRE de modelo (adb devices -l → model:XXX), no por
+  # el serial — con un solo dispositivo lo tomamos de ahí automáticamente.
+  local device_flag=()
   if [ "$BUILD_TARGET" = "device" ]; then
-    device_flag="--device"
-    _has_android_target || warn "No detecto un dispositivo Android por adb. Conéctalo con 'Depuración USB' activada."
+    local lines count model
+    lines="$(_android_device_lines)"
+    count="$(printf '%s\n' "$lines" | grep -c . || true)"
+    if [ -n "${EXPO_ANDROID_DEVICE_NAME:-}" ]; then
+      device_flag=(--device "$EXPO_ANDROID_DEVICE_NAME")
+    elif [ "$count" -eq 1 ]; then
+      model="$(printf '%s\n' "$lines" | grep -oE 'model:[^ ]+' | cut -d: -f2)"
+      device_flag=(--device "$model")
+    elif [ "$count" -eq 0 ]; then
+      err "No detecto ningún dispositivo Android por adb. Conéctalo con 'Depuración USB' activada."
+      exit 1
+    else
+      err "Hay $count dispositivos Android conectados. Especifica cuál usar:"
+      printf '%s\n' "$lines" >&2
+      err "EXPO_ANDROID_DEVICE_NAME=<model> npm run device:android"
+      exit 1
+    fi
   else
     _has_android_target || warn "No hay emulador Android corriendo; Expo intentará seleccionar/arrancar uno."
   fi
 
   if [ "$release" -eq 1 ]; then
     info "Android ($BUILD_TARGET): build RELEASE e instalación…"
-    # shellcheck disable=SC2086
-    npx expo run:android $device_flag --variant release
+    npx expo run:android "${device_flag[@]}" --variant release
   else
     ensure_dev_client
     info "Android ($BUILD_TARGET): DEV build (dev-client) e instalación…"
-    # shellcheck disable=SC2086
-    npx expo run:android $device_flag
+    npx expo run:android "${device_flag[@]}"
   fi
 }
 
