@@ -11,7 +11,15 @@ export class AuthApi {
     return this.client.post<unknown>('/api/auth/register', body);
   }
 
-  getMe() {
-    return this.client.get<unknown>('/api/users/me');
+  /**
+   * Perfil + hogares del usuario. Acepta un accessToken explícito para el
+   * flujo de auth (se llama antes de persistir la sesión, cuando el
+   * interceptor todavía no tiene token que inyectar).
+   */
+  getMe(accessToken?: string) {
+    const config = accessToken
+      ? { headers: { Authorization: `Bearer ${accessToken}` } }
+      : undefined;
+    return this.client.get<unknown>('/api/users/me', config);
   }
 }

@@ -1,15 +1,12 @@
 import { z } from 'zod';
+import { isValidPassword } from '@features/auth/register/passwordRules';
 
-// Reglas: más de 5 caracteres, una mayúscula, un número y un símbolo.
-// Mismo mensaje para las 4 (se muestra una sola vez bajo el campo); el detalle
-// visual condición-por-condición vive en <PasswordStrengthMeter>.
+// Reglas alineadas 1:1 con el backend (ver passwordRules.ts). Un solo mensaje
+// consolidado bajo el campo; el detalle por condición vive en el medidor.
 const passwordSchema = z
   .string()
   .min(1, 'validation.passwordRequired')
-  .refine((val) => val.length > 5, 'validation.passwordRequirements')
-  .refine((val) => /[0-9]/.test(val), 'validation.passwordRequirements')
-  .refine((val) => /[A-Z]/.test(val), 'validation.passwordRequirements')
-  .refine((val) => /[^A-Za-z0-9]/.test(val), 'validation.passwordRequirements');
+  .refine(isValidPassword, 'validation.passwordRequirements');
 
 export const registerFormSchema = z
   .object({

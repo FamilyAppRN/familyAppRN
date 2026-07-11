@@ -36,13 +36,29 @@ export const authResponseSchema = z.object({
 
 export type AuthResponse = z.infer<typeof authResponseSchema>;
 
-/** Respuesta de /api/users/me — perfil + hogares. */
+/**
+ * Resumen de hogar que devuelve /api/users/me (NO es el household completo;
+ * ese vive en el feature household). Forma tomada de HouseholdSummarySchema
+ * del backend (family-backend/.../household.schemas.ts).
+ */
+export const householdSummarySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  role: z.enum(['admin', 'member']),
+  is_owner: z.boolean(),
+  invite_code: z.string().nullable().optional(),
+  members_count: z.number(),
+});
+
+export type HouseholdSummary = z.infer<typeof householdSummarySchema>;
+
+/** Respuesta de /api/users/me — perfil + hogares (resumen). */
 export const meResponseSchema = z.object({
   success: z.boolean(),
   message: z.string().optional(),
   data: z.object({
     user: authUserSchema,
-    households: z.array(z.any()), // Se puede refinar el schema de household más adelante
+    households: z.array(householdSummarySchema),
   }),
 });
 

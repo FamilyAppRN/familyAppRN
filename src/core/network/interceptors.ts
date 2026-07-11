@@ -1,26 +1,20 @@
 import { AxiosInstance, InternalAxiosRequestConfig, RawAxiosRequestHeaders, AxiosHeaders } from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { normalizeError } from '@core/errors/AppError';
+import { sessionStorage } from '@core/session/SessionStorage';
 import { Logger } from '@core/logger/Logger';
-
-/** Clave única donde se persiste el token de sesión. */
-export const AUTH_TOKEN_KEY = '@auth_token';
 
 // Axios no tipa metadata custom; se usa para medir la duración de la request.
 type ConfigWithMetadata = InternalAxiosRequestConfig & { metadata?: { startedAt: number } };
 
 export function setupInterceptors(instance: AxiosInstance): void {
-  // Request: inyecta el accessToken si existe + traza completa (solo DEV, vía Logger).
+  // Request: inyecta el accessToken de la sesión persistida + traza (solo DEV).
   instance.interceptors.request.use(async (config) => {
-    const raw = await AsyncStorage.getItem(AUTH_TOKEN_KEY);
-    if (raw) {
-      try {
-        const { accessToken } = JSON.parse(raw) as { accessToken?: string };
-        if (accessToken) {
-          config.headers.Authorization = `Bearer ${accessToken}`;
-        }
-      } catch (err) {
-        Logger.warn('El token de sesión estaba corrupto en AsyncStorage', err);
+    // No pisar un Authorization ya puesto por quien llama (ej. /me con token
+    // explícito durante el login, antes de que la sesión esté persistida).
+    if (!config.headers.Authorization) {
+      const token = await sessionStorage.getAccessToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
     }
 

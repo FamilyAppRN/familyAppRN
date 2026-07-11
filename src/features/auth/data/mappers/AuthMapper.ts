@@ -7,6 +7,7 @@ export const AuthMapper = {
       id: rawUser.id,
       email: rawUser.email,
       name: rawUser.name,
+      plan: rawUser.plan,
     };
   },
 };

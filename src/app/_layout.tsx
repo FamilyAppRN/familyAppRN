@@ -15,6 +15,7 @@ import {
 
 import { QueryProvider } from '@core/providers/QueryProvider';
 import { initFirebase } from '@core/firebase/firebaseApp';
+import { useRestoreSession } from '@features/auth/session/useRestoreSession';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 
 SplashScreen.preventAutoHideAsync();
@@ -26,18 +27,21 @@ export default function RootLayout() {
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_700Bold,
   });
+  const { isRestoring } = useRestoreSession();
 
   useEffect(() => {
     initFirebase();
   }, []);
 
   useEffect(() => {
-    if (loaded || error) {
+    if ((loaded || error) && !isRestoring) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [loaded, error, isRestoring]);
 
-  if (!loaded && !error) return null;
+  // El splash se mantiene hasta que fuentes Y restauración de sesión estén
+  // resueltas — evita un flash a Welcome antes de confirmar si hay sesión.
+  if ((!loaded && !error) || isRestoring) return null;
 
   return (
     <QueryProvider>

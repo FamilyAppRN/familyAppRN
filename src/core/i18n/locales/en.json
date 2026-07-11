@@ -73,7 +73,7 @@
     "email": "Enter a valid email",
     "passwordMin": "Minimum 8 characters",
     "passwordRequired": "Password is required",
-    "passwordRequirements": "Must be more than 5 characters, with an uppercase letter, a number, and a symbol",
+    "passwordRequirements": "At least 8 characters, with lowercase, uppercase, a number and a symbol (@$!%*?&)",
     "confirmPasswordRequired": "Confirm your password",
     "passwordMismatch": "Passwords don't match",
     "nameRequired": "Name is required",

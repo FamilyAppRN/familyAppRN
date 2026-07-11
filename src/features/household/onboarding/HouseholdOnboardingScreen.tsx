@@ -14,7 +14,7 @@ import { ArrowRight, HousePlus, UserPlus } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 
-import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { logout } from '@features/auth/logout';
 import { useHouseholdOnboarding } from '@features/household/onboarding/useHouseholdOnboarding';
 import { InviteCodeInput } from '@features/household/onboarding/organisms/InviteCodeInput';
 import { TextField } from '@shared/ui/molecules/TextField';
@@ -25,7 +25,6 @@ export function HouseholdOnboardingScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
-  const clearUser = useAuthStore((s) => s.clearUser);
   const {
     householdName,
     setHouseholdName,
@@ -43,8 +42,8 @@ export function HouseholdOnboardingScreen() {
   const createIconColor = semanticColors[scheme].emphasis;
   const joinIconColor = scheme === 'dark' ? palette.accent[400] : palette.accent[600];
 
-  const handleLogout = () => {
-    clearUser();
+  const handleLogout = async () => {
+    await logout();
     router.replace('/(auth)/welcome');
   };
 

@@ -4,12 +4,11 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@shared/ui/atoms/Button';
-import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { logout } from '@features/auth/logout';
 
 export default function SettingsRoute() {
   const { t } = useTranslation();
   const router = useRouter();
-  const clearUser = useAuthStore((s) => s.clearUser);
 
   return (
     <SafeAreaView className="flex-1 items-center justify-center bg-base px-4">
@@ -21,8 +20,8 @@ export default function SettingsRoute() {
         <Button
           title={t('home.logout')}
           variant="secondary"
-          onPress={() => {
-            clearUser();
+          onPress={async () => {
+            await logout();
             router.replace('/(auth)/welcome');
           }}
         />
