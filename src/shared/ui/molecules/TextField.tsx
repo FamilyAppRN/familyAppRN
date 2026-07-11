@@ -54,7 +54,14 @@ export function TextField({
         {leftIcon ? <View className="mr-2">{leftIcon}</View> : null}
 
         <TextInput
-          className="flex-1 py-3 text-body font-sans text-foreground"
+          // Fix: con Plus Jakarta Sans (fuente custom), un lineHeight FIJO
+          // (el que trae "text-body") hace que iOS recorte el descendente de
+          // "g"/"y"/"j" dentro de esa caja, sin importar qué tan grande sea
+          // el número. La solución real es no fijar lineHeight y dejar que
+          // cada plataforma lo calcule de las métricas propias de la fuente.
+          className="flex-1 py-3 text-[16px] font-sans text-foreground"
+          style={{ includeFontPadding: true }}
+          textAlignVertical="center"
           value={value}
           onChangeText={onChangeText}
           onFocus={() => setFocused(true)}

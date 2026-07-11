@@ -57,7 +57,8 @@
   },
   "householdOnboarding": {
     "title": "Welcome home!",
-    "subtitle": "To get started, create a new family group or join an existing one.",
+    "subtitle": "Choose how you'd like to start organizing your family life.",
+    "or": "or",
     "createCardTitle": "Create my household",
     "createCardDesc": "Be the admin and organize your family's tasks, groceries, and notes.",
     "createPlaceholder": "Name of your household (e.g. Garcia Family)",

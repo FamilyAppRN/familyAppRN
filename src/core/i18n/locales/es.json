@@ -57,8 +57,9 @@
     "settings": "Ajustes"
   },
   "householdOnboarding": {
-    "title": "¡Bienvenidos a casa!",
-    "subtitle": "Para comenzar, crea un nuevo grupo familiar o únete a uno existente.",
+    "title": "¡Bienvenido a casa!",
+    "subtitle": "Elige cómo quieres empezar a organizar tu vida familiar.",
+    "or": "o",
     "createCardTitle": "Crear mi hogar",
     "createCardDesc": "Sé el administrador y organiza las tareas, compras y notas de tu familia.",
     "createPlaceholder": "Nombre de tu hogar (ej: Familia García)",

@@ -43,9 +43,12 @@ export function useHouseholdOnboarding() {
     }
   };
 
-  const handleJoin = () => {
-    if (inviteCode.trim().length === 6) {
-      joinMutation.mutate(inviteCode.trim().toUpperCase());
+  // Acepta el código directo (auto-submit) o usa el del estado. Evita doble
+  // envío mientras la mutación está en curso.
+  const handleJoin = (code?: string) => {
+    const value = (code ?? inviteCode).trim().toUpperCase();
+    if (value.length === 6 && !joinMutation.isPending) {
+      joinMutation.mutate(value);
     }
   };
 

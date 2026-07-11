@@ -1,13 +1,12 @@
 import type { User } from '@features/auth/domain/models/User';
-import type { MeResponse } from '@features/auth/data/schemas/authSchema';
+import type { AuthUser } from '@features/auth/data/schemas/authSchema';
 
 export const AuthMapper = {
-  toDomain(res: MeResponse): User {
+  toDomain(rawUser: AuthUser): User {
     return {
-      id: res.data.user.id,
-      email: res.data.user.email,
-      name: res.data.user.name,
-      // Se puede mapear avatar si el backend lo empieza a proveer
+      id: rawUser.id,
+      email: rawUser.email,
+      name: rawUser.name,
     };
   },
 };

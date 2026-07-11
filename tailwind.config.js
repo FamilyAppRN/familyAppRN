@@ -43,6 +43,7 @@ module.exports = {
         faint: 'rgb(var(--color-text-faint) / <alpha-value>)', // terciario / placeholder
         emphasis: 'rgb(var(--color-emphasis) / <alpha-value>)', // texto/ícono de marca (flip)
         chip: 'rgb(var(--color-chip) / <alpha-value>)', // fondo verde suave (chips)
+        'accent-soft': 'rgb(var(--color-accent-soft) / <alpha-value>)', // fondo coral suave
         line: 'rgb(var(--color-border) / <alpha-value>)', // bordes
         'line-strong': 'rgb(var(--color-border-strong) / <alpha-value>)', // bordes visibles
       },
