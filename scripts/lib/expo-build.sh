@@ -42,6 +42,21 @@ ensure_dev_client() {
   fi
 }
 
+# Si queda un Metro corriendo de una corrida anterior (o de otra terminal),
+# `expo run:*` lo detecta, lo reutiliza en vez de arrancar uno propio, y esta
+# sesión termina sin logs en vivo ("Skipping dev server"). Lo liberamos antes
+# de compilar para que el Metro final SIEMPRE quede en esta misma terminal.
+free_metro_port() {
+  local port="${EXPO_METRO_PORT:-8081}"
+  local pid
+  pid="$(lsof -ti:"$port" 2>/dev/null || true)"
+  if [ -n "$pid" ]; then
+    warn "Puerto $port ocupado por un Metro anterior — liberándolo…"
+    kill -9 $pid 2>/dev/null || true
+    sleep 1
+  fi
+}
+
 # --- Android SDK (ANDROID_HOME) ---
 # ~/.zshrc solo se carga en shells interactivos; este script puede correr en
 # uno no-interactivo (CI, subprocess) donde ANDROID_HOME no llega aunque esté
@@ -161,6 +176,8 @@ run_expo_build() {
     esac
   done
 
+  [ "$release" -eq 0 ] && free_metro_port
+
   case "$platform" in
     android) setup_node; _build_android "$release" ;;
     ios)     setup_node; _build_ios "$release" ;;
@@ -169,6 +186,14 @@ run_expo_build() {
   esac
 
   info "Listo."
-  [ "$release" -eq 0 ] && info "DEV build: arranca Metro con  →  npx expo start --dev-client"
+
+  if [ "$release" -eq 0 ]; then
+    # exec (no un subproceso aparte): reemplaza este script por Metro, así
+    # los logs quedan en ESTA MISMA terminal — no hace falta un 2º comando,
+    # y Ctrl+C corta todo limpio.
+    info "Arrancando Metro (dev client) en esta misma terminal — Ctrl+C para salir…"
+    exec npx expo start --dev-client
+  fi
+
   return 0
 }

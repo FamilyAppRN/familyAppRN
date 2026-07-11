@@ -14,7 +14,8 @@
 #   - Node >= 24 (usa nvm/.nvmrc).
 #   - Android: un emulador (AVD) corriendo o disponible + adb.
 #   - iOS:     macOS + Xcode (Simulator). El simulador NO requiere firma/Apple ID.
-#   - Un DEV build necesita Metro aparte: npx expo start --dev-client
+#   - Un DEV build arranca Metro solo, al final, en esta misma terminal
+#     (Ctrl+C para salir). No hace falta correr `expo start` aparte.
 set -euo pipefail
 
 export BUILD_TARGET=emulator

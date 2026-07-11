@@ -32,7 +32,9 @@ npm run device:both
 ```
 
 Añade `:release` para un build standalone (empaqueta el JS, sin Metro): p. ej. `npm run device:android:release`.
-Un DEV build necesita Metro aparte: `npx expo start --dev-client`. Android requiere adb.
+Un DEV build arranca Metro solo al final, en la misma terminal (Ctrl+C para salir) — no hace
+falta correr `expo start` aparte. Android requiere adb. Si hay un Metro de una corrida anterior
+ocupando el puerto 8081, el script lo libera automáticamente antes de compilar.
 
 ---
 

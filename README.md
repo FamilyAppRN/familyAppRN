@@ -1,56 +1,107 @@
-# Welcome to your Expo app 👋
+# Gestia
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil de gestión familiar colaborativa (React Native + Expo Router). Un hogar, varios
+miembros: listas de compras, tareas, notas — todo compartido en tiempo real.
 
-## Get started
+- **Bundle ID / package:** `com.familycollab.gestia`
+- **Scheme:** `gestia://`
+- **Backend:** repo aparte ([family-backend](../family-backend)), ElysiaJS + MongoDB + Firebase Auth,
+  desplegado en `https://family-backend-vvnp.onrender.com` (Swagger en `/docs`).
 
-1. Install dependencies
+## Stack
 
-   ```bash
-   npm install
-   ```
+- **Expo SDK 56** + **Expo Router** (file-based routing, `src/app/`)
+- **NativeWind v4** (Tailwind para RN) — dark mode automático vía `prefers-color-scheme`
+- **TanStack React Query** (estado de servidor) + **Zustand** (estado de auth en memoria)
+- **React Hook Form + Zod** (formularios y validación, alineada 1:1 con el backend)
+- **Axios** con interceptores (inyección de token, logging de requests en DEV, normalización de errores)
+- **expo-secure-store** (tokens en Keychain/Keystore) + **AsyncStorage** (perfil no sensible)
+- **i18next** (ES/EN, detecta el idioma del dispositivo)
+- **@react-native-firebase/app** (el backend gestiona Firebase Auth; el cliente no usa su SDK para login)
 
-2. Start the app
+## Arquitectura
 
-   ```bash
-   npx expo start
-   ```
+Feature-based, DDD ligero. Cada feature es autocontenido: `domain/` (modelos), `data/` (api,
+schemas Zod, mappers, repository), y la screen + hook de presentación (el hook orquesta, la
+screen solo pinta). `core/` tiene la infraestructura transversal: red, storage, sesión, i18n,
+logger, errores. `shared/` tiene UI reusable (átomos, moléculas) y tokens de diseño.
 
-In the output, you'll find options to open the app in a
+Detalle completo y decisiones tomadas: [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) ·
+sistema visual: [`docs/UI-UX.md`](docs/UI-UX.md).
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/
+├── app/                  # rutas (Expo Router) — (auth)/ y (main)/
+├── core/                 # network, storage, session, i18n, logger, errors, firebase
+├── features/
+│   ├── auth/             # welcome, login, register, sesión persistida
+│   └── household/        # onboarding de hogar (crear / unirse con código)
+└── shared/
+    ├── ui/                # componentes reusables (Button, TextField, ...)
+    └── theme/             # tokens de color/tipografía
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Requisitos
 
-### Other setup steps
+- **Node ≥ 24** (`.nvmrc` incluido — `nvm use`). Con la versión por defecto del sistema, Expo SDK 56 falla.
+- Xcode (iOS) y/o Android Studio + SDK (Android) para builds nativos.
+- Un `.env` local (ver `.env.example`) con `EXPO_PUBLIC_API_URL` apuntando al backend.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Empezar
 
-## Learn more
+```bash
+nvm use
+npm install
+cp .env.example .env   # y completar EXPO_PUBLIC_API_URL
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Correr la app
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Este proyecto **no usa Expo Go** — algunos módulos (Firebase, SecureStore) requieren un
+dev-client compilado. Dos scripts (lógica común en `scripts/lib/expo-build.sh`):
 
-## Join the community
+```bash
+# Emulador Android / Simulador iOS (iOS no requiere firma)
+npm run emulator:android
+npm run emulator:ios
+npm run emulator:both
 
-Join our community of developers creating universal apps.
+# Teléfono físico por USB (iOS requiere Xcode + Apple ID para firma)
+npm run device:android
+npm run device:ios
+npm run device:both
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Cada uno compila, instala **y** deja Metro corriendo en la misma terminal (`Ctrl+C` para salir) —
+no hace falta un segundo comando. Si un Metro de una corrida anterior quedó ocupando el puerto, el
+script lo libera solo antes de compilar.
+
+Agrega `:release` para un build standalone (JS empaquetado, sin Metro): p. ej.
+`npm run device:android:release`.
+
+### Solo el bundler web (sin nativo)
+
+```bash
+npm run web
+```
+
+## Scripts
+
+| Comando | Qué hace |
+| --- | --- |
+| `npm run device:<plataforma>[:release]` | Build + instalación en dispositivo físico por USB |
+| `npm run emulator:<plataforma>[:release]` | Build + instalación en emulador/simulador |
+| `npm run web` | Bundler web (react-native-web) |
+| `npm run lint` | ESLint (`expo lint`) |
+
+## Convenciones del proyecto
+
+Reglas obligatorias (Expo antes que React Native puro, i18n sin strings hardcodeados, checklist
+de feature nueva, etc.) viven en [`AGENTS.md`](AGENTS.md) — léelo antes de tocar código.
+
+⚠️ **`src/components/`, `src/hooks/`, `src/constants/` son del template de arranque (demo)** —
+no bases features nuevas ahí; migra a `shared/` lo que sirva.
+
+⚠️ **No corras `npm run reset-project`** — es boilerplate de `create-expo-app` que mueve/borra
+`src/` y `scripts/` completos (todo el código real de la app) para volver a un scaffold en blanco.
+Queda en el repo por defecto del template; no tiene uso en este proyecto.
