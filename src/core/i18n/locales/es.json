@@ -53,8 +53,38 @@
     "shopping": "Compras",
     "tasks": "Tareas",
     "notes": "Notas",
-    "family": "Familia",
+    "calendar": "Calendario",
     "settings": "Ajustes"
+  },
+  "shopping": {
+    "empty": {
+      "title": "Tu lista está vacía",
+      "description": "Agrega tu primer producto y empieza a organizar las compras del hogar.",
+      "cta": "Agregar producto"
+    },
+    "loadError": "No pudimos cargar las compras."
+  },
+  "tasks": {
+    "empty": {
+      "title": "Sin tareas pendientes",
+      "description": "Crea la primera tarea y repártanse las responsabilidades del hogar.",
+      "cta": "Crear tarea"
+    },
+    "loadError": "No pudimos cargar las tareas."
+  },
+  "notes": {
+    "empty": {
+      "title": "Aún no hay notas",
+      "description": "Deja recordatorios, códigos o ideas para toda la familia."
+    },
+    "inputPlaceholder": "Escribe una nota rápida…",
+    "loadError": "No pudimos cargar las notas."
+  },
+  "calendar": {
+    "empty": {
+      "title": "Sin eventos programados",
+      "description": "Agrega citas, cumpleaños o pendientes familiares."
+    }
   },
   "householdOnboarding": {
     "title": "¡Bienvenido a casa!",

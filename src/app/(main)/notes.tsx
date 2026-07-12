@@ -1,15 +1,5 @@
-import { Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
+import { NotesScreen } from '@features/notes/presentation/NotesScreen';
 
 export default function NotesRoute() {
-  const { t } = useTranslation();
-
-  return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-base px-4">
-      <Text className="text-h1 font-jakarta-bold text-foreground">
-        {t('tabs.notes')}
-      </Text>
-    </SafeAreaView>
-  );
+  return <NotesScreen />;
 }

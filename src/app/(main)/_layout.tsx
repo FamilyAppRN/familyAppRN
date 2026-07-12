@@ -11,7 +11,7 @@ const TABS = [
   { name: 'shopping', href: '/shopping' },
   { name: 'tasks', href: '/tasks' },
   { name: 'notes', href: '/notes' },
-  { name: 'family', href: '/family' },
+  { name: 'calendar', href: '/calendar' },
   { name: 'settings', href: '/settings' },
 ] as const;
 

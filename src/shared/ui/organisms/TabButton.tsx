@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { Pressable, useColorScheme, View, type PressableProps } from 'react-native';
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
-import { FileText, ListChecks, Settings, ShoppingCart, Users } from 'lucide-react-native';
+import { CalendarDays, FileText, ListChecks, Settings, ShoppingCart } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { palette, semanticColors } from '@shared/theme/tokens';
@@ -12,7 +12,7 @@ const ICONS: Record<string, IconComponent> = {
   shopping: ShoppingCart,
   tasks: ListChecks,
   notes: FileText,
-  family: Users,
+  calendar: CalendarDays,
   settings: Settings,
 };
 

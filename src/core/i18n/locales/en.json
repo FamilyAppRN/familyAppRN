@@ -52,8 +52,38 @@
     "shopping": "Shopping",
     "tasks": "Tasks",
     "notes": "Notes",
-    "family": "Family",
+    "calendar": "Calendar",
     "settings": "Settings"
+  },
+  "shopping": {
+    "empty": {
+      "title": "Your list is empty",
+      "description": "Add your first product and start organizing the household shopping.",
+      "cta": "Add product"
+    },
+    "loadError": "We couldn't load the shopping lists."
+  },
+  "tasks": {
+    "empty": {
+      "title": "No pending tasks",
+      "description": "Create the first task and share the household responsibilities.",
+      "cta": "Create task"
+    },
+    "loadError": "We couldn't load the tasks."
+  },
+  "notes": {
+    "empty": {
+      "title": "No notes yet",
+      "description": "Leave reminders, codes or ideas for the whole family."
+    },
+    "inputPlaceholder": "Write a quick note…",
+    "loadError": "We couldn't load the notes."
+  },
+  "calendar": {
+    "empty": {
+      "title": "No scheduled events",
+      "description": "Add appointments, birthdays or family to-dos."
+    }
   },
   "householdOnboarding": {
     "title": "Welcome home!",
