@@ -1,31 +1,5 @@
-import { Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-
-import { Button } from '@shared/ui/atoms/Button';
-import { logout } from '@features/auth/logout';
+import { ProfileScreen } from '@features/auth/profile/ProfileScreen';
 
 export default function SettingsRoute() {
-  const { t } = useTranslation();
-  const router = useRouter();
-
-  return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-base px-4">
-      <Text className="text-h1 font-jakarta-bold text-foreground mb-6">
-        {t('tabs.settings')}
-      </Text>
-      
-      <View className="w-full max-w-[280px]">
-        <Button
-          title={t('home.logout')}
-          variant="secondary"
-          onPress={async () => {
-            await logout();
-            router.replace('/(auth)/welcome');
-          }}
-        />
-      </View>
-    </SafeAreaView>
-  );
+  return <ProfileScreen />;
 }

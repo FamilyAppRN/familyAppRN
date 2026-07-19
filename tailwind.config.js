@@ -2,7 +2,12 @@
 // Fuente canónica de tokens para estilos por className (NativeWind).
 // Mantener en sync con src/shared/theme/tokens/*.ts (usados en estilos imperativos).
 module.exports = {
-  // 'media' = sigue el esquema del sistema (los tokens semánticos cambian solos).
+  // 'media': los --color-* de global.css siguen el esquema del SO por defecto.
+  // El override manual (Ajustes → Tema) NO usa el `dark:`/class de NativeWind
+  // (colorScheme.set() solo alterna una clase en web, no re-evalúa los valores
+  // de @media en 'system', y en general no hay selector `.dark` real en RN) —
+  // en su lugar, @core/theme inyecta los --color-* vía `vars()` en el root,
+  // que tiene prioridad sobre @media. Ver ThemeVarsProvider.
   darkMode: 'media',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
@@ -44,6 +49,7 @@ module.exports = {
         emphasis: 'rgb(var(--color-emphasis) / <alpha-value>)', // texto/ícono de marca (flip)
         chip: 'rgb(var(--color-chip) / <alpha-value>)', // fondo verde suave (chips)
         'accent-soft': 'rgb(var(--color-accent-soft) / <alpha-value>)', // fondo coral suave
+        'danger-soft': 'rgb(var(--color-danger-soft) / <alpha-value>)', // fondo rojo suave (logout)
         line: 'rgb(var(--color-border) / <alpha-value>)', // bordes
         'line-strong': 'rgb(var(--color-border-strong) / <alpha-value>)', // bordes visibles
       },

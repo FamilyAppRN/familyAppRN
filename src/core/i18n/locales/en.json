@@ -52,8 +52,37 @@
     "shopping": "Shopping",
     "tasks": "Tasks",
     "notes": "Notes",
-    "calendar": "Calendar",
-    "settings": "Settings"
+    "calendar": "Family",
+    "settings": "Profile"
+  },
+  "profile": {
+    "plan": {
+      "free": "Free Plan",
+      "premium": "Premium Plan"
+    },
+    "members": {
+      "title": "Family members",
+      "subtitle": "View and invite members"
+    },
+    "subscription": {
+      "title": "Manage Subscription",
+      "subtitle": "Premium plan options"
+    },
+    "theme": {
+      "title": "Theme",
+      "subtitle": "Choose your preferred mode",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "support": {
+      "title": "Support",
+      "subtitle": "Help and FAQs"
+    },
+    "social": {
+      "title": "Social Media",
+      "subtitle": "Connect with us"
+    }
   },
   "shopping": {
     "empty": {

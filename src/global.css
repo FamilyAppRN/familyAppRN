@@ -15,6 +15,7 @@
     --color-emphasis: 46 98 64; /* #2E6240 verde enfatizado */
     --color-chip: 220 239 226; /* #DCEFE2 verde suave */
     --color-accent-soft: 255 240 231; /* #FFF0E7 coral suave */
+    --color-danger-soft: 253 226 225; /* #FDE2E1 rojo suave (logout) */
     --color-border: 228 226 219; /* #E4E2DB */
     --color-border-strong: 228 226 219; /* #E4E2DB */
   }
@@ -29,6 +30,7 @@
       --color-emphasis: 155 207 174; /* #9BCFAE verde en oscuro */
       --color-chip: 33 46 32; /* ~#212E20 (verde 18% sobre base) */
       --color-accent-soft: 73 47 32; /* ~#492F20 (coral 18% sobre surface oscuro) */
+      --color-danger-soft: 57 29 24; /* ~#391D18 (rojo 16% sobre base oscuro) */
       --color-border: 51 47 40; /* #332F28 */
       --color-border-strong: 70 65 58; /* #46413A */
     }

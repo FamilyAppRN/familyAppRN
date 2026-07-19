@@ -33,14 +33,14 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#DCEFE2",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 96,
+          "image": "./assets/images/splash-icon-gestia.png",
+          "imageWidth": 200,
           "dark": {
             "backgroundColor": "#171510"
           },
           "android": {
-            "image": "./assets/images/splash-icon.png",
-            "imageWidth": 96
+            "image": "./assets/images/splash-icon-gestia.png",
+            "imageWidth": 200
           }
         }
       ],

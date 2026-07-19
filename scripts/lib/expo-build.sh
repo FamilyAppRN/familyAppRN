@@ -16,6 +16,12 @@ err()  { printf "${c_red}✗ %s${c_reset}\n" "$1" >&2; }
 _LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$_LIB_DIR/../.." && pwd)"
 
+# Binario local de Expo, sin pasar por `npx`: npx a veces no reenvía SIGINT
+# (Ctrl+C) al proceso real que lanza, dejándolo colgado — muy notorio en
+# `expo start` (el proceso de larga duración al final de este script).
+EXPO_BIN="$ROOT/node_modules/.bin/expo"
+[ -x "$EXPO_BIN" ] || EXPO_BIN="npx expo"
+
 # --- Node vía nvm (el proyecto exige Node >= 24) ---
 setup_node() {
   cd "$ROOT"
@@ -38,7 +44,7 @@ setup_node() {
 ensure_dev_client() {
   if ! node -e "require.resolve('expo-dev-client')" >/dev/null 2>&1; then
     info "Instalando expo-dev-client (reemplazo de Expo Go)…"
-    npx expo install expo-dev-client
+    "$EXPO_BIN" install expo-dev-client
   fi
 }
 
@@ -126,11 +132,11 @@ _build_android() {
 
   if [ "$release" -eq 1 ]; then
     info "Android ($BUILD_TARGET): build RELEASE e instalación…"
-    npx expo run:android "${device_flag[@]}" --variant release
+    "$EXPO_BIN" run:android "${device_flag[@]}" --variant release
   else
     ensure_dev_client
     info "Android ($BUILD_TARGET): DEV build (dev-client) e instalación…"
-    npx expo run:android "${device_flag[@]}"
+    "$EXPO_BIN" run:android "${device_flag[@]}"
   fi
 }
 
@@ -159,7 +165,7 @@ _build_ios() {
     info "iOS ($BUILD_TARGET): DEV build (dev-client) e instalación…"
   fi
   # shellcheck disable=SC2086
-  npx expo run:ios $device_flag $config_flag
+  "$EXPO_BIN" run:ios $device_flag $config_flag
 }
 
 # run_expo_build <android|ios|both> [--release]
@@ -192,7 +198,7 @@ run_expo_build() {
     # los logs quedan en ESTA MISMA terminal — no hace falta un 2º comando,
     # y Ctrl+C corta todo limpio.
     info "Arrancando Metro (dev client) en esta misma terminal — Ctrl+C para salir…"
-    exec npx expo start --dev-client
+    exec "$EXPO_BIN" start --dev-client
   fi
 
   return 0

@@ -1,8 +1,9 @@
 import { type ComponentType } from 'react';
-import { Pressable, Text, useColorScheme, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { Plus } from 'lucide-react-native';
 
 import { palette, semanticColors } from '@shared/theme/tokens';
+import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 
 type Tone = 'green' | 'coral';
 
@@ -20,7 +21,7 @@ interface EmptyStateProps {
  * descripción y CTA opcional. Se centra en el espacio disponible.
  */
 export function EmptyState({ Icon, tone = 'green', title, description, cta }: EmptyStateProps) {
-  const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
+  const scheme = useAppColorScheme();
   const tileClass = tone === 'green' ? 'bg-chip' : 'bg-accent-soft';
   const iconColor =
     tone === 'green'

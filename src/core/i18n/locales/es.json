@@ -53,8 +53,37 @@
     "shopping": "Compras",
     "tasks": "Tareas",
     "notes": "Notas",
-    "calendar": "Calendario",
-    "settings": "Ajustes"
+    "calendar": "Familia",
+    "settings": "Perfil"
+  },
+  "profile": {
+    "plan": {
+      "free": "Plan Gratis",
+      "premium": "Plan Premium"
+    },
+    "members": {
+      "title": "Miembros de la familia",
+      "subtitle": "Ver e invitar integrantes"
+    },
+    "subscription": {
+      "title": "Gestionar Suscripción",
+      "subtitle": "Opciones de Plan Premium"
+    },
+    "theme": {
+      "title": "Tema",
+      "subtitle": "Elige tu modo preferido",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "support": {
+      "title": "Soporte",
+      "subtitle": "Ayuda y preguntas frecuentes"
+    },
+    "social": {
+      "title": "Redes Sociales",
+      "subtitle": "Conecta con nosotros"
+    }
   },
   "shopping": {
     "empty": {

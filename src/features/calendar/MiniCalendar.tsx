@@ -1,7 +1,8 @@
-import { Text, useColorScheme, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 
 import { semanticColors } from '@shared/theme/tokens';
+import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 
 const DOW = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
 const CELL_WIDTH = `${100 / 7}%`;
@@ -11,7 +12,7 @@ const CELL_WIDTH = `${100 / 7}%`;
  * tiene backend). Lunes primero; resalta el día de hoy.
  */
 export function MiniCalendar() {
-  const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
+  const scheme = useAppColorScheme();
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@shared/ui/molecules/EmptyState';
 import { ScreenHeader } from '@shared/ui/molecules/ScreenHeader';
+import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import { MiniCalendar } from '@features/calendar/MiniCalendar';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 
@@ -13,18 +14,20 @@ export function CalendarScreen() {
   const household = useCurrentHousehold();
 
   return (
-    <SafeAreaView className="flex-1 bg-base" edges={['top']}>
-      <ScreenHeader title={household?.name ?? ''} />
-      <MiniCalendar />
+    <ThemeVarsProvider>
+      <SafeAreaView className="flex-1 bg-base" edges={['top']}>
+        <ScreenHeader title={household?.name ?? ''} />
+        <MiniCalendar />
 
-      <View className="flex-1">
-        <EmptyState
-          Icon={CalendarDays}
-          tone="green"
-          title={t('calendar.empty.title')}
-          description={t('calendar.empty.description')}
-        />
-      </View>
-    </SafeAreaView>
+        <View className="flex-1">
+          <EmptyState
+            Icon={CalendarDays}
+            tone="green"
+            title={t('calendar.empty.title')}
+            description={t('calendar.empty.description')}
+          />
+        </View>
+      </SafeAreaView>
+    </ThemeVarsProvider>
   );
 }

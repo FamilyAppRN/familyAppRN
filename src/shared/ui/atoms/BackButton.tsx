@@ -1,6 +1,7 @@
-import { Pressable, useColorScheme } from 'react-native';
+import { Pressable } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
 import { semanticColors } from '@shared/theme/tokens';
+import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 
 interface Props {
   onPress: () => void;
@@ -8,7 +9,7 @@ interface Props {
 
 /** Botón circular de "volver". No conoce el dominio ni la ruta de destino. */
 export function BackButton({ onPress }: Props) {
-  const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
+  const scheme = useAppColorScheme();
 
   return (
     <Pressable
