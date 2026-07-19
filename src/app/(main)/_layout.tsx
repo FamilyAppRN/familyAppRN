@@ -26,15 +26,16 @@ export default function MainLayout() {
       <TabSlot />
       <TabList asChild>
         {/*
-          El tab bar vive en el layout, fuera de cualquier <ThemeVarsProvider>
-          de screen. Además, <TabList asChild> usa expo-router/ui's <Slot>
-          (@radix-ui/react-slot): al fusionar props sobre ESTE hijo directo
-          descarta cualquier --color-* de vars() en su `style` (confirmado
-          inspeccionando el DOM — solo sobreviven propiedades RN "normales"
-          como paddingBottom). Por eso acá el color se resuelve por JS
-          (semanticColors[scheme]) en vez de className/vars — igual que hace
-          TabButton para sus íconos, que tiene el mismo problema un nivel más
-          abajo (<TabTrigger asChild>).
+          Colores por JS (semanticColors[scheme]), NO por className/vars():
+          <TabList asChild> usa expo-router/ui's <Slot> (@radix-ui/react-slot),
+          que al fusionar props sobre ESTE hijo directo descarta cualquier
+          --color-* de vars() en su `style` (confirmado inspeccionando el DOM
+          — solo sobreviven propiedades RN "normales" como paddingBottom).
+          Reactivo a useAppColorScheme() — confirmado seguro: el crash de
+          navegación NO lo causaba ningún hook reactivo cerca de <Tabs>/
+          <Stack>, sino una clase `shadow-*` alternada condicionalmente en
+          ThemeSelector.tsx (bug conocido de NativeWind/cssInterop, ver nota
+          ahí). Sin shadow-* acá, este patrón es seguro.
         */}
         <View
           className="flex-row items-center justify-around pt-2"

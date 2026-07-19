@@ -15,14 +15,21 @@ import {
 import { QueryProvider } from '@core/providers/QueryProvider';
 import { initFirebase } from '@core/firebase/firebaseApp';
 import { useHydrateTheme } from '@core/theme/useHydrateTheme';
+import { useInitialColorScheme } from '@shared/theme/useInitialColorScheme';
 import { useRestoreSession } from '@features/auth/session/useRestoreSession';
-import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useAppColorScheme();
+  // Valor fijo (no el hook reactivo): el ThemeProvider de React Navigation
+  // es inerte acá (headerShown:false en toda la app, UI propia por
+  // Tailwind), así que no hace falta que reaccione en vivo — un valor
+  // post-hidratación alcanza. (El crash real de navegación NO era por esto
+  // ni por ningún hook reactivo cerca de <Stack>/<Tabs> — era una clase
+  // `shadow-*` alternada condicionalmente en ThemeSelector.tsx, bug conocido
+  // de NativeWind/cssInterop. Ver la nota ahí.)
+  const colorScheme = useInitialColorScheme();
   const [loaded, error] = useFonts({
     PlusJakartaSans_400Regular,
     PlusJakartaSans_600SemiBold,
