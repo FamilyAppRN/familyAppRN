@@ -90,7 +90,31 @@
       "description": "Add your first product and start organizing the household shopping.",
       "cta": "Add product"
     },
-    "loadError": "We couldn't load the shopping lists."
+    "loadError": "We couldn't load the shopping lists.",
+    "refresh": "Refresh",
+    "categories": {
+      "vegetables": "Produce",
+      "dairy": "Dairy",
+      "meat": "Meat",
+      "cleaning": "Cleaning",
+      "other": "Other"
+    },
+    "units": {
+      "unit": "Unit",
+      "kg": "kg",
+      "g": "g",
+      "l": "L",
+      "ml": "ml"
+    },
+    "newItem": {
+      "title": "New product",
+      "nameLabel": "Product name",
+      "namePlaceholder": "E.g. Whole milk",
+      "quantityLabel": "Quantity",
+      "unitLabel": "Unit",
+      "categoryLabel": "Category",
+      "submit": "Add to list"
+    }
   },
   "tasks": {
     "empty": {
@@ -136,6 +160,8 @@
     "confirmPasswordRequired": "Confirm your password",
     "passwordMismatch": "Passwords don't match",
     "nameRequired": "Name is required",
-    "termsRequired": "You must accept the terms"
+    "termsRequired": "You must accept the terms",
+    "itemNameRequired": "Enter the product name",
+    "quantityMin": "Quantity must be at least 1"
   }
 }

@@ -91,7 +91,31 @@
       "description": "Agrega tu primer producto y empieza a organizar las compras del hogar.",
       "cta": "Agregar producto"
     },
-    "loadError": "No pudimos cargar las compras."
+    "loadError": "No pudimos cargar las compras.",
+    "refresh": "Actualizar",
+    "categories": {
+      "vegetables": "Verduras",
+      "dairy": "Lácteos",
+      "meat": "Carnes",
+      "cleaning": "Limpieza",
+      "other": "Otros"
+    },
+    "units": {
+      "unit": "Unidad",
+      "kg": "kg",
+      "g": "g",
+      "l": "L",
+      "ml": "ml"
+    },
+    "newItem": {
+      "title": "Nuevo producto",
+      "nameLabel": "Nombre del producto",
+      "namePlaceholder": "Ej. Leche entera",
+      "quantityLabel": "Cantidad",
+      "unitLabel": "Unidad",
+      "categoryLabel": "Categoría",
+      "submit": "Agregar a la lista"
+    }
   },
   "tasks": {
     "empty": {
@@ -137,6 +161,8 @@
     "confirmPasswordRequired": "Confirma tu contraseña",
     "passwordMismatch": "Las contraseñas no coinciden",
     "nameRequired": "Nombre requerido",
-    "termsRequired": "Debes aceptar los términos"
+    "termsRequired": "Debes aceptar los términos",
+    "itemNameRequired": "Escribe el nombre del producto",
+    "quantityMin": "La cantidad debe ser al menos 1"
   }
 }

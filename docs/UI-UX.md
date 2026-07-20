@@ -116,11 +116,19 @@ fecha), FAB, tap en avatar sin asignar → AssignMemberSheet.
 | Patrón | Regla |
 |---|---|
 | Acciones destructivas | Swipe o long-press + confirmación. Nunca un tap accidental borra. |
-| Creación de contenido | Siempre bottom sheet (`ActionSheet`), nunca pantalla nueva — excepto onboarding. |
+| Creación de contenido | Siempre bottom sheet (`ActionSheet`), nunca pantalla nueva — excepto onboarding y "Nuevo producto" (ver abajo). |
 | Sincronización | Optimista en UI primero; rollback silencioso si falla. |
 | Avatares | Mismo color por usuario en toda la app (determinístico por `user_id`). |
 | Estados vacíos | Nunca pantalla en blanco: siempre `EmptyState` con CTA. |
 | Pull to refresh | En las 3 listas core (shopping, tasks, notes) como respaldo manual. |
+
+> **Excepción aprobada — "Nuevo producto" (Compras).** Se implementó como pantalla
+> completa, no como bottom sheet, por decisión de diseño sobre el mockup aprobado:
+> el formulario tiene 4 campos (nombre, cantidad, unidad, categoría) y no entra
+> cómodo en una hoja. Vive en `src/app/(modals)/new-shopping-item.tsx` — fuera del
+> grupo `(main)` a propósito, para que el `<Stack>` raíz la monte por encima del
+> tab bar. Es la única ruta del proyecto fuera de `(auth)`/`(main)` y el único uso
+> de `router.push`/`router.back`. No "corregir" a ActionSheet sin volver a decidirlo.
 
 ---
 

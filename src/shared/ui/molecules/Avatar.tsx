@@ -6,8 +6,12 @@ import { palette } from '@shared/theme/tokens';
 interface AvatarProps {
   name: string;
   size?: number;
+  /** Color de fondo sólido (miembro). Sin él usa el verde suave de marca. */
+  color?: string;
   /** Botón de cámara superpuesto (editar foto). Omitir para solo mostrar el avatar. */
   onEditPress?: () => void;
+  /** Borde del color del fondo, para avatares superpuestos. */
+  bordered?: boolean;
 }
 
 function getInitials(name: string): string {
@@ -17,13 +21,30 @@ function getInitials(name: string): string {
 }
 
 /** Avatar circular con iniciales (no hay foto de perfil en el backend aún). */
-export function Avatar({ name, size = 78, onEditPress }: AvatarProps) {
+export function Avatar({ name, size = 78, color, onEditPress, bordered = true }: AvatarProps) {
+  // Fuente derivada del diámetro, acotada a [10, 18]. El tope de 18 hace que
+  // el avatar grande del perfil (78) quede EXACTAMENTE como antes (text-h2),
+  // y el piso de 10 mantiene legibles los badges chicos (22-30) de listas.
+  const fontSize = Math.min(18, Math.max(10, Math.round(size * 0.4)));
+  const borderWidth = bordered ? (size >= 48 ? 3 : 2) : 0;
+
   return (
     <View style={{ width: size, height: size }}>
       <View
-        style={{ width: size, height: size }}
-        className="items-center justify-center rounded-full border-[3px] border-base bg-chip">
-        <Text className="text-h2 font-jakarta-bold text-emphasis">{getInitials(name)}</Text>
+        style={{
+          width: size,
+          height: size,
+          borderWidth,
+          ...(color ? { backgroundColor: color } : {}),
+        }}
+        className={`items-center justify-center rounded-full border-base ${
+          color ? '' : 'bg-chip'
+        }`}>
+        <Text
+          style={{ fontSize, color: color ? palette.neutral[0] : undefined }}
+          className={`font-jakarta-bold ${color ? '' : 'text-emphasis'}`}>
+          {getInitials(name)}
+        </Text>
       </View>
 
       {onEditPress ? (

@@ -10,6 +10,17 @@ export class HouseholdRepository {
     this.api = new HouseholdApi(client);
   }
 
+  /** Hogar completo (incluye members[]), para avatares y resolver added_by. */
+  async getHousehold(householdId: string): Promise<Household> {
+    try {
+      const raw = await this.api.getHousehold(householdId);
+      return householdResponseSchema.parse(raw).data;
+    } catch (error) {
+      Logger.error('Error obteniendo el hogar', error);
+      throw error;
+    }
+  }
+
   async createHousehold(name: string): Promise<Household> {
     try {
       const raw = await this.api.createHousehold({ name });
