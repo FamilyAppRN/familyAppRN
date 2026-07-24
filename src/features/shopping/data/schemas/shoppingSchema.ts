@@ -17,12 +17,22 @@ export const shoppingItemSchema = z.object({
 
 export type ShoppingItem = z.infer<typeof shoppingItemSchema>;
 
+export const shoppingHistoryItemSchema = z.object({
+  id: z.string(),
+  completed_at: z.string().or(z.date()),
+  completed_by: z.string(),
+  items: z.array(shoppingItemSchema),
+});
+
+export type ShoppingHistoryItem = z.infer<typeof shoppingHistoryItemSchema>;
+
 export const shoppingListSchema = z.object({
   id: z.string(),
   household_id: z.string(),
   name: z.string(),
   status: z.enum(['active', 'archived']),
   items: z.array(shoppingItemSchema),
+  history: z.array(shoppingHistoryItemSchema).optional(),
   created_by: z.string(),
   created_at: z.any().optional(),
 });
@@ -44,4 +54,13 @@ export const shoppingListResponseSchema = z.object({
   success: z.boolean(),
   message: z.string().optional(),
   data: shoppingListSchema,
+});
+
+export const shoppingFinalizeResponseSchema = z.object({
+  success: z.boolean(),
+  message: z.string().optional(),
+  data: z.object({
+    history: shoppingHistoryItemSchema,
+    active_list: shoppingListSchema,
+  }),
 });

@@ -4,6 +4,7 @@ import { ShoppingApi, type NewItemBody } from '@features/shopping/data/api/Shopp
 import {
   shoppingListsResponseSchema,
   shoppingListResponseSchema,
+  shoppingFinalizeResponseSchema,
   type ShoppingList,
 } from '@features/shopping/data/schemas/shoppingSchema';
 
@@ -51,6 +52,16 @@ export class ShoppingRepository {
       return shoppingListResponseSchema.parse(raw).data;
     } catch (error) {
       Logger.error('Error agregando ítem de compras', error);
+      throw error;
+    }
+  }
+
+  async finalizePurchase(listId: string) {
+    try {
+      const raw = await this.api.finalizePurchase(listId);
+      return shoppingFinalizeResponseSchema.parse(raw).data;
+    } catch (error) {
+      Logger.error('Error finalizando compra', error);
       throw error;
     }
   }

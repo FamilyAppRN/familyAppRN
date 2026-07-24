@@ -61,6 +61,17 @@ export function useShopping() {
     [lists],
   );
 
+  const history = useMemo(() => {
+    return lists
+      .flatMap((list) => list.history ?? [])
+      .sort((a, b) => new Date(b.completed_at).getTime() - new Date(a.completed_at).getTime());
+  }, [lists]);
+
+  const canFinalize = useMemo(() => {
+    if (totalItems === 0) return false;
+    return lists.every((list) => list.items.every((item) => item.is_completed));
+  }, [totalItems, lists]);
+
   const toggleMutation = useMutation({
     mutationFn: ({ listId, itemId, isCompleted }: ToggleInput) =>
       getShoppingRepository().toggleItem(listId, itemId, isCompleted),
@@ -87,13 +98,23 @@ export function useShopping() {
     },
   });
 
+  const finalizeMutation = useMutation({
+    mutationFn: (listId: string) => getShoppingRepository().finalizePurchase(listId),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
   return {
     householdName: household?.name,
     sections,
+    history,
+    canFinalize,
     totalItems,
     isLoading: query.isLoading,
     isError: query.isError,
     isRefreshing: query.isRefetching,
+    isFinalizing: finalizeMutation.isPending,
     refresh: () => query.refetch(),
     toggleItem: (item: ShoppingItemWithList) =>
       toggleMutation.mutate({
@@ -101,5 +122,11 @@ export function useShopping() {
         itemId: item.id,
         isCompleted: !item.is_completed,
       }),
+    finalizePurchase: () => {
+      const activeList = lists.find((l) => l.items.length > 0);
+      if (activeList) {
+        finalizeMutation.mutate(activeList.id);
+      }
+    },
   };
 }
