@@ -25,4 +25,8 @@ export class ShoppingApi {
   toggleItem(listId: string, itemId: string, body: { is_completed: boolean }) {
     return this.client.patch<unknown>(`/api/shopping/${listId}/items/${itemId}`, body);
   }
+
+  finalizePurchase(listId: string) {
+    return this.client.post<unknown>(`/api/shopping/${listId}/finalize`);
+  }
 }
