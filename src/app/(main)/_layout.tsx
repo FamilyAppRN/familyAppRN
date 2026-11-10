@@ -38,11 +38,11 @@ export default function MainLayout() {
           ahí). Sin shadow-* acá, este patrón es seguro.
         */}
         <View
-          className="flex-row items-center justify-around pt-2"
+          className="flex-row items-start px-1 pt-2"
           style={{
             borderTopWidth: 1,
             borderTopColor: semanticColors[scheme].border,
-            backgroundColor: semanticColors[scheme].bgBase,
+            backgroundColor: semanticColors[scheme].bgSurface,
             paddingBottom: insets.bottom > 0 ? insets.bottom : 12,
           }}>
           {TABS.map((tab) => (

@@ -1,10 +1,9 @@
 import { forwardRef } from 'react';
-import { Pressable, View, type PressableProps } from 'react-native';
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
-import { CalendarDays, FileText, ListChecks, ShoppingCart, User } from 'lucide-react-native';
+import { Pressable, Text, View, type PressableProps } from 'react-native';
+import { CalendarDays, House, ListChecks, ShoppingCart, StickyNote } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
-import { palette, semanticColors } from '@shared/theme/tokens';
+import { semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 
 type IconComponent = React.ComponentType<{ color?: string; size?: number }>;
@@ -12,9 +11,9 @@ type IconComponent = React.ComponentType<{ color?: string; size?: number }>;
 const ICONS: Record<string, IconComponent> = {
   shopping: ShoppingCart,
   tasks: ListChecks,
-  notes: FileText,
+  notes: StickyNote,
   calendar: CalendarDays,
-  settings: User,
+  settings: House,
 };
 
 // Props que inyecta <TabTrigger asChild>: isFocused + PressableProps (+ href, que
@@ -25,37 +24,46 @@ type TabButtonProps = PressableProps & {
   href?: string;
 };
 
+/**
+ * Pestaña del rediseño: icono dentro de una píldora (rellena si está activa)
+ * y la etiqueta siempre visible debajo, igual en las cinco pestañas.
+ */
 export const TabButton = forwardRef<View, TabButtonProps>(function TabButton(
   { routeName, isFocused = false, href: _href, ...pressableProps },
   ref,
 ) {
   const { t } = useTranslation();
   const scheme = useAppColorScheme();
-  const Icon = ICONS[routeName] ?? User;
-  // Color por JS (no className/CSS var): TabButton es hijo de <TabTrigger
+  const Icon = ICONS[routeName] ?? House;
+  // Colores por JS (no className/CSS var): TabButton es hijo de <TabTrigger
   // asChild>, otro punto donde expo-router/ui's <Slot> descarta estilos —
   // ver la nota larga en (main)/_layout.tsx.
-  const iconColor = isFocused ? palette.neutral[0] : semanticColors[scheme].textSecondary;
+  const color = isFocused ? semanticColors[scheme].emphasis : semanticColors[scheme].textSecondary;
 
   return (
-    <Pressable ref={ref} accessibilityRole="button" {...pressableProps}>
-      <Animated.View
-        layout={LinearTransition.springify().mass(0.6).damping(14)}
-        className={`items-center justify-center rounded-full ${
-          isFocused ? 'flex-row bg-brand-600 px-5 py-2.5' : 'flex-col px-3 py-1'
-        }`}>
-        <Icon color={iconColor} size={22} />
-        <Animated.Text
-          layout={LinearTransition.springify()}
-          entering={FadeIn.duration(200)}
-          exiting={FadeOut.duration(100)}
-          style={{ color: iconColor }}
-          className={
-            isFocused ? 'ml-2 text-sm font-jakarta-semibold' : 'mt-1 text-[10px] font-jakarta-semibold'
-          }>
-          {t(`tabs.${routeName}`)}
-        </Animated.Text>
-      </Animated.View>
+    <Pressable
+      ref={ref}
+      accessibilityRole="tab"
+      accessibilityState={{ selected: isFocused }}
+      style={{ flex: 1, alignItems: 'center', gap: 3, minHeight: 48, paddingVertical: 4 }}
+      {...pressableProps}>
+      <View
+        style={{
+          width: 56,
+          height: 30,
+          borderRadius: 999,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: isFocused ? semanticColors[scheme].chip : 'transparent',
+        }}>
+        <Icon color={color} size={22} />
+      </View>
+      <Text
+        numberOfLines={1}
+        style={{ color, fontSize: 11, lineHeight: 14 }}
+        className={isFocused ? 'font-jakarta-bold' : 'font-jakarta-semibold'}>
+        {t(`tabs.${routeName}`)}
+      </Text>
     </Pressable>
   );
 });
