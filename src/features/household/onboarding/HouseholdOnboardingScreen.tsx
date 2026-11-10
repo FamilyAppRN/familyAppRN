@@ -7,6 +7,7 @@ import { useHouseholdOnboarding } from '@features/household/onboarding/useHouseh
 import { InviteCodeInput } from '@features/household/onboarding/organisms/InviteCodeInput';
 import { TextField } from '@shared/ui/molecules/TextField';
 import { Button } from '@shared/ui/atoms/Button';
+import { BackButton } from '@shared/ui/atoms/BackButton';
 import { palette, semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
@@ -28,6 +29,11 @@ export function HouseholdOnboardingScreen() {
             contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 32, paddingBottom: 24, gap: 24 }}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}>
+            {onboarding.canGoBack ? (
+              <View className="-mb-2 -ml-2.5">
+                <BackButton onPress={onboarding.goBack} />
+              </View>
+            ) : null}
             <View className="gap-2">
               {onboarding.firstName ? (
                 <Text className="text-caption font-jakarta-semibold text-emphasis">

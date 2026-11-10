@@ -16,9 +16,11 @@ export function useRestoreSession() {
 
     getAuthRepository()
       .restoreSession()
-      .then((result) => {
+      .then(async (result) => {
         if (cancelled || !result) return;
         setUser(result.user, result.households);
+        // Antes de soltar el splash, para no mostrar un hogar y saltar a otro.
+        await useAuthStore.getState().hydrateActiveHousehold();
       })
       .finally(() => {
         if (!cancelled) setIsRestoring(false);

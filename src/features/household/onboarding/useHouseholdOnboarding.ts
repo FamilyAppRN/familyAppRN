@@ -9,7 +9,8 @@ export const INVITE_CODE_LENGTH = 6;
 
 export function useHouseholdOnboarding() {
   const router = useRouter();
-  const setHouseholds = useAuthStore((s) => s.setHouseholds);
+  const addHousehold = useAuthStore((s) => s.addHousehold);
+  const hasHouseholds = useAuthStore((s) => s.households.length > 0);
   const userName = useAuthStore((s) => s.user?.name);
   const householdRepo = getHouseholdRepository();
 
@@ -19,7 +20,13 @@ export function useHouseholdOnboarding() {
   const createMutation = useMutation({
     mutationFn: (name: string) => householdRepo.createHousehold(name),
     onSuccess: (household) => {
-      setHouseholds([household]);
+      addHousehold({
+        id: household.id,
+        name: household.name,
+        role: 'admin',
+        is_owner: true,
+        members_count: household.members.length,
+      });
       router.replace('/(main)/shopping');
     },
   });
@@ -27,7 +34,13 @@ export function useHouseholdOnboarding() {
   const joinMutation = useMutation({
     mutationFn: (code: string) => householdRepo.joinHousehold(code),
     onSuccess: (household) => {
-      setHouseholds([household]);
+      addHousehold({
+        id: household.id,
+        name: household.name,
+        role: 'member',
+        is_owner: false,
+        members_count: household.members.length,
+      });
       router.replace('/(main)/shopping');
     },
   });
@@ -49,6 +62,9 @@ export function useHouseholdOnboarding() {
   };
 
   return {
+    /** Ya tiene hogares: vino desde el selector, así que puede volver. */
+    canGoBack: hasHouseholds,
+    goBack: () => router.back(),
     firstName: userName?.trim().split(/\s+/)[0],
     householdName,
     setHouseholdName,
