@@ -36,11 +36,11 @@
   },
   "register": {
     "brand": "Gestia",
-    "title": "Crea tu cuenta familiar",
-    "subtitle": "Comienza a organizar tu hogar hoy mismo.",
-    "nameLabel": "Nombre completo",
+    "title": "Crea tu cuenta",
+    "subtitle": "Después eliges si creas un hogar o te unes a uno.",
+    "nameLabel": "Tu nombre",
     "namePlaceholder": "Ej. Ana García",
-    "emailLabel": "Correo electrónico",
+    "emailLabel": "Correo",
     "emailPlaceholder": "tu@email.com",
     "passwordLabel": "Contraseña",
     "passwordPlaceholder": "••••••••",
@@ -52,10 +52,18 @@
       "good": "Buena",
       "strong": "Fuerte"
     },
-    "terms": "Acepto los Términos de servicio y la Política de privacidad.",
+    "terms": "Acepto los Términos y la Política de privacidad.",
     "submit": "Crear cuenta",
-    "haveAccount": "¿Ya tienes una cuenta? ",
-    "login": "Iniciar sesión"
+    "haveAccount": "¿Ya tienes cuenta? ",
+    "login": "Entrar",
+    "rules": {
+      "length": "8 caracteres",
+      "case": "Mayúscula y minúscula",
+      "number": "Un número",
+      "symbol": "Un símbolo (@$!%*?&)",
+      "met": "cumplido",
+      "missing": "falta"
+    }
   },
   "home": {
     "title": "¡Estás en casa! 🏡",
