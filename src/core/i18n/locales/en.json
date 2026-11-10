@@ -164,7 +164,8 @@
       "noDate": "No date",
       "create": "Create task",
       "save": "Save changes",
-      "createError": "We couldn’t save the task. Check your connection and try again."
+      "createError": "We couldn’t save the task. Check your connection and try again.",
+      "editTitle": "Edit task"
     },
     "detail": {
       "status": {
@@ -223,6 +224,7 @@
     "nameRequired": "Name is required",
     "termsRequired": "You must accept the terms",
     "itemNameRequired": "Enter the product name",
-    "quantityMin": "Quantity must be at least 1"
+    "quantityMin": "Quantity must be at least 1",
+    "taskTitleRequired": "Write what needs doing"
   }
 }

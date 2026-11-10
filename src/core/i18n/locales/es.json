@@ -165,7 +165,8 @@
       "noDate": "Sin fecha",
       "create": "Crear tarea",
       "save": "Guardar cambios",
-      "createError": "No pudimos guardar la tarea. Revisa tu conexión e inténtalo de nuevo."
+      "createError": "No pudimos guardar la tarea. Revisa tu conexión e inténtalo de nuevo.",
+      "editTitle": "Editar tarea"
     },
     "detail": {
       "status": {
@@ -224,6 +225,7 @@
     "nameRequired": "Nombre requerido",
     "termsRequired": "Debes aceptar los términos",
     "itemNameRequired": "Escribe el nombre del producto",
-    "quantityMin": "La cantidad debe ser al menos 1"
+    "quantityMin": "La cantidad debe ser al menos 1",
+    "taskTitleRequired": "Escribe qué hay que hacer"
   }
 }
