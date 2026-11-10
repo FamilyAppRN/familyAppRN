@@ -16,15 +16,6 @@ export function normalizeCategory(raw?: string | null): ShoppingCategory {
     : CATEGORY_FALLBACK;
 }
 
-/** Emoji por categoría (el mockup los muestra en los chips). */
-export const CATEGORY_EMOJI: Record<ShoppingCategory, string> = {
-  vegetables: '🥬',
-  dairy: '🥛',
-  meat: '🥩',
-  cleaning: '🧽',
-  other: '🛒',
-};
-
 /** Unidades ofrecidas. `unit` = piezas (se omite al mostrar). */
 export const SHOPPING_UNITS = ['unit', 'kg', 'g', 'l', 'ml'] as const;
 

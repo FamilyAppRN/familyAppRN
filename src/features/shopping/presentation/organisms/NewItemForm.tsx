@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Controller, type Control } from 'react-hook-form';
-import { Plus, ShoppingBasket } from 'lucide-react-native';
+import { ShoppingBasket } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { TextField } from '@shared/ui/molecules/TextField';
@@ -9,7 +9,6 @@ import { Chip } from '@shared/ui/atoms/Chip';
 import { QuantityStepper } from '@shared/ui/atoms/QuantityStepper';
 import { palette } from '@shared/theme/tokens';
 import {
-  CATEGORY_EMOJI,
   SHOPPING_CATEGORIES,
   SHOPPING_UNITS,
 } from '@features/shopping/domain/categories';
@@ -20,7 +19,7 @@ interface NewItemFormProps {
   onSubmit: () => void;
   isPending: boolean;
   isValid: boolean;
-  errorMessage?: string;
+  hasError: boolean;
 }
 
 function FieldLabel({ children }: { children: string }) {
@@ -36,7 +35,7 @@ export function NewItemForm({
   onSubmit,
   isPending,
   isValid,
-  errorMessage,
+  hasError,
 }: NewItemFormProps) {
   const { t } = useTranslation();
 
@@ -104,7 +103,7 @@ export function NewItemForm({
               {SHOPPING_CATEGORIES.map((category) => (
                 <Chip
                   key={category}
-                  label={`${CATEGORY_EMOJI[category]} ${t(`shopping.categories.${category}`)}`}
+                  label={t(`shopping.categories.${category}`)}
                   selected={value === category}
                   onPress={() => onChange(category)}
                 />
@@ -114,8 +113,10 @@ export function NewItemForm({
         )}
       />
 
-      {errorMessage ? (
-        <Text className="text-caption font-sans text-danger-500">{errorMessage}</Text>
+      {hasError ? (
+        <Text accessibilityRole="alert" className="text-caption font-sans text-danger-700">
+          {t('shopping.newItem.error')}
+        </Text>
       ) : null}
 
       <Button
@@ -123,7 +124,6 @@ export function NewItemForm({
         onPress={onSubmit}
         isLoading={isPending}
         disabled={!isValid}
-        rightIcon={<Plus size={18} color={palette.neutral[0]} />}
       />
     </View>
   );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -11,11 +12,17 @@ import {
 } from '@features/shopping/presentation/newItemFormSchema';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 
+/**
+ * Agregar productos. La pantalla queda abierta tras cada alta para armar la
+ * lista de corrido: se limpia el nombre y la cantidad, y se conservan la
+ * categoría y la unidad elegidas.
+ */
 export function useNewShoppingItem() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const household = useCurrentHousehold();
   const householdId = household?.id;
+  const [added, setAdded] = useState<string[]>([]);
 
   const form = useForm<NewItemFormData>({
     resolver: zodResolver(newItemFormSchema),
@@ -32,11 +39,12 @@ export function useNewShoppingItem() {
         unit: data.unit === 'unit' ? null : data.unit,
         category: data.category,
       }),
-    onSuccess: () => {
+    onSuccess: (_list, data) => {
       void queryClient.invalidateQueries({
         queryKey: shoppingQueryKeys.byHousehold(householdId as string),
       });
-      router.back();
+      setAdded((prev) => [data.name.trim(), ...prev]);
+      form.reset({ ...data, name: '', quantity: 1 });
     },
   });
 
@@ -45,7 +53,8 @@ export function useNewShoppingItem() {
     onSubmit: form.handleSubmit((data) => mutation.mutate(data)),
     isPending: mutation.isPending,
     isValid: form.formState.isValid,
-    errorMessage: mutation.error?.message,
+    hasError: mutation.isError,
+    added,
     goBack: () => router.back(),
   };
 }

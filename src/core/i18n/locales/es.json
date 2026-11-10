@@ -130,13 +130,18 @@
       "ml": "ml"
     },
     "newItem": {
-      "title": "Nuevo producto",
+      "title": "Agregar a la lista",
       "nameLabel": "Nombre del producto",
       "namePlaceholder": "Ej. Leche entera",
       "quantityLabel": "Cantidad",
       "unitLabel": "Unidad",
       "categoryLabel": "Categoría",
-      "submit": "Agregar a la lista"
+      "submit": "Agregar",
+      "close": "Cerrar",
+      "done": "Listo",
+      "added": "Agregado: {{items}}",
+      "keepsOpen": "La pantalla sigue abierta para que agregues varios seguidos.",
+      "error": "No pudimos agregar el producto. Inténtalo de nuevo."
     },
     "title": "Compras",
     "unitShort": "u",

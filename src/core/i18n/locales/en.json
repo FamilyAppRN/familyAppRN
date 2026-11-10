@@ -129,13 +129,18 @@
       "ml": "ml"
     },
     "newItem": {
-      "title": "New product",
+      "title": "Add to the list",
       "nameLabel": "Product name",
       "namePlaceholder": "E.g. Whole milk",
       "quantityLabel": "Quantity",
       "unitLabel": "Unit",
       "categoryLabel": "Category",
-      "submit": "Add to list"
+      "submit": "Add",
+      "close": "Close",
+      "done": "Done",
+      "added": "Added: {{items}}",
+      "keepsOpen": "This screen stays open so you can add several in a row.",
+      "error": "We couldn’t add the item. Try again."
     },
     "title": "Shopping",
     "unitShort": "pcs",
