@@ -82,7 +82,8 @@
       "free": "Free plan",
       "premium": "Premium plan",
       "freeLimits": "1 home of your own · up to 4 members per home",
-      "premiumLimits": "Several homes · up to 15 members per home"
+      "premiumLimits": "Several homes · up to 15 members per home",
+      "upgrade": "Upgrade"
     },
     "members": {
       "title": "Family members",
@@ -377,5 +378,53 @@
     "joinLimit": "The free plan allows being in 2 homes",
     "premium": "Premium",
     "seePremium": "See Premium"
+  },
+  "premium": {
+    "brand": "Gestia Premium",
+    "close": "Close",
+    "title": "For families living in more than one home",
+    "subtitle": "More homes, more members and tools for the whole family.",
+    "soon": "Soon",
+    "features": {
+      "homes": {
+        "title": "Several homes",
+        "description": "Your place, your parents’ and the beach house. Free: 1 of your own."
+      },
+      "members": {
+        "title": "Up to 15 members",
+        "description": "Free: up to 4 per home."
+      },
+      "calendar": {
+        "title": "Family calendar",
+        "description": "Appointments, birthdays and dated tasks in one place."
+      },
+      "points": {
+        "title": "Points for kids",
+        "description": "They complete, you verify, and points add up."
+      },
+      "ai": {
+        "title": "Weekly AI menu",
+        "description": "Plan the week and fill the list automatically."
+      }
+    },
+    "periods": {
+      "yearly": {
+        "name": "Yearly",
+        "price": "$49.99",
+        "perMonth": "$4.17 a month",
+        "saving": "2 months free"
+      },
+      "monthly": {
+        "name": "Monthly",
+        "price": "$4.99"
+      }
+    },
+    "subscribe": {
+      "yearly": "Subscribe for $49.99 a year",
+      "monthly": "Subscribe for $4.99 a month"
+    },
+    "comingSoon": "Available soon",
+    "renewal": "Renews automatically. You’ll be able to cancel anytime from the store.",
+    "alreadyPremium": "You already have Premium. Thank you!"
   }
 }

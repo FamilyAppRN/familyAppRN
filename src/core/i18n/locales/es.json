@@ -83,7 +83,8 @@
       "free": "Plan gratis",
       "premium": "Plan Premium",
       "freeLimits": "1 hogar propio · hasta 4 miembros por hogar",
-      "premiumLimits": "Varios hogares · hasta 15 miembros por hogar"
+      "premiumLimits": "Varios hogares · hasta 15 miembros por hogar",
+      "upgrade": "Mejorar"
     },
     "members": {
       "title": "Miembros de la familia",
@@ -378,5 +379,53 @@
     "joinLimit": "El plan gratis permite estar en 2 hogares",
     "premium": "Premium",
     "seePremium": "Ver Premium"
+  },
+  "premium": {
+    "brand": "Gestia Premium",
+    "close": "Cerrar",
+    "title": "Para familias que viven en más de una casa",
+    "subtitle": "Más hogares, más miembros y herramientas para toda la familia.",
+    "soon": "Pronto",
+    "features": {
+      "homes": {
+        "title": "Varios hogares",
+        "description": "Tu casa, la de tus padres y la de la playa. Gratis: 1 propio."
+      },
+      "members": {
+        "title": "Hasta 15 miembros",
+        "description": "Gratis: hasta 4 por hogar."
+      },
+      "calendar": {
+        "title": "Calendario familiar",
+        "description": "Citas, cumpleaños y tareas con fecha en un solo lugar."
+      },
+      "points": {
+        "title": "Puntos para los niños",
+        "description": "Ellos completan, tú verificas y suman puntos."
+      },
+      "ai": {
+        "title": "Menú semanal con IA",
+        "description": "Planifica la semana y llena la lista sola."
+      }
+    },
+    "periods": {
+      "yearly": {
+        "name": "Anual",
+        "price": "$49.99",
+        "perMonth": "$4.17 al mes",
+        "saving": "2 meses gratis"
+      },
+      "monthly": {
+        "name": "Mensual",
+        "price": "$4.99"
+      }
+    },
+    "subscribe": {
+      "yearly": "Suscribirme por $49.99 al año",
+      "monthly": "Suscribirme por $4.99 al mes"
+    },
+    "comingSoon": "Disponible pronto",
+    "renewal": "Se renueva solo. Podrás cancelar cuando quieras desde la tienda.",
+    "alreadyPremium": "Ya tienes Premium. ¡Gracias!"
   }
 }

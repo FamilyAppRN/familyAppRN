@@ -46,13 +46,26 @@ export function ProfileScreen() {
             </View>
           </View>
 
-          <View className={`gap-0.5 rounded-card border p-4 ${profile.isPremium ? 'border-line bg-chip' : 'border-line bg-accent-soft'}`}>
-            <Text className="text-body font-jakarta-bold text-foreground">
-              {t(profile.isPremium ? 'profile.plan.premium' : 'profile.plan.free')}
-            </Text>
-            <Text className="text-caption font-sans text-muted">
-              {t(profile.isPremium ? 'profile.plan.premiumLimits' : 'profile.plan.freeLimits')}
-            </Text>
+          <View
+            className={`flex-row items-center gap-3 rounded-card border border-line p-4 ${
+              profile.isPremium ? 'bg-chip' : 'bg-accent-soft'
+            }`}>
+            <View className="flex-1 gap-0.5">
+              <Text className="text-body font-jakarta-bold text-foreground">
+                {t(profile.isPremium ? 'profile.plan.premium' : 'profile.plan.free')}
+              </Text>
+              <Text className="text-caption font-sans text-muted">
+                {t(profile.isPremium ? 'profile.plan.premiumLimits' : 'profile.plan.freeLimits')}
+              </Text>
+            </View>
+            {profile.isPremium ? null : (
+              <Pressable
+                accessibilityRole="button"
+                onPress={profile.openPremium}
+                className="h-10 justify-center rounded-button bg-accent-500 px-3.5 active:opacity-90">
+                <Text className="text-caption font-jakarta-bold text-neutral-950">{t('profile.plan.upgrade')}</Text>
+              </Pressable>
+            )}
           </View>
 
           <View className="gap-2">
