@@ -23,16 +23,16 @@
   "login": {
     "brand": "Gestia",
     "title": "Welcome back",
-    "subtitle": "We're glad to see you here",
+    "subtitle": "Sign in to see what your family added today.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@email.com",
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
-    "forgot": "Forgot my password",
+    "forgot": "Forgot your password?",
     "submit": "Log in",
     "divider": "Or continue with",
-    "noAccount": "Don't have an account? ",
-    "createFamily": "Create family"
+    "noAccount": "No account yet? ",
+    "createFamily": "Create account"
   },
   "register": {
     "brand": "Gestia",
@@ -280,5 +280,12 @@
     "taskTitleRequired": "Write what needs doing",
     "noteTitleRequired": "Write a title",
     "noteContentRequired": "Write the content"
+  },
+  "auth": {
+    "social": {
+      "google": "Continue with Google",
+      "apple": "Continue with Apple",
+      "divider": "or with your email"
+    }
   }
 }

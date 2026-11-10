@@ -23,16 +23,16 @@
   "login": {
     "brand": "Gestia",
     "title": "Hola de nuevo",
-    "subtitle": "Nos alegra verte por aquí",
-    "emailLabel": "Email",
+    "subtitle": "Entra para ver lo que tu familia agregó hoy.",
+    "emailLabel": "Correo",
     "emailPlaceholder": "tu@email.com",
     "passwordLabel": "Contraseña",
     "passwordPlaceholder": "••••••••",
-    "forgot": "Olvidé mi contraseña",
+    "forgot": "¿Olvidaste tu contraseña?",
     "submit": "Entrar",
     "divider": "O continúa con",
-    "noAccount": "¿No tienes una cuenta? ",
-    "createFamily": "Crear familia"
+    "noAccount": "¿No tienes cuenta? ",
+    "createFamily": "Crear cuenta"
   },
   "register": {
     "brand": "Gestia",
@@ -281,5 +281,12 @@
     "taskTitleRequired": "Escribe qué hay que hacer",
     "noteTitleRequired": "Escribe un título",
     "noteContentRequired": "Escribe el contenido"
+  },
+  "auth": {
+    "social": {
+      "google": "Continuar con Google",
+      "apple": "Continuar con Apple",
+      "divider": "o con tu correo"
+    }
   }
 }
