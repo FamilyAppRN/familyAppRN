@@ -261,18 +261,21 @@
     }
   },
   "householdOnboarding": {
-    "title": "Welcome home!",
-    "subtitle": "Choose how you'd like to start organizing your family life.",
+    "title": "How do you want to start?",
+    "subtitle": "A home is the space you share with your family.",
     "or": "or",
-    "createCardTitle": "Create my household",
-    "createCardDesc": "Be the admin and organize your family's tasks, groceries, and notes.",
-    "createPlaceholder": "Name of your household (e.g. Garcia Family)",
+    "createCardTitle": "Create my home",
+    "createCardDesc": "You’ll be admin and can invite your family",
+    "createPlaceholder": "For example, The Smiths",
     "createBtnStart": "Start now",
-    "createBtnSubmit": "Create and start →",
-    "joinCardTitle": "Join a household",
-    "joinCardDesc": "Ask the administrator for the 6-digit code and enter it below.",
+    "createBtnSubmit": "Create home",
+    "joinCardTitle": "I was invited",
+    "joinCardDesc": "Enter the code you were given",
     "joinBtnSubmit": "Join",
-    "joinPlaceholder": "Invitation code"
+    "joinPlaceholder": "Invitation code",
+    "greeting": "Hi, {{name}}",
+    "joinHint": "It checks itself once all 6 characters are in.",
+    "createLabel": "Home name"
   },
   "validation": {
     "email": "Enter a valid email",

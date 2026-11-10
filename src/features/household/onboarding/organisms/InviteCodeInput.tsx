@@ -51,27 +51,28 @@ export function InviteCodeInput({ value, onChange, onComplete }: InviteCodeInput
   };
 
   return (
-    <View className="my-2 w-full flex-row justify-between">
+    <View accessibilityRole="none" className="w-full flex-row gap-1.5">
       {Array(6)
         .fill(null)
         .map((_, index) => {
           const isFocused = focusedIndex === index;
           const isFilled = Boolean(codeArray[index]);
           const borderClass = isFocused
-            ? 'border-brand-500 bg-chip'
+            ? 'border-[1.5px] border-brand-600 bg-surface'
             : isFilled
-              ? 'border-brand-500 bg-chip'
-              : 'border-line-strong bg-base';
+              ? 'border border-line-strong bg-surface'
+              : 'border border-line bg-base';
 
           return (
             <View
               key={index}
-              className={`h-[52px] w-[44px] items-center justify-center rounded-xl border ${borderClass}`}>
+              className={`h-[54px] flex-1 items-center justify-center rounded-button ${borderClass}`}>
               <TextInput
+                accessibilityLabel={`${index + 1} / 6`}
                 ref={(ref) => {
                   inputsRef.current[index] = ref;
                 }}
-                className="h-full w-full text-center text-xl font-jakarta-semibold text-foreground"
+                className="h-full w-full text-center text-h1 font-jakarta-bold text-foreground"
                 style={{ includeFontPadding: true }}
                 value={codeArray[index]}
                 onChangeText={(text) => handleTextChange(text, index)}

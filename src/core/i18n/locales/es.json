@@ -262,18 +262,21 @@
     }
   },
   "householdOnboarding": {
-    "title": "¡Bienvenido a casa!",
-    "subtitle": "Elige cómo quieres empezar a organizar tu vida familiar.",
+    "title": "¿Cómo quieres empezar?",
+    "subtitle": "Un hogar es el espacio que compartes con tu familia.",
     "or": "o",
     "createCardTitle": "Crear mi hogar",
-    "createCardDesc": "Sé el administrador y organiza las tareas, compras y notas de tu familia.",
-    "createPlaceholder": "Nombre de tu hogar (ej: Familia García)",
+    "createCardDesc": "Serás admin y podrás invitar a tu familia",
+    "createPlaceholder": "Por ejemplo, Casa Pérez",
     "createBtnStart": "Comenzar ahora",
-    "createBtnSubmit": "Crear e iniciar →",
-    "joinCardTitle": "Unirme a un hogar",
-    "joinCardDesc": "Pide el código de 6 dígitos al administrador e ingrésalo abajo.",
+    "createBtnSubmit": "Crear hogar",
+    "joinCardTitle": "Me invitaron",
+    "joinCardDesc": "Escribe el código que te compartieron",
     "joinBtnSubmit": "Unirme",
-    "joinPlaceholder": "Código de invitación"
+    "joinPlaceholder": "Código de invitación",
+    "greeting": "Hola, {{name}}",
+    "joinHint": "Se valida solo al completar los 6 caracteres.",
+    "createLabel": "Nombre del hogar"
   },
   "validation": {
     "email": "Ingresa un email válido",
