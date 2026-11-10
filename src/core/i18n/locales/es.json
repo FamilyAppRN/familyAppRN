@@ -80,8 +80,10 @@
   },
   "profile": {
     "plan": {
-      "free": "Plan Gratis",
-      "premium": "Plan Premium"
+      "free": "Plan gratis",
+      "premium": "Plan Premium",
+      "freeLimits": "1 hogar propio · hasta 4 miembros por hogar",
+      "premiumLimits": "Varios hogares · hasta 15 miembros por hogar"
     },
     "members": {
       "title": "Miembros de la familia",
@@ -105,7 +107,10 @@
     "social": {
       "title": "Redes Sociales",
       "subtitle": "Conecta con nosotros"
-    }
+    },
+    "title": "Mi perfil",
+    "preferences": "Preferencias",
+    "language": "Idioma"
   },
   "shopping": {
     "empty": {

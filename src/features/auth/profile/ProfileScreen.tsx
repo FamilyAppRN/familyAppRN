@@ -1,135 +1,88 @@
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import {
-  AtSign,
-  Camera,
-  HelpCircle,
-  LogOut,
-  Music2,
-  Share2,
-  SlidersHorizontal,
-  Users,
-  Award,
-} from 'lucide-react-native';
+import { Globe, LogOut, Moon } from 'lucide-react-native';
 
 import { Avatar } from '@shared/ui/molecules/Avatar';
-import { ProfileRow } from '@shared/ui/molecules/ProfileRow';
+import { BackButton } from '@shared/ui/atoms/BackButton';
+import { LanguageSwitch } from '@shared/ui/atoms/LanguageSwitch';
 import { ThemeSelector } from '@shared/ui/molecules/ThemeSelector';
 import { palette, semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
-import { useAuthStore } from '@features/auth/store/useAuthStore';
-import { logout } from '@features/auth/logout';
+import { useProfile } from '@features/auth/profile/useProfile';
 
-// Redes sociales: sin URLs reales todavía — no-op hasta que se definan.
-const SOCIAL_ICONS = [Camera, AtSign, Music2];
-
+/**
+ * Perfil (se abre desde el avatar de la cabecera). Solo muestra opciones que
+ * funcionan hoy: plan, tema, idioma y cerrar sesión. Notificaciones y mejorar
+ * el plan se suman cuando existan (A5 y U5).
+ */
 export function ProfileScreen() {
   const { t } = useTranslation();
-  const router = useRouter();
   const scheme = useAppColorScheme();
-  const user = useAuthStore((s) => s.user);
-
-  const isPremium = user?.plan === 'premium';
-
-  const handleLogout = async () => {
-    await logout();
-    router.replace('/(auth)/welcome');
-  };
+  const profile = useProfile();
+  const iconColor = semanticColors[scheme].textPrimary;
 
   return (
     <ThemeVarsProvider>
-      <SafeAreaView className="flex-1 bg-base" edges={['top']}>
-        <ScrollView contentContainerStyle={{ padding: 24, paddingBottom: 32 }}>
-          {/* Cabecera: avatar + nombre + plan */}
-          <View className="items-center">
-            <Avatar name={user?.name ?? '?'} onEditPress={() => {}} />
-            <Text className="mt-3 text-h2 font-jakarta-bold text-foreground">{user?.name}</Text>
-            <View
-              className={`mt-1.5 flex-row items-center gap-1 rounded-badge px-2.5 py-1 ${
-                isPremium ? 'bg-chip' : 'bg-surface-2'
-              }`}>
-              <Award
-                size={12}
-                color={isPremium ? semanticColors[scheme].emphasis : palette.neutral[400]}
-              />
-              <Text
-                className={`text-[11px] font-jakarta-bold ${
-                  isPremium ? 'text-emphasis' : 'text-muted'
-                }`}>
-                {t(isPremium ? 'profile.plan.premium' : 'profile.plan.free')}
+      <SafeAreaView className="flex-1 bg-base" edges={['top', 'bottom']}>
+        <View className="flex-row items-center gap-1 px-4 pb-2 pt-2">
+          <BackButton onPress={profile.goBack} />
+          <Text accessibilityRole="header" className="text-h2 font-jakarta-bold text-foreground">
+            {t('profile.title')}
+          </Text>
+        </View>
+
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 32, gap: 20 }}>
+          <View className="flex-row items-center gap-4">
+            <Avatar name={profile.name || '?'} size={72} bordered={false} />
+            <View className="flex-1 gap-0.5">
+              <Text className="text-h2 font-jakarta-bold text-foreground" numberOfLines={1}>
+                {profile.name}
+              </Text>
+              <Text className="text-caption font-sans text-muted" numberOfLines={1}>
+                {profile.email}
               </Text>
             </View>
           </View>
 
-          {/* Lista de opciones */}
-          <View className="mt-5">
-            <ProfileRow
-              Icon={Users}
-              title={t('profile.members.title')}
-              subtitle={t('profile.members.subtitle')}
-              onPress={() => {}}
-            />
-            <ProfileRow
-              Icon={Award}
-              title={t('profile.subscription.title')}
-              subtitle={t('profile.subscription.subtitle')}
-              onPress={() => {}}
-            />
-
-            {/* Tema: fila propia (sin chevron), selector debajo */}
-            <View className="gap-3 border-b border-line py-3.5">
-              <View className="flex-row items-center gap-3">
-                <SlidersHorizontal size={20} color={semanticColors[scheme].emphasis} />
-                <View className="flex-1">
-                  <Text className="text-body font-jakarta-semibold text-foreground">
-                    {t('profile.theme.title')}
-                  </Text>
-                  <Text className="mt-0.5 text-caption font-sans text-muted">
-                    {t('profile.theme.subtitle')}
-                  </Text>
-                </View>
-              </View>
-              <ThemeSelector />
-            </View>
-
-            <ProfileRow
-              Icon={HelpCircle}
-              title={t('profile.support.title')}
-              subtitle={t('profile.support.subtitle')}
-              onPress={() => {}}
-            />
-
-            <ProfileRow
-              Icon={Share2}
-              title={t('profile.social.title')}
-              subtitle={t('profile.social.subtitle')}
-              noBorder
-              trailing={
-                <View className="flex-row gap-2">
-                  {SOCIAL_ICONS.map((SocialIcon, i) => (
-                    <View
-                      key={i}
-                      className="h-8 w-8 items-center justify-center rounded-full bg-surface-2">
-                      <SocialIcon size={16} color={semanticColors[scheme].textSecondary} />
-                    </View>
-                  ))}
-                </View>
-              }
-            />
+          <View className={`gap-0.5 rounded-card border p-4 ${profile.isPremium ? 'border-line bg-chip' : 'border-line bg-accent-soft'}`}>
+            <Text className="text-body font-jakarta-bold text-foreground">
+              {t(profile.isPremium ? 'profile.plan.premium' : 'profile.plan.free')}
+            </Text>
+            <Text className="text-caption font-sans text-muted">
+              {t(profile.isPremium ? 'profile.plan.premiumLimits' : 'profile.plan.freeLimits')}
+            </Text>
           </View>
 
-          {/* Cerrar sesión */}
+          <View className="gap-2">
+            <Text accessibilityRole="header" className="text-caption font-jakarta-bold text-muted">
+              {t('profile.preferences')}
+            </Text>
+            <View className="overflow-hidden rounded-card border border-line bg-surface">
+              <View className="gap-3 border-b border-line p-3.5">
+                <View className="flex-row items-center gap-3">
+                  <Moon size={20} color={iconColor} />
+                  <Text className="text-body font-jakarta-semibold text-foreground">{t('profile.theme.title')}</Text>
+                </View>
+                <ThemeSelector />
+              </View>
+              <View className="min-h-[56px] flex-row items-center gap-3 px-3.5 py-2.5">
+                <Globe size={20} color={iconColor} />
+                <Text className="flex-1 text-body font-jakarta-semibold text-foreground">
+                  {t('profile.language')}
+                </Text>
+                <LanguageSwitch />
+              </View>
+            </View>
+          </View>
+
           <Pressable
             accessibilityRole="button"
-            onPress={handleLogout}
-            className="mt-5 h-12 flex-row items-center justify-center gap-1.5 rounded-button bg-danger-soft active:opacity-80">
-            <LogOut size={18} color={palette.danger[500]} />
-            <Text className="text-button font-jakarta-bold text-danger-500">
-              {t('home.logout')}
-            </Text>
+            onPress={profile.logout}
+            className="min-h-[52px] flex-row items-center gap-2.5 rounded-card border border-line bg-surface px-3.5 active:opacity-80">
+            <LogOut size={18} color={palette.danger[700]} />
+            <Text className="text-body font-jakarta-semibold text-danger-700">{t('home.logout')}</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>
