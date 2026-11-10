@@ -5,10 +5,10 @@ import { ListChecks, Plus } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@shared/ui/molecules/EmptyState';
-import { ScreenHeader } from '@shared/ui/molecules/ScreenHeader';
 import { palette } from '@shared/theme/tokens';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
+import { HouseholdHeader } from '@features/household/HouseholdHeader';
 import type { TaskFilter } from '@features/tasks/domain/taskGroups';
 import { useTasks } from '@features/tasks/presentation/useTasks';
 import { TaskRow } from '@features/tasks/presentation/organisms/TaskRow';
@@ -20,7 +20,6 @@ export function TasksScreen() {
   const router = useRouter();
   const { resolveMember } = useHouseholdMembers();
   const {
-    householdName,
     filter,
     setFilter,
     counts,
@@ -39,7 +38,7 @@ export function TasksScreen() {
   return (
     <ThemeVarsProvider>
       <SafeAreaView className="flex-1 bg-base" edges={['top']}>
-        <ScreenHeader title={householdName ?? ''} />
+        <HouseholdHeader />
 
         {isLoading ? (
           <View className="flex-1 items-center justify-center">

@@ -14,13 +14,13 @@ import { Pin, Plus, Send, StickyNote } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@shared/ui/molecules/EmptyState';
-import { ScreenHeader } from '@shared/ui/molecules/ScreenHeader';
 import { palette, semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import type { Note } from '@features/notes/data/schemas/notesSchema';
 import { useNotes } from '@features/notes/presentation/useNotes';
 import { NoteCard } from '@features/notes/presentation/organisms/NoteCard';
+import { HouseholdHeader } from '@features/household/HouseholdHeader';
 
 export function NotesScreen() {
   const { t } = useTranslation();
@@ -46,9 +46,8 @@ export function NotesScreen() {
     <ThemeVarsProvider>
       <SafeAreaView className="flex-1 bg-base" edges={['top']}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1">
-          <ScreenHeader
-            title={notes.householdName ?? ''}
-            right={
+          <HouseholdHeader
+            actions={
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel={t('notes.new')}

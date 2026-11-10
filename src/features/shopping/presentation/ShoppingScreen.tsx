@@ -1,26 +1,24 @@
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { Check, Plus, RefreshCw, ShoppingCart } from 'lucide-react-native';
+import { Check, Plus, ShoppingCart } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@shared/ui/molecules/EmptyState';
-import { ScreenHeader } from '@shared/ui/molecules/ScreenHeader';
 import { palette, semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
 import { useShopping } from '@features/shopping/presentation/useShopping';
-import { MemberAvatarStack } from '@features/shopping/presentation/organisms/MemberAvatarStack';
+import { HouseholdHeader } from '@features/household/HouseholdHeader';
 import { ShoppingItemRow } from '@features/shopping/presentation/organisms/ShoppingItemRow';
 
 export function ShoppingScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const scheme = useAppColorScheme();
-  const { members, resolveMember } = useHouseholdMembers();
+  const { resolveMember } = useHouseholdMembers();
   const {
-    householdName,
     sections,
     history,
     canFinalize,
@@ -39,19 +37,7 @@ export function ShoppingScreen() {
   return (
     <ThemeVarsProvider>
       <SafeAreaView className="flex-1 bg-base" edges={['top']}>
-        <ScreenHeader
-          title={householdName ?? ''}
-          left={<MemberAvatarStack members={members} />}
-          right={
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t('shopping.refresh')}
-              hitSlop={8}
-              onPress={() => refresh()}>
-              <RefreshCw size={20} color={semanticColors[scheme].textSecondary} />
-            </Pressable>
-          }
-        />
+        <HouseholdHeader />
 
         {isLoading ? (
           <View className="flex-1 items-center justify-center">

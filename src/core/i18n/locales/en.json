@@ -298,5 +298,10 @@
       "apple": "Continue with Apple",
       "divider": "or with your email"
     }
+  },
+  "householdHeader": {
+    "members_one": "{{count}} member",
+    "members_other": "{{count}} members",
+    "profile": "My profile"
   }
 }

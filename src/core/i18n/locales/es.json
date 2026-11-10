@@ -299,5 +299,10 @@
       "apple": "Continuar con Apple",
       "divider": "o con tu correo"
     }
+  },
+  "householdHeader": {
+    "members_one": "{{count}} miembro",
+    "members_other": "{{count}} miembros",
+    "profile": "Mi perfil"
   }
 }
