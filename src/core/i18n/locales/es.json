@@ -301,7 +301,14 @@
     "empty": {
       "title": "Sin eventos programados",
       "description": "Agrega citas, cumpleaños o pendientes familiares."
-    }
+    },
+    "today": "Hoy",
+    "previousWeek": "Semana anterior",
+    "nextWeek": "Semana siguiente",
+    "allDay": "Todo el día",
+    "emptyDay": "Nada programado para este día.",
+    "taskOf": "Tarea de {{name}}",
+    "tasksHint": "Aquí aparecen las tareas con fecha. Los eventos del calendario llegan con Premium."
   },
   "householdOnboarding": {
     "title": "¿Cómo quieres empezar?",

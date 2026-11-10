@@ -300,7 +300,14 @@
     "empty": {
       "title": "No scheduled events",
       "description": "Add appointments, birthdays or family to-dos."
-    }
+    },
+    "today": "Today",
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "allDay": "All day",
+    "emptyDay": "Nothing scheduled for this day.",
+    "taskOf": "{{name}}’s task",
+    "tasksHint": "Tasks with a due date show up here. Calendar events arrive with Premium."
   },
   "householdOnboarding": {
     "title": "How do you want to start?",
