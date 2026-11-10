@@ -1,10 +1,24 @@
 {
   "welcome": {
     "brand": "Gestia",
-    "title": "Organize your home effortlessly",
-    "subtitle": "The warm, safe digital space to coordinate tasks and connect with your family.",
-    "login": "Log In",
-    "register": "Sign Up"
+    "title": "A tidy home, together.",
+    "subtitle": "Shopping, tasks and notes shared with your family, instantly.",
+    "login": "I already have an account",
+    "register": "Create account",
+    "benefits": {
+      "shopping": {
+        "title": "One shopping list for everyone",
+        "description": "If someone adds milk, you see it at the store."
+      },
+      "tasks": {
+        "title": "Shared chores",
+        "description": "Assign, remind and check off what’s done."
+      },
+      "homes": {
+        "title": "One home or several",
+        "description": "Your place, your parents’ place, the shared flat."
+      }
+    }
   },
   "login": {
     "brand": "Gestia",

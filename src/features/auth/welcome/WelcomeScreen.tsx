@@ -1,64 +1,77 @@
-import { Text, View } from 'react-native';
+import type { ComponentType } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRight } from 'lucide-react-native';
+import { ListChecks, ShoppingCart, Users } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@shared/ui/atoms/Button';
-import { palette } from '@shared/theme/tokens';
+import { palette, semanticColors } from '@shared/theme/tokens';
+import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import { useWelcome } from '@features/auth/welcome/useWelcome';
 
+type BenefitKey = 'shopping' | 'tasks' | 'homes';
+
+const BENEFITS: { key: BenefitKey; Icon: ComponentType<{ size?: number; color?: string }>; tile: string }[] = [
+  { key: 'shopping', Icon: ShoppingCart, tile: 'bg-chip' },
+  { key: 'tasks', Icon: ListChecks, tile: 'bg-accent-soft' },
+  { key: 'homes', Icon: Users, tile: 'bg-surface-2' },
+];
+
 export function WelcomeScreen() {
   const { t } = useTranslation();
+  const scheme = useAppColorScheme();
   const { goToLogin, goToRegister } = useWelcome();
+
+  const iconColor: Record<BenefitKey, string> = {
+    shopping: semanticColors[scheme].emphasis,
+    tasks: scheme === 'dark' ? palette.accent[400] : palette.accent[600],
+    homes: semanticColors[scheme].textPrimary,
+  };
 
   return (
     <ThemeVarsProvider>
       <SafeAreaView className="flex-1 bg-base">
-        <View className="flex-1 px-6 py-4">
-          {/* Centro: logo + marca + imagen + copy */}
-          <View className="flex-1 items-center justify-center">
-            {/* Ícono real de la app (Gestia) */}
-            <View className="mb-3 h-16 w-16 overflow-hidden rounded-[20px] border border-line shadow-card">
+        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 32, paddingBottom: 16, gap: 32 }}>
+          <View className="flex-row items-center gap-2.5">
+            <View className="h-11 w-11 overflow-hidden rounded-[14px] border border-line">
               <Image
                 source={require('@/assets/images/Gestia_Icon.png')}
                 style={{ width: '100%', height: '100%' }}
                 contentFit="cover"
+                accessibilityIgnoresInvertColors
               />
             </View>
-            <Text className="mb-6 text-h2 font-jakarta-bold text-foreground">
-              {t('welcome.brand')}
-            </Text>
+            <Text className="text-h2 font-jakarta-bold text-foreground">{t('welcome.brand')}</Text>
+          </View>
 
-            {/* Imagen de la familia */}
-            <View className="mb-7 aspect-[4/3] w-full max-w-[300px] overflow-hidden rounded-[24px] border border-line bg-surface shadow-card">
-              <Image
-                source={require('@/assets/welcome_hero_family.png')}
-                style={{ width: '100%', height: '100%' }}
-                contentFit="cover"
-              />
-            </View>
-
-            <Text className="mb-3 px-2 text-center text-display font-jakarta-bold text-foreground">
+          <View className="gap-3">
+            <Text accessibilityRole="header" className="text-display font-jakarta-bold text-foreground">
               {t('welcome.title')}
             </Text>
-            <Text className="max-w-[300px] text-center text-body font-sans text-muted">
-              {t('welcome.subtitle')}
-            </Text>
+            <Text className="text-body font-sans text-muted">{t('welcome.subtitle')}</Text>
           </View>
 
-          {/* Footer: CTAs */}
-          <View className="gap-3 pb-2">
-            <Button
-              title={t('welcome.login')}
-              variant="primary"
-              onPress={goToLogin}
-              rightIcon={<ArrowRight size={20} color={palette.neutral[0]} />}
-            />
-            <Button title={t('welcome.register')} variant="secondary" onPress={goToRegister} />
+          <View className="flex-1 gap-2.5">
+            {BENEFITS.map(({ key, Icon, tile }) => (
+              <View key={key} className="flex-row items-center gap-3.5 rounded-card border border-line bg-surface p-3.5">
+                <View className={`h-10 w-10 items-center justify-center rounded-button ${tile}`}>
+                  <Icon size={20} color={iconColor[key]} />
+                </View>
+                <View className="flex-1 gap-0.5">
+                  <Text className="text-body font-jakarta-bold text-foreground">{t(`welcome.benefits.${key}.title`)}</Text>
+                  <Text className="text-caption font-sans text-muted">{t(`welcome.benefits.${key}.description`)}</Text>
+                </View>
+              </View>
+            ))}
           </View>
-        </View>
+
+          <View className="gap-2.5">
+            <Button title={t('welcome.register')} variant="primary" onPress={goToRegister} />
+            <Button title={t('welcome.login')} variant="secondary" onPress={goToLogin} />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </ThemeVarsProvider>
   );
