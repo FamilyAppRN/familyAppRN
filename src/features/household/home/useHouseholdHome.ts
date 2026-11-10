@@ -1,16 +1,40 @@
+import { useState } from 'react';
 import { Share } from 'react-native';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import { getHouseholdRepository } from '@features/household/data/householdFactory';
+import { householdQueryKeys } from '@features/household/data/queryKeys';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
-import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
+import { useHouseholdMembers, type ResolvedMember } from '@features/household/useHouseholdMembers';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
 
-/** Pestaña Hogar: miembros con su rol y el código para invitar. */
+/** Acción destructiva esperando confirmación en la propia pantalla. */
+export type PendingConfirm = { kind: 'remove'; member: ResolvedMember } | { kind: 'leave' } | null;
+
+/**
+ * Pestaña Hogar: miembros, código para invitar y ajustes. Reglas del backend:
+ * solo un admin renombra o quita a otros; quien creó el hogar no puede salir
+ * ni ser quitado.
+ */
 export function useHouseholdHome() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const household = useCurrentHousehold();
+  const householdId = household?.id as string;
   const userId = useAuthStore((s) => s.user?.id);
-  const { members, inviteCode, isLoading } = useHouseholdMembers();
+  const renameInSession = useAuthStore((s) => s.renameHousehold);
+  const removeFromSession = useAuthStore((s) => s.removeHousehold);
+  const { members, inviteCode, ownerId, isLoading } = useHouseholdMembers();
+
+  const [editingName, setEditingName] = useState<string | null>(null);
+  const [confirm, setConfirm] = useState<PendingConfirm>(null);
+
+  const isAdmin = members.find((m) => m.id === userId)?.role === 'admin';
+  const isOwner = !!userId && userId === ownerId;
+  const detailKey = householdQueryKeys.details(householdId);
 
   // Admins primero; dentro de cada grupo, el usuario actual arriba y luego por nombre.
   const sortedMembers = [...members].sort((a, b) => {
@@ -20,9 +44,45 @@ export function useHouseholdHome() {
     return a.name.localeCompare(b.name);
   });
 
+  const renameMutation = useMutation({
+    mutationFn: (name: string) => getHouseholdRepository().renameHousehold(householdId, name),
+    onSuccess: (updated) => {
+      renameInSession(householdId, updated.name);
+      queryClient.setQueryData(detailKey, updated);
+      setEditingName(null);
+    },
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: (memberId: string) => getHouseholdRepository().removeMember(householdId, memberId),
+    onSuccess: () => {
+      setConfirm(null);
+      void queryClient.invalidateQueries({ queryKey: detailKey });
+    },
+  });
+
+  const leaveMutation = useMutation({
+    mutationFn: () => getHouseholdRepository().removeMember(householdId, userId as string),
+    onSuccess: () => {
+      setConfirm(null);
+      queryClient.removeQueries({ queryKey: detailKey });
+      removeFromSession(householdId);
+      // Sin hogares hay que elegir uno nuevo; si quedan, la pestaña muestra el siguiente.
+      if (useAuthStore.getState().households.length === 0) {
+        router.replace('/(auth)/household-onboarding');
+      }
+    },
+  });
+
+  const trimmedName = editingName?.trim() ?? '';
+
   return {
+    householdName: household?.name ?? '',
     members: sortedMembers,
     userId,
+    ownerId,
+    isAdmin,
+    isOwner,
     inviteCode,
     isLoading,
     shareInvite: () => {
@@ -31,5 +91,35 @@ export function useHouseholdHome() {
         message: t('shopping.emptyState.shareMessage', { household: household?.name ?? '', code: inviteCode }),
       });
     },
+
+    // Renombrar (solo admin)
+    editingName,
+    startRename: () => setEditingName(household?.name ?? ''),
+    setEditingName,
+    cancelRename: () => {
+      setEditingName(null);
+      renameMutation.reset();
+    },
+    canSaveName: trimmedName.length > 0 && trimmedName !== household?.name && !renameMutation.isPending,
+    saveName: () => renameMutation.mutate(trimmedName),
+    isRenaming: renameMutation.isPending,
+    renameError: renameMutation.isError,
+
+    // Quitar miembro (admin) y salir (cualquiera menos quien lo creó)
+    canRemove: (member: ResolvedMember) => isAdmin && member.id !== userId && member.id !== ownerId,
+    confirm,
+    askRemove: (member: ResolvedMember) => setConfirm({ kind: 'remove', member }),
+    askLeave: () => setConfirm({ kind: 'leave' }),
+    cancelConfirm: () => {
+      setConfirm(null);
+      removeMutation.reset();
+      leaveMutation.reset();
+    },
+    confirmAction: () => {
+      if (confirm?.kind === 'remove') removeMutation.mutate(confirm.member.id);
+      if (confirm?.kind === 'leave') leaveMutation.mutate();
+    },
+    isConfirming: removeMutation.isPending || leaveMutation.isPending,
+    confirmError: removeMutation.isError || leaveMutation.isError,
   };
 }

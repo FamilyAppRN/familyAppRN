@@ -367,7 +367,30 @@
       "title": "Miembros",
       "you": "{{name}} · tú",
       "admin": "Admin",
-      "member": "Miembro"
+      "member": "Miembro",
+      "owner": "Creó el hogar",
+      "remove": "Quitar",
+      "removeLabel": "Quitar a {{name}} del hogar"
+    },
+    "settings": {
+      "title": "Ajustes del hogar",
+      "nameLabel": "Nombre del hogar",
+      "change": "Cambiar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "renameError": "No pudimos cambiar el nombre. Inténtalo de nuevo.",
+      "leave": "Salir del hogar",
+      "ownerCannotLeave": "Creaste este hogar, así que no puedes salir de él."
+    },
+    "confirm": {
+      "removeTitle": "¿Quitar a {{name}}?",
+      "removeBody": "Deja de ver las compras, tareas y notas de este hogar. Puede volver con el código.",
+      "leaveTitle": "¿Salir de {{household}}?",
+      "leaveBody": "Dejas de ver sus compras, tareas y notas. Para volver necesitas el código otra vez.",
+      "cancel": "Cancelar",
+      "remove": "Quitar",
+      "leave": "Salir",
+      "error": "No se pudo completar. Revisa tu conexión e inténtalo de nuevo."
     }
   },
   "switcher": {

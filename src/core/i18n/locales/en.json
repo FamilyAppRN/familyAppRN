@@ -366,7 +366,30 @@
       "title": "Members",
       "you": "{{name}} · you",
       "admin": "Admin",
-      "member": "Member"
+      "member": "Member",
+      "owner": "Created the home",
+      "remove": "Remove",
+      "removeLabel": "Remove {{name}} from the home"
+    },
+    "settings": {
+      "title": "Home settings",
+      "nameLabel": "Home name",
+      "change": "Change",
+      "save": "Save",
+      "cancel": "Cancel",
+      "renameError": "We couldn’t change the name. Try again.",
+      "leave": "Leave home",
+      "ownerCannotLeave": "You created this home, so you can’t leave it."
+    },
+    "confirm": {
+      "removeTitle": "Remove {{name}}?",
+      "removeBody": "They stop seeing this home’s shopping, tasks and notes. They can come back with the code.",
+      "leaveTitle": "Leave {{household}}?",
+      "leaveBody": "You stop seeing its shopping, tasks and notes. To come back you’ll need the code again.",
+      "cancel": "Cancel",
+      "remove": "Remove",
+      "leave": "Leave",
+      "error": "That didn’t work. Check your connection and try again."
     }
   },
   "switcher": {
