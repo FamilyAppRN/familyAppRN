@@ -15,4 +15,14 @@ export class HouseholdApi {
   joinHousehold(body: { inviteCode: string }) {
     return this.client.post<unknown>('/api/households/join', body);
   }
+
+  /** Solo admin. */
+  updateHousehold(householdId: string, body: { name: string }) {
+    return this.client.patch<unknown>(`/api/households/${householdId}`, body);
+  }
+
+  /** Un admin quita a otro miembro, o el propio usuario sale del hogar. */
+  removeMember(householdId: string, userId: string) {
+    return this.client.delete<unknown>(`/api/households/${householdId}/members/${userId}`);
+  }
 }

@@ -62,6 +62,8 @@ export function useHouseholdMembers() {
     resolveMember,
     /** Código para invitar (lo ve cualquier miembro). */
     inviteCode: query.data?.invite_code,
+    /** Quien creó el hogar: no puede salir ni ser quitado. */
+    ownerId: query.data?.admin_id,
     isLoading: query.isLoading,
   };
 }

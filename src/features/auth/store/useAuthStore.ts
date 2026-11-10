@@ -28,6 +28,9 @@ interface AuthState {
   /** Suma un hogar recién creado o unido y lo deja activo. */
   addHousehold: (household: SessionHousehold) => void;
   setActiveHousehold: (id: string) => void;
+  renameHousehold: (id: string, name: string) => void;
+  /** Saca un hogar de la sesión (al salir). Si era el activo, pasa al primero que quede. */
+  removeHousehold: (id: string) => void;
   /** Recupera el hogar activo guardado, si sigue en la lista. */
   hydrateActiveHousehold: () => Promise<void>;
   clearUser: () => void;
@@ -48,6 +51,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   setActiveHousehold: (id) => {
     void storage.set(ACTIVE_HOUSEHOLD_KEY, id);
     set({ activeHouseholdId: id });
+  },
+  renameHousehold: (id, name) =>
+    set({ households: get().households.map((h) => (h.id === id ? { ...h, name } : h)) }),
+  removeHousehold: (id) => {
+    const households = get().households.filter((h) => h.id !== id);
+    const activeHouseholdId = get().activeHouseholdId === id ? (households[0]?.id ?? null) : get().activeHouseholdId;
+    if (activeHouseholdId) void storage.set(ACTIVE_HOUSEHOLD_KEY, activeHouseholdId);
+    else void storage.remove(ACTIVE_HOUSEHOLD_KEY);
+    set({ households, activeHouseholdId });
   },
   hydrateActiveHousehold: async () => {
     const stored = await storage.get(ACTIVE_HOUSEHOLD_KEY);

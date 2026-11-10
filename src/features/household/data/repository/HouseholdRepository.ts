@@ -32,6 +32,24 @@ export class HouseholdRepository {
     }
   }
 
+  async renameHousehold(householdId: string, name: string): Promise<Household> {
+    try {
+      return householdResponseSchema.parse(await this.api.updateHousehold(householdId, { name })).data;
+    } catch (error) {
+      Logger.error('Error renombrando el hogar', error);
+      throw error;
+    }
+  }
+
+  async removeMember(householdId: string, userId: string): Promise<void> {
+    try {
+      await this.api.removeMember(householdId, userId);
+    } catch (error) {
+      Logger.error('Error quitando miembro del hogar', error);
+      throw error;
+    }
+  }
+
   async joinHousehold(inviteCode: string): Promise<Household> {
     try {
       const raw = await this.api.joinHousehold({ inviteCode });
