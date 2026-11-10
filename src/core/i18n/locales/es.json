@@ -158,6 +158,22 @@
       "title": "Voy al súper",
       "description": "Avisa a tu familia para que agregue lo que falta",
       "soon": "Pronto"
+    },
+    "quickAdd": {
+      "milk": "Leche",
+      "bread": "Pan",
+      "eggs": "Huevos",
+      "fruit": "Frutas",
+      "toiletPaper": "Papel higiénico"
+    },
+    "emptyState": {
+      "quickHint": "Toca para agregar lo de siempre, o usa el botón + para algo nuevo.",
+      "addOne": "Agregar {{name}}",
+      "inviteTitle": "Gestia funciona mejor en familia",
+      "inviteBody": "Invita a quienes viven contigo para que vean y llenen la lista.",
+      "invite": "Invitar",
+      "codeLabel": "Código de invitación: {{code}}",
+      "shareMessage": "Únete a {{household}} en Gestia con este código: {{code}}"
     }
   },
   "tasks": {

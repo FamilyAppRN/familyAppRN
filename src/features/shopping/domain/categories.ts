@@ -16,6 +16,18 @@ export function normalizeCategory(raw?: string | null): ShoppingCategory {
     : CATEGORY_FALLBACK;
 }
 
+/**
+ * Atajos del estado vacío: lo que casi todas las casas compran. El nombre se
+ * traduce al agregarlo (`shopping.quickAdd.<clave>`).
+ */
+export const QUICK_ADD_ITEMS: { key: string; category: ShoppingCategory }[] = [
+  { key: 'milk', category: 'dairy' },
+  { key: 'bread', category: 'other' },
+  { key: 'eggs', category: 'dairy' },
+  { key: 'fruit', category: 'vegetables' },
+  { key: 'toiletPaper', category: 'cleaning' },
+];
+
 /** Unidades ofrecidas. `unit` = piezas (se omite al mostrar). */
 export const SHOPPING_UNITS = ['unit', 'kg', 'g', 'l', 'ml'] as const;
 

@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { Share } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getShoppingRepository } from '@features/shopping/data/shoppingFactory';
@@ -10,6 +12,7 @@ import {
   type ShoppingCategory,
 } from '@features/shopping/domain/categories';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
+import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
 
 /**
  * Ítem con la lista a la que pertenece. La UI agrupa por categoría mezclando
@@ -35,6 +38,8 @@ export function useShopping() {
   const household = useCurrentHousehold();
   const householdId = household?.id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
+  const { inviteCode, members } = useHouseholdMembers();
   const queryKey = shoppingQueryKeys.byHousehold(householdId as string);
 
   const query = useQuery({
@@ -111,6 +116,19 @@ export function useShopping() {
     },
   });
 
+  const quickAddMutation = useMutation({
+    mutationFn: (item: { name: string; category: ShoppingCategory }) =>
+      getShoppingRepository().addItemToDefaultList(householdId as string, {
+        name: item.name,
+        quantity: 1,
+        unit: null,
+        category: item.category,
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
   return {
     householdName: household?.name,
     sections,
@@ -130,6 +148,14 @@ export function useShopping() {
         itemId: item.id,
         isCompleted: !item.is_completed,
       }),
+    quickAdd: (name: string, category: ShoppingCategory) => quickAddMutation.mutate({ name, category }),
+    isQuickAdding: quickAddMutation.isPending,
+    inviteCode,
+    isAlone: members.length <= 1,
+    shareInvite: () => {
+      if (!inviteCode) return;
+      void Share.share({ message: t('shopping.emptyState.shareMessage', { household: household?.name ?? '', code: inviteCode }) });
+    },
     finalizePurchase: () => {
       const activeList = lists.find((l) => l.items.length > 0);
       if (activeList) {

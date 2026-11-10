@@ -57,5 +57,11 @@ export function useHouseholdMembers() {
     [query.data],
   );
 
-  return { members, resolveMember, isLoading: query.isLoading };
+  return {
+    members,
+    resolveMember,
+    /** Código para invitar (lo ve cualquier miembro). */
+    inviteCode: query.data?.invite_code,
+    isLoading: query.isLoading,
+  };
 }

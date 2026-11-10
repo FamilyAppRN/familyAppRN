@@ -157,6 +157,22 @@
       "title": "Going shopping",
       "description": "Let your family know so they can add what’s missing",
       "soon": "Soon"
+    },
+    "quickAdd": {
+      "milk": "Milk",
+      "bread": "Bread",
+      "eggs": "Eggs",
+      "fruit": "Fruit",
+      "toiletPaper": "Toilet paper"
+    },
+    "emptyState": {
+      "quickHint": "Tap to add the usual, or use the + button for something new.",
+      "addOne": "Add {{name}}",
+      "inviteTitle": "Gestia works better as a family",
+      "inviteBody": "Invite the people you live with so they can see and fill the list.",
+      "invite": "Invite",
+      "codeLabel": "Invite code: {{code}}",
+      "shareMessage": "Join {{household}} on Gestia with this code: {{code}}"
     }
   },
   "tasks": {

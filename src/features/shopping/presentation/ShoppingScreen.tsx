@@ -1,10 +1,9 @@
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { Check, Navigation, Plus, ShoppingCart } from 'lucide-react-native';
+import { Check, Navigation, Plus } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
-import { EmptyState } from '@shared/ui/molecules/EmptyState';
 import { palette, semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
@@ -13,6 +12,7 @@ import { HouseholdHeader } from '@features/household/HouseholdHeader';
 import { useShopping } from '@features/shopping/presentation/useShopping';
 import { CategorySection } from '@features/shopping/presentation/organisms/CategorySection';
 import { ShoppingItemRow } from '@features/shopping/presentation/organisms/ShoppingItemRow';
+import { EmptyShopping } from '@features/shopping/presentation/organisms/EmptyShopping';
 
 export function ShoppingScreen() {
   const { t, i18n } = useTranslation();
@@ -33,6 +33,11 @@ export function ShoppingScreen() {
     refresh,
     toggleItem,
     finalizePurchase,
+    quickAdd,
+    isQuickAdding,
+    inviteCode,
+    isAlone,
+    shareInvite,
   } = useShopping();
 
   const goToNewItem = () => router.push('/(modals)/new-shopping-item');
@@ -51,12 +56,12 @@ export function ShoppingScreen() {
             <Text className="text-center text-caption font-sans text-muted">{t('shopping.loadError')}</Text>
           </View>
         ) : totalItems === 0 ? (
-          <EmptyState
-            Icon={ShoppingCart}
-            tone="green"
-            title={t('shopping.empty.title')}
-            description={t('shopping.empty.description')}
-            cta={{ label: t('shopping.empty.cta'), onPress: goToNewItem }}
+          <EmptyShopping
+            onQuickAdd={quickAdd}
+            isAdding={isQuickAdding}
+            inviteCode={inviteCode}
+            showInvite={isAlone}
+            onShareInvite={shareInvite}
           />
         ) : (
           <ScrollView
@@ -145,7 +150,7 @@ export function ShoppingScreen() {
           </ScrollView>
         )}
 
-        {totalItems > 0 ? (
+        {!isLoading && !isError ? (
           <View className="absolute bottom-5 left-4 right-4 flex-row items-center gap-3">
             {cartItems.length > 0 ? (
               <Pressable
