@@ -136,6 +136,22 @@
       "unitLabel": "Unit",
       "categoryLabel": "Category",
       "submit": "Add to list"
+    },
+    "title": "Shopping",
+    "unitShort": "pcs",
+    "pendingCount_one": "{{count}} to buy",
+    "pendingCount_other": "{{count}} to buy",
+    "inCart": "In the cart · {{count}}",
+    "finalize": "Finish shopping",
+    "finalizeMissing_one": "{{count}} left to check",
+    "finalizeMissing_other": "{{count}} left to check",
+    "history": "Past trips",
+    "historyLine_one": "{{count}} item · {{name}}",
+    "historyLine_other": "{{count}} items · {{name}}",
+    "goingShopping": {
+      "title": "Going shopping",
+      "description": "Let your family know so they can add what’s missing",
+      "soon": "Soon"
     }
   },
   "tasks": {

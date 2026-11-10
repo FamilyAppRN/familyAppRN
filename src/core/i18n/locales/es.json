@@ -137,6 +137,22 @@
       "unitLabel": "Unidad",
       "categoryLabel": "Categoría",
       "submit": "Agregar a la lista"
+    },
+    "title": "Compras",
+    "unitShort": "u",
+    "pendingCount_one": "{{count}} por comprar",
+    "pendingCount_other": "{{count}} por comprar",
+    "inCart": "En el carrito · {{count}}",
+    "finalize": "Finalizar compra",
+    "finalizeMissing_one": "Falta {{count}} por marcar",
+    "finalizeMissing_other": "Faltan {{count}} por marcar",
+    "history": "Compras anteriores",
+    "historyLine_one": "{{count}} producto · {{name}}",
+    "historyLine_other": "{{count}} productos · {{name}}",
+    "goingShopping": {
+      "title": "Voy al súper",
+      "description": "Avisa a tu familia para que agregue lo que falta",
+      "soon": "Pronto"
     }
   },
   "tasks": {

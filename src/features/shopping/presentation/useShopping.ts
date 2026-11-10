@@ -45,16 +45,22 @@ export function useShopping() {
 
   const lists = useMemo(() => query.data ?? [], [query.data]);
 
-  /** Ítems de todas las listas, agrupados por categoría (sin secciones vacías). */
+  const allItems = useMemo<ShoppingItemWithList[]>(
+    () => lists.flatMap((list) => list.items.map((item) => ({ ...item, listId: list.id }))),
+    [lists],
+  );
+
+  /** Pendientes agrupados por categoría (sin secciones vacías). */
   const sections = useMemo<CategorySection[]>(() => {
-    const allItems: ShoppingItemWithList[] = lists.flatMap((list) =>
-      list.items.map((item) => ({ ...item, listId: list.id })),
-    );
+    const pending = allItems.filter((item) => !item.is_completed);
     return SHOPPING_CATEGORIES.map((category) => ({
       category,
-      items: allItems.filter((item) => normalizeCategory(item.category) === category),
+      items: pending.filter((item) => normalizeCategory(item.category) === category),
     })).filter((section) => section.items.length > 0);
-  }, [lists]);
+  }, [allItems]);
+
+  /** Lo ya marcado: va a la sección "En el carrito". */
+  const cartItems = useMemo(() => allItems.filter((item) => item.is_completed), [allItems]);
 
   const totalItems = useMemo(
     () => lists.reduce((count, list) => count + list.items.length, 0),
@@ -108,6 +114,8 @@ export function useShopping() {
   return {
     householdName: household?.name,
     sections,
+    cartItems,
+    pendingCount: totalItems - cartItems.length,
     history,
     canFinalize,
     totalItems,
