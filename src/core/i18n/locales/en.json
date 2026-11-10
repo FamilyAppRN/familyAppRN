@@ -351,7 +351,8 @@
   "householdHeader": {
     "members_one": "{{count}} member",
     "members_other": "{{count}} members",
-    "profile": "My profile"
+    "profile": "My profile",
+    "switch": "Switch home. Current home: {{name}}"
   },
   "household": {
     "title": "Home",
@@ -366,5 +367,15 @@
       "admin": "Admin",
       "member": "Member"
     }
+  },
+  "switcher": {
+    "title": "Your homes",
+    "close": "Close",
+    "create": "Create another home",
+    "createLimit": "The free plan allows 1 home of your own",
+    "join": "Join with a code",
+    "joinLimit": "The free plan allows being in 2 homes",
+    "premium": "Premium",
+    "seePremium": "See Premium"
   }
 }

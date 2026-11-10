@@ -352,7 +352,8 @@
   "householdHeader": {
     "members_one": "{{count}} miembro",
     "members_other": "{{count}} miembros",
-    "profile": "Mi perfil"
+    "profile": "Mi perfil",
+    "switch": "Cambiar de hogar. Hogar actual: {{name}}"
   },
   "household": {
     "title": "Hogar",
@@ -367,5 +368,15 @@
       "admin": "Admin",
       "member": "Miembro"
     }
+  },
+  "switcher": {
+    "title": "Tus hogares",
+    "close": "Cerrar",
+    "create": "Crear otro hogar",
+    "createLimit": "El plan gratis permite 1 hogar propio",
+    "join": "Unirme con un código",
+    "joinLimit": "El plan gratis permite estar en 2 hogares",
+    "premium": "Premium",
+    "seePremium": "Ver Premium"
   }
 }
