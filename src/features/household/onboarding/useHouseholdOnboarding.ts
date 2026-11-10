@@ -14,6 +14,11 @@ export function useHouseholdOnboarding() {
   const userName = useAuthStore((s) => s.user?.name);
   const householdRepo = getHouseholdRepository();
 
+  // Desde el selector (ya hay hogares) se cierran las pantallas apiladas encima
+  // de las pestañas; en el primer ingreso se reemplaza el onboarding.
+  const goHome = () =>
+    hasHouseholds ? router.dismissTo('/(main)/shopping') : router.replace('/(main)/shopping');
+
   const [householdName, setHouseholdName] = useState('');
   const [inviteCode, setInviteCode] = useState('');
 
@@ -27,7 +32,7 @@ export function useHouseholdOnboarding() {
         is_owner: true,
         members_count: household.members.length,
       });
-      router.replace('/(main)/shopping');
+      goHome();
     },
   });
 
@@ -41,7 +46,7 @@ export function useHouseholdOnboarding() {
         is_owner: false,
         members_count: household.members.length,
       });
-      router.replace('/(main)/shopping');
+      goHome();
     },
   });
 
