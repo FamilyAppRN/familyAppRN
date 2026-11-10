@@ -44,7 +44,7 @@ export function HouseholdHeader({ actions }: HouseholdHeaderProps) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t('householdHeader.profile')}
-          onPress={() => router.navigate('/(main)/settings' as Href)}
+          onPress={() => router.push('/(modals)/profile' as Href)}
           className="h-11 w-11 items-center justify-center">
           <Avatar
             name={user?.name ?? '?'}

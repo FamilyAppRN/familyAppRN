@@ -76,7 +76,7 @@
     "tasks": "Tareas",
     "notes": "Notas",
     "calendar": "Calendario",
-    "settings": "Hogar"
+    "household": "Hogar"
   },
   "profile": {
     "plan": {
@@ -341,5 +341,19 @@
     "members_one": "{{count}} miembro",
     "members_other": "{{count}} miembros",
     "profile": "Mi perfil"
+  },
+  "household": {
+    "title": "Hogar",
+    "invite": {
+      "title": "Invita a tu familia",
+      "body": "Comparte este código. Quien lo use entra como miembro.",
+      "share": "Compartir código"
+    },
+    "members": {
+      "title": "Miembros",
+      "you": "{{name}} · tú",
+      "admin": "Admin",
+      "member": "Miembro"
+    }
   }
 }

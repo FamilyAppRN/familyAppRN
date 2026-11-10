@@ -13,7 +13,7 @@ const ICONS: Record<string, IconComponent> = {
   tasks: SquareCheckBig,
   notes: StickyNote,
   calendar: Calendar,
-  settings: House,
+  household: House,
 };
 
 // Props que inyecta <TabTrigger asChild>: isFocused + PressableProps (+ href, que

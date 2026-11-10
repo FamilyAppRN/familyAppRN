@@ -75,7 +75,7 @@
     "tasks": "Tasks",
     "notes": "Notes",
     "calendar": "Calendar",
-    "settings": "Home"
+    "household": "Home"
   },
   "profile": {
     "plan": {
@@ -340,5 +340,19 @@
     "members_one": "{{count}} member",
     "members_other": "{{count}} members",
     "profile": "My profile"
+  },
+  "household": {
+    "title": "Home",
+    "invite": {
+      "title": "Invite your family",
+      "body": "Share this code. Whoever uses it joins as a member.",
+      "share": "Share code"
+    },
+    "members": {
+      "title": "Members",
+      "you": "{{name}} · you",
+      "admin": "Admin",
+      "member": "Member"
+    }
   }
 }

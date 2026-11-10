@@ -14,7 +14,7 @@ const TABS = [
   { name: 'tasks', href: '/tasks' },
   { name: 'notes', href: '/notes' },
   { name: 'calendar', href: '/calendar' },
-  { name: 'settings', href: '/settings' },
+  { name: 'household', href: '/household' },
 ] as const;
 
 export default function MainLayout() {
