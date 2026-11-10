@@ -69,7 +69,7 @@ export function useTasks() {
     setFilter,
     counts,
     groups,
-    tasks,
+
     isEmpty: tasks.length === 0,
     isLoading: query.isLoading,
     isError: query.isError,

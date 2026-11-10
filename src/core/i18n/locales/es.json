@@ -123,7 +123,68 @@
       "description": "Crea la primera tarea y repártanse las responsabilidades del hogar.",
       "cta": "Crear tarea"
     },
-    "loadError": "No pudimos cargar las tareas."
+    "loadError": "No pudimos cargar las tareas.",
+    "title": "Tareas",
+    "new": "Nueva tarea",
+    "filters": {
+      "mine": "Mías",
+      "all": "Todas",
+      "done": "Hechas"
+    },
+    "groups": {
+      "overdue": "Atrasadas",
+      "today": "Hoy",
+      "upcoming": "Próximas",
+      "noDate": "Sin fecha",
+      "done": "Hechas"
+    },
+    "due": {
+      "today": "Hoy",
+      "todayAt": "Hoy, {{time}}",
+      "tomorrow": "Mañana",
+      "overdue": "Venció {{date}}"
+    },
+    "unassigned": "Sin asignar",
+    "assign": "Asignar tarea",
+    "complete": "Completar: {{title}}",
+    "reopen": "Reabrir: {{title}}",
+    "emptyFilter": {
+      "mine": "No tienes tareas pendientes.",
+      "all": "No hay tareas pendientes en el hogar.",
+      "done": "Todavía no hay tareas hechas."
+    },
+    "form": {
+      "titleLabel": "Qué hay que hacer",
+      "titlePlaceholder": "Por ejemplo, sacar la basura",
+      "descriptionLabel": "Detalles",
+      "descriptionPlaceholder": "Opcional",
+      "who": "Quién",
+      "me": "Yo",
+      "nobody": "Nadie",
+      "when": "Cuándo",
+      "noDate": "Sin fecha",
+      "create": "Crear tarea",
+      "save": "Guardar cambios",
+      "createError": "No pudimos guardar la tarea. Revisa tu conexión e inténtalo de nuevo."
+    },
+    "detail": {
+      "status": {
+        "pending": "Pendiente",
+        "done": "Hecha"
+      },
+      "assignedTo": "Asignada a",
+      "when": "Cuándo",
+      "createdBy": "Creada por",
+      "edit": "Editar",
+      "markDone": "Marcar como hecha",
+      "reopen": "Marcar como pendiente",
+      "delete": "Eliminar tarea",
+      "confirmTitle": "¿Eliminar esta tarea?",
+      "confirmBody": "Desaparece para todo el hogar y no se puede recuperar.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar",
+      "notFound": "Esta tarea ya no existe."
+    }
   },
   "notes": {
     "empty": {

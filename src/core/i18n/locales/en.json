@@ -122,7 +122,68 @@
       "description": "Create the first task and share the household responsibilities.",
       "cta": "Create task"
     },
-    "loadError": "We couldn't load the tasks."
+    "loadError": "We couldn't load the tasks.",
+    "title": "Tasks",
+    "new": "New task",
+    "filters": {
+      "mine": "Mine",
+      "all": "All",
+      "done": "Done"
+    },
+    "groups": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "noDate": "No date",
+      "done": "Done"
+    },
+    "due": {
+      "today": "Today",
+      "todayAt": "Today, {{time}}",
+      "tomorrow": "Tomorrow",
+      "overdue": "Was due {{date}}"
+    },
+    "unassigned": "Unassigned",
+    "assign": "Assign task",
+    "complete": "Complete: {{title}}",
+    "reopen": "Reopen: {{title}}",
+    "emptyFilter": {
+      "mine": "You have no pending tasks.",
+      "all": "No pending tasks in the household.",
+      "done": "No completed tasks yet."
+    },
+    "form": {
+      "titleLabel": "What needs doing",
+      "titlePlaceholder": "For example, take out the trash",
+      "descriptionLabel": "Details",
+      "descriptionPlaceholder": "Optional",
+      "who": "Who",
+      "me": "Me",
+      "nobody": "Nobody",
+      "when": "When",
+      "noDate": "No date",
+      "create": "Create task",
+      "save": "Save changes",
+      "createError": "We couldn’t save the task. Check your connection and try again."
+    },
+    "detail": {
+      "status": {
+        "pending": "Pending",
+        "done": "Done"
+      },
+      "assignedTo": "Assigned to",
+      "when": "When",
+      "createdBy": "Created by",
+      "edit": "Edit",
+      "markDone": "Mark as done",
+      "reopen": "Mark as pending",
+      "delete": "Delete task",
+      "confirmTitle": "Delete this task?",
+      "confirmBody": "It disappears for the whole household and can’t be recovered.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "notFound": "This task no longer exists."
+    }
   },
   "notes": {
     "empty": {
