@@ -15,6 +15,16 @@ import { TaskRow } from '@features/tasks/presentation/organisms/TaskRow';
 
 const FILTERS: TaskFilter[] = ['mine', 'all', 'done'];
 
+// Sombra de la pestaña elegida como style estático, NO como clase `shadow-*`
+// alternada: eso dispara el bug de NativeWind documentado en ThemeSelector.tsx.
+const selectedTabShadow = {
+  shadowColor: '#171510',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.08,
+  shadowRadius: 3,
+  elevation: 1,
+};
+
 export function TasksScreen() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -69,8 +79,9 @@ export function TasksScreen() {
                       accessibilityRole="tab"
                       accessibilityState={{ selected }}
                       onPress={() => setFilter(key)}
+                      style={selected ? selectedTabShadow : undefined}
                       className={`h-[38px] flex-1 items-center justify-center rounded-[9px] ${
-                        selected ? 'bg-surface shadow-card' : ''
+                        selected ? 'bg-surface' : ''
                       }`}>
                       <Text
                         className={`text-caption ${
