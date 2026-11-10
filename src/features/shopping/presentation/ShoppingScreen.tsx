@@ -129,7 +129,7 @@ export function ShoppingScreen() {
             accessibilityRole="button"
             accessibilityLabel={t('shopping.empty.cta')}
             onPress={goToNewItem}
-            className="absolute bottom-6 right-6 h-[52px] w-[52px] items-center justify-center rounded-[16px] bg-accent-500 active:opacity-90">
+            className="absolute bottom-6 right-6 h-[52px] w-[52px] items-center justify-center rounded-[16px] bg-brand-600 active:opacity-90">
             <Plus size={26} color={palette.neutral[0]} />
           </Pressable>
         ) : null}
@@ -140,7 +140,7 @@ export function ShoppingScreen() {
             accessibilityLabel={t('shopping.finalize', 'Finalizar Compra')}
             onPress={finalizePurchase}
             disabled={isFinalizing}
-            className={`absolute bottom-6 left-6 right-6 flex-row h-[52px] items-center justify-center gap-2 rounded-[16px] bg-brand-500 active:opacity-90 ${
+            className={`absolute bottom-6 left-6 right-6 flex-row h-[52px] items-center justify-center gap-2 rounded-[16px] bg-brand-600 active:opacity-90 ${
               isFinalizing ? 'opacity-70' : ''
             }`}>
             {isFinalizing ? (

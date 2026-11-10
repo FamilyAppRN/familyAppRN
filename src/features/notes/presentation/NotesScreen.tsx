@@ -65,7 +65,7 @@ export function NotesScreen() {
           <Pressable
             accessibilityRole="button"
             onPress={() => {}}
-            className="h-9 w-9 items-center justify-center rounded-button bg-brand-500 active:opacity-90">
+            className="h-9 w-9 items-center justify-center rounded-button bg-brand-600 active:opacity-90">
             <Send size={18} color={palette.neutral[0]} />
           </Pressable>
         </View>

@@ -14,7 +14,7 @@ export function LanguageSwitch() {
             key={lng}
             accessibilityRole="button"
             onPress={() => setLanguage(lng)}
-            className={`rounded-full px-3 py-1 ${active ? 'bg-brand-500' : ''}`}>
+            className={`rounded-full px-3 py-1 ${active ? 'bg-brand-600' : ''}`}>
             <Text
               className={`text-caption font-jakarta-semibold ${active ? 'text-white' : 'text-muted'}`}>
               {lng.toUpperCase()}

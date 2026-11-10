@@ -45,7 +45,7 @@ export function EmptyState({ Icon, tone = 'green', title, description, cta }: Em
         <Pressable
           accessibilityRole="button"
           onPress={cta.onPress}
-          className="mt-5 h-12 flex-row items-center justify-center gap-1.5 rounded-button bg-brand-500 px-6 shadow-card active:opacity-90">
+          className="mt-5 h-12 flex-row items-center justify-center gap-1.5 rounded-button bg-brand-600 px-6 shadow-card active:opacity-90">
           <Plus size={18} color={palette.neutral[0]} />
           <Text className="text-button font-jakarta-semibold text-white">{cta.label}</Text>
         </Pressable>

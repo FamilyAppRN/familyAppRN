@@ -18,7 +18,7 @@ interface ButtonProps {
 }
 
 const containerByVariant: Record<ButtonVariant, string> = {
-  primary: 'bg-brand-500 active:bg-brand-600',
+  primary: 'bg-brand-600 active:bg-brand-700',
   // verde suave visible en claro y oscuro (chip = #DCEFE2 / #212E20)
   secondary: 'bg-chip border border-brand-500/40 active:opacity-80',
 };
