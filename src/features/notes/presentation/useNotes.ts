@@ -63,7 +63,6 @@ export function useNotes() {
     householdName: household?.name,
     pinned,
     others,
-    notes,
     isEmpty: notes.length === 0,
     isLoading: query.isLoading,
     isError: query.isError,

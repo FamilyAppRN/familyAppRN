@@ -193,7 +193,45 @@
       "description": "Deja recordatorios, códigos o ideas para toda la familia."
     },
     "inputPlaceholder": "Escribe una nota rápida…",
-    "loadError": "No pudimos cargar las notas."
+    "loadError": "No pudimos cargar las notas.",
+    "title": "Notas",
+    "pinnedSection": "Fijadas",
+    "recentSection": "Recientes",
+    "new": "Nueva nota",
+    "pin": "Fijar nota",
+    "unpin": "Desfijar nota",
+    "publish": "Publicar nota",
+    "publishError": "No pudimos publicar la nota. Inténtalo de nuevo.",
+    "byline": "{{name}} · {{date}}",
+    "someone": "Alguien",
+    "colors": {
+      "white": "Blanco",
+      "amber": "Amarillo",
+      "green": "Verde",
+      "blue": "Azul",
+      "coral": "Coral"
+    },
+    "editor": {
+      "newTitle": "Nueva nota",
+      "editTitle": "Editar nota",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Por ejemplo, vacuna de Mateo",
+      "contentLabel": "Contenido",
+      "contentPlaceholder": "Escribe la nota para la familia",
+      "color": "Color",
+      "pinned": "Fijada",
+      "notPinned": "Fijar",
+      "save": "Guardar",
+      "visibility": "Visible para todo el hogar",
+      "readOnly": "Solo quien la escribió o un admin puede editarla.",
+      "saveError": "No pudimos guardar la nota. Inténtalo de nuevo.",
+      "delete": "Eliminar",
+      "confirmTitle": "¿Eliminar esta nota?",
+      "confirmBody": "Desaparece para todo el hogar y no se puede recuperar.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar",
+      "notFound": "Esta nota ya no existe."
+    }
   },
   "calendar": {
     "empty": {
@@ -226,6 +264,8 @@
     "termsRequired": "Debes aceptar los términos",
     "itemNameRequired": "Escribe el nombre del producto",
     "quantityMin": "La cantidad debe ser al menos 1",
-    "taskTitleRequired": "Escribe qué hay que hacer"
+    "taskTitleRequired": "Escribe qué hay que hacer",
+    "noteTitleRequired": "Escribe un título",
+    "noteContentRequired": "Escribe el contenido"
   }
 }

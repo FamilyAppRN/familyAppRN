@@ -192,7 +192,45 @@
       "description": "Leave reminders, codes or ideas for the whole family."
     },
     "inputPlaceholder": "Write a quick note…",
-    "loadError": "We couldn't load the notes."
+    "loadError": "We couldn't load the notes.",
+    "title": "Notes",
+    "pinnedSection": "Pinned",
+    "recentSection": "Recent",
+    "new": "New note",
+    "pin": "Pin note",
+    "unpin": "Unpin note",
+    "publish": "Post note",
+    "publishError": "We couldn’t post the note. Try again.",
+    "byline": "{{name}} · {{date}}",
+    "someone": "Someone",
+    "colors": {
+      "white": "White",
+      "amber": "Yellow",
+      "green": "Green",
+      "blue": "Blue",
+      "coral": "Coral"
+    },
+    "editor": {
+      "newTitle": "New note",
+      "editTitle": "Edit note",
+      "titleLabel": "Title",
+      "titlePlaceholder": "For example, Mateo’s vaccine",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Write the note for the family",
+      "color": "Color",
+      "pinned": "Pinned",
+      "notPinned": "Pin",
+      "save": "Save",
+      "visibility": "Visible to the whole household",
+      "readOnly": "Only the author or an admin can edit it.",
+      "saveError": "We couldn’t save the note. Try again.",
+      "delete": "Delete",
+      "confirmTitle": "Delete this note?",
+      "confirmBody": "It disappears for the whole household and can’t be recovered.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "notFound": "This note no longer exists."
+    }
   },
   "calendar": {
     "empty": {
@@ -225,6 +263,8 @@
     "termsRequired": "You must accept the terms",
     "itemNameRequired": "Enter the product name",
     "quantityMin": "Quantity must be at least 1",
-    "taskTitleRequired": "Write what needs doing"
+    "taskTitleRequired": "Write what needs doing",
+    "noteTitleRequired": "Write a title",
+    "noteContentRequired": "Write the content"
   }
 }
