@@ -19,6 +19,7 @@ export interface ResolvedMember {
   name: string;
   initials: string;
   color: string;
+  role: 'admin' | 'member';
 }
 
 function toInitials(name: string): string {
@@ -47,6 +48,7 @@ export function useHouseholdMembers() {
     name: m.display_name,
     initials: toInitials(m.display_name),
     color: MEMBER_COLORS[index % MEMBER_COLORS.length],
+    role: m.role,
   }));
 
   /** Resuelve el id de usuario de un ítem al miembro; null si ya no pertenece. */
