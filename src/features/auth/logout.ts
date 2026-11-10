@@ -1,5 +1,6 @@
 import { getAuthRepository } from '@features/auth/data/authFactory';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { disconnectRealtime } from '@core/realtime/socket';
 
 /**
  * Cierra sesión: borra la sesión persistida (tokens en SecureStore + perfil
@@ -7,6 +8,7 @@ import { useAuthStore } from '@features/auth/store/useAuthStore';
  * de quien lo llama.
  */
 export async function logout(): Promise<void> {
+  disconnectRealtime();
   await getAuthRepository().logout();
   useAuthStore.getState().clearUser();
 }

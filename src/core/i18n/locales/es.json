@@ -354,7 +354,8 @@
     "members_one": "{{count}} miembro",
     "members_other": "{{count}} miembros",
     "profile": "Mi perfil",
-    "switch": "Cambiar de hogar. Hogar actual: {{name}}"
+    "switch": "Cambiar de hogar. Hogar actual: {{name}}",
+    "online": "En línea"
   },
   "household": {
     "title": "Hogar",

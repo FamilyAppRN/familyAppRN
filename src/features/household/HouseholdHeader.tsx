@@ -10,6 +10,7 @@ import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { useRealtimeStatus } from '@core/realtime/socket';
 
 interface HouseholdHeaderProps {
   /** Acciones propias de la pantalla, a la izquierda del avatar. */
@@ -28,6 +29,7 @@ export function HouseholdHeader({ actions }: HouseholdHeaderProps) {
   const { members, resolveMember } = useHouseholdMembers();
   const user = useAuthStore((s) => s.user);
   const me = resolveMember(user?.id);
+  const isOnline = useRealtimeStatus((s) => s.isConnected);
 
   return (
     <View className="flex-row items-center justify-between gap-3 px-4 pb-1 pt-2">
@@ -43,9 +45,14 @@ export function HouseholdHeader({ actions }: HouseholdHeaderProps) {
           <ChevronDown size={18} color={semanticColors[scheme].textSecondary} />
         </View>
         {members.length > 0 ? (
-          <Text className="text-caption font-sans text-muted">
-            {t('householdHeader.members', { count: members.length })}
-          </Text>
+          <View className="flex-row items-center gap-1.5">
+            {isOnline ? <View className="h-[7px] w-[7px] rounded-full bg-success-500" /> : null}
+            <Text className="text-caption font-sans text-muted">
+              {isOnline
+                ? `${t('householdHeader.online')} · ${t('householdHeader.members', { count: members.length })}`
+                : t('householdHeader.members', { count: members.length })}
+            </Text>
+          </View>
         ) : null}
       </Pressable>
 
