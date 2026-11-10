@@ -77,7 +77,9 @@ export function TaskRow({ task, assignee, isOverdue, onToggle, onOpen }: TaskRow
           accessibilityLabel={assignee.name}
           className="h-[30px] w-[30px] items-center justify-center rounded-full"
           style={{ backgroundColor: assignee.color }}>
-          <Text className="text-[12px] font-jakarta-bold text-white">{assignee.initials}</Text>
+          <Text className="text-[12px] font-jakarta-bold" style={{ color: assignee.textColor }}>
+            {assignee.initials}
+          </Text>
         </View>
       ) : (
         <View className="h-[30px] w-[30px] items-center justify-center rounded-full border border-dashed border-neutral-400">

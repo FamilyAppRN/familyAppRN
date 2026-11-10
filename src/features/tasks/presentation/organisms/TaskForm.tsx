@@ -32,11 +32,12 @@ interface MemberOptionProps {
   label: string;
   initials?: string;
   color?: string;
+  textColor?: string;
   selected: boolean;
   onPress: () => void;
 }
 
-function MemberOption({ label, initials, color, selected, onPress }: MemberOptionProps) {
+function MemberOption({ label, initials, color, textColor, selected, onPress }: MemberOptionProps) {
   return (
     <Pressable
       accessibilityRole="radio"
@@ -50,7 +51,9 @@ function MemberOption({ label, initials, color, selected, onPress }: MemberOptio
         }`}>
         {initials ? (
           <View className="h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: color }}>
-            <Text className="text-body font-jakarta-bold text-white">{initials}</Text>
+            <Text className="text-body font-jakarta-bold" style={{ color: textColor }}>
+              {initials}
+            </Text>
           </View>
         ) : (
           <View className="h-10 w-10 rounded-full border-[1.5px] border-dashed border-neutral-400" />
@@ -135,6 +138,7 @@ export function TaskForm({
                   label={member.id === userId ? t('tasks.form.me') : member.name}
                   initials={member.initials}
                   color={member.color}
+                  textColor={member.textColor}
                   selected={value === member.id}
                   onPress={() => onChange(member.id)}
                 />

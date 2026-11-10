@@ -17,7 +17,9 @@ function MemberValue({ member, fallback }: { member: ResolvedMember | null; fall
   return (
     <View className="flex-row items-center gap-2">
       <View className="h-7 w-7 items-center justify-center rounded-full" style={{ backgroundColor: member.color }}>
-        <Text className="text-caption font-jakarta-bold text-white">{member.initials}</Text>
+        <Text className="text-caption font-jakarta-bold" style={{ color: member.textColor }}>
+          {member.initials}
+        </Text>
       </View>
       <Text className="text-body font-jakarta-semibold text-foreground">{member.name}</Text>
     </View>

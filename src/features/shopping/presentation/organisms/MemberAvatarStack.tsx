@@ -17,7 +17,7 @@ export function MemberAvatarStack({ members, max = 3 }: MemberAvatarStackProps) 
     <View className="flex-row items-center">
       {members.slice(0, max).map((member, index) => (
         <View key={member.id} style={index > 0 ? { marginLeft: -10 } : undefined}>
-          <Avatar name={member.name} size={30} color={member.color} />
+          <Avatar name={member.name} size={30} color={member.color} textColor={member.textColor} />
         </View>
       ))}
     </View>

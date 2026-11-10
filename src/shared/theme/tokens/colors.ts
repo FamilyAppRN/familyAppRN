@@ -72,3 +72,14 @@ export const semanticColors = {
 } as const;
 
 export type ColorScheme = keyof typeof semanticColors;
+
+/**
+ * Avatares de miembros: fondo claro con letra oscura del mismo tono (todas
+ * las parejas superan 4.5:1). Se asignan por orden y se repiten.
+ */
+export const avatarColors = [
+  { bg: '#DCEFE2', fg: '#2E6240' }, // salvia
+  { bg: '#FFE6DA', fg: '#A8431A' }, // coral
+  { bg: '#FFF3DC', fg: '#8A5A10' }, // ámbar
+  { bg: '#E3EAF5', fg: '#2F4A73' }, // pizarra
+] as const;

@@ -45,7 +45,7 @@ export function ShoppingItemRow({ item, addedBy, onToggle }: ShoppingItemRowProp
 
       {/* Quien lo agregó. Al completarse se oculta, como en el mockup. */}
       {!done && addedBy ? (
-        <Avatar name={addedBy.name} size={22} color={addedBy.color} bordered={false} />
+        <Avatar name={addedBy.name} size={22} color={addedBy.color} textColor={addedBy.textColor} bordered={false} />
       ) : null}
     </Pressable>
   );
