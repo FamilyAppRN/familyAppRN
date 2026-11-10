@@ -123,7 +123,7 @@ export function TasksScreen() {
               accessibilityRole="button"
               accessibilityLabel={t('tasks.new')}
               onPress={goToNewTask}
-              className="absolute bottom-6 right-6 h-14 w-14 items-center justify-center rounded-[18px] bg-brand-600 active:opacity-90">
+              className="absolute bottom-5 right-4 h-14 w-14 items-center justify-center rounded-[18px] bg-brand-600 active:opacity-90">
               <Plus size={26} color={palette.neutral[0]} />
             </Pressable>
           </>
