@@ -21,7 +21,10 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.familycollab.gestia",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.POST_NOTIFICATIONS"
+      ]
     },
     "web": {
       "output": "static",
@@ -47,6 +50,7 @@
       "expo-font",
       "expo-localization",
       "@react-native-firebase/app",
+      "@react-native-firebase/messaging",
       [
         "expo-build-properties",
         {
