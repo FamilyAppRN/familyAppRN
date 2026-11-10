@@ -17,10 +17,18 @@ export const taskSchema = z.object({
 });
 
 export type Task = z.infer<typeof taskSchema>;
+export type TaskStatus = z.infer<typeof taskStatusSchema>;
 
 /** GET /api/tasks?household_id=... */
 export const tasksResponseSchema = z.object({
   success: z.boolean(),
   message: z.string().optional(),
   data: z.array(taskSchema),
+});
+
+/** POST /api/tasks, PATCH /api/tasks/:id y /:id/status */
+export const taskResponseSchema = z.object({
+  success: z.boolean(),
+  message: z.string().optional(),
+  data: taskSchema,
 });
