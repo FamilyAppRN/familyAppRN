@@ -38,12 +38,15 @@ export default function MainLayout() {
           ahí). Sin shadow-* acá, este patrón es seguro.
         */}
         <View
-          className="flex-row items-start px-1 pt-2"
           style={{
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            paddingHorizontal: 4,
+            paddingTop: 8,
             borderTopWidth: 1,
             borderTopColor: semanticColors[scheme].border,
             backgroundColor: semanticColors[scheme].bgSurface,
-            paddingBottom: insets.bottom > 0 ? insets.bottom : 12,
+            paddingBottom: insets.bottom > 0 ? insets.bottom : 16,
           }}>
           {TABS.map((tab) => (
             <TabTrigger key={tab.name} name={tab.name} href={tab.href as Href} asChild>

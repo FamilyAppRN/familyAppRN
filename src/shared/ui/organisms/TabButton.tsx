@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { Pressable, Text, View, type PressableProps } from 'react-native';
-import { CalendarDays, House, ListChecks, ShoppingCart, StickyNote } from 'lucide-react-native';
+import { Calendar, House, ShoppingCart, SquareCheckBig, StickyNote } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { semanticColors } from '@shared/theme/tokens';
@@ -10,9 +10,9 @@ type IconComponent = React.ComponentType<{ color?: string; size?: number }>;
 
 const ICONS: Record<string, IconComponent> = {
   shopping: ShoppingCart,
-  tasks: ListChecks,
+  tasks: SquareCheckBig,
   notes: StickyNote,
-  calendar: CalendarDays,
+  calendar: Calendar,
   settings: House,
 };
 
@@ -29,7 +29,10 @@ type TabButtonProps = PressableProps & {
  * y la etiqueta siempre visible debajo, igual en las cinco pestañas.
  */
 export const TabButton = forwardRef<View, TabButtonProps>(function TabButton(
-  { routeName, isFocused = false, href: _href, ...pressableProps },
+  // `style` se descarta a propósito: <TabTrigger> inyecta
+  // { flexDirection: 'row', justifyContent: 'space-between' }, que pondría el
+  // icono al lado de la etiqueta y anularía el reparto del ancho.
+  { routeName, isFocused = false, href: _href, style: _triggerStyle, ...pressableProps },
   ref,
 ) {
   const { t } = useTranslation();
@@ -43,13 +46,13 @@ export const TabButton = forwardRef<View, TabButtonProps>(function TabButton(
   return (
     <Pressable
       ref={ref}
+      {...pressableProps}
       accessibilityRole="tab"
       accessibilityState={{ selected: isFocused }}
-      style={{ flex: 1, alignItems: 'center', gap: 3, minHeight: 48, paddingVertical: 4 }}
-      {...pressableProps}>
+      style={{ flex: 1, flexDirection: 'column', alignItems: 'center', gap: 3, minHeight: 48, paddingVertical: 4 }}>
       <View
         style={{
-          width: 56,
+          width: 52,
           height: 30,
           borderRadius: 999,
           alignItems: 'center',
