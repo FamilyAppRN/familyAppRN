@@ -1,7 +1,7 @@
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Globe, LogOut, Moon } from 'lucide-react-native';
+import { Bell, Globe, LogOut, Moon } from 'lucide-react-native';
 
 import { Avatar } from '@shared/ui/molecules/Avatar';
 import { BackButton } from '@shared/ui/atoms/BackButton';
@@ -13,9 +13,8 @@ import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import { useProfile } from '@features/auth/profile/useProfile';
 
 /**
- * Perfil (se abre desde el avatar de la cabecera). Solo muestra opciones que
- * funcionan hoy: plan, tema, idioma y cerrar sesión. Notificaciones y mejorar
- * el plan se suman cuando existan (A5 y U5).
+ * Perfil (se abre desde el avatar de la cabecera): plan, notificaciones,
+ * tema, idioma y cerrar sesión.
  */
 export function ProfileScreen() {
   const { t } = useTranslation();
@@ -73,6 +72,22 @@ export function ProfileScreen() {
               {t('profile.preferences')}
             </Text>
             <View className="overflow-hidden rounded-card border border-line bg-surface">
+              <View className="min-h-[60px] flex-row items-center gap-3 border-b border-line px-3.5 py-2.5">
+                <Bell size={20} color={iconColor} />
+                <View className="flex-1">
+                  <Text className="text-body font-jakarta-semibold text-foreground">{t('profile.notifications.title')}</Text>
+                  <Text className={`text-caption font-sans ${profile.notificationsError ? 'text-danger-700' : 'text-muted'}`}>
+                    {profile.notificationsError ? t('profile.notifications.error') : t('profile.notifications.subtitle')}
+                  </Text>
+                </View>
+                <Switch
+                  accessibilityLabel={t('profile.notifications.title')}
+                  value={profile.notificationsEnabled}
+                  onValueChange={profile.setNotificationsEnabled}
+                  trackColor={{ true: palette.brand[600], false: palette.neutral[200] }}
+                  thumbColor={palette.neutral[0]}
+                />
+              </View>
               <View className="gap-3 border-b border-line p-3.5">
                 <View className="flex-row items-center gap-3">
                   <Moon size={20} color={iconColor} />

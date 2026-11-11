@@ -25,6 +25,8 @@ interface AuthState {
   isAuthenticated: boolean;
   setUser: (user: User, households?: SessionHousehold[]) => void;
   setHouseholds: (households: SessionHousehold[]) => void;
+  /** Cambia datos del usuario en memoria (ej. preferencias). */
+  updateUser: (changes: Partial<User>) => void;
   /** Suma un hogar recién creado o unido y lo deja activo. */
   addHousehold: (household: SessionHousehold) => void;
   setActiveHousehold: (id: string) => void;
@@ -43,6 +45,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: false,
   setUser: (user, households = []) => set({ user, households, isAuthenticated: true }),
   setHouseholds: (households) => set({ households }),
+  updateUser: (changes) => {
+    const user = get().user;
+    if (user) set({ user: { ...user, ...changes } });
+  },
   addHousehold: (household) => {
     const others = get().households.filter((h) => h.id !== household.id);
     void storage.set(ACTIVE_HOUSEHOLD_KEY, household.id);

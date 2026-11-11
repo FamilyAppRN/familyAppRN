@@ -111,7 +111,12 @@
     },
     "title": "Mi perfil",
     "preferences": "Preferencias",
-    "language": "Idioma"
+    "language": "Idioma",
+    "notifications": {
+      "title": "Notificaciones",
+      "subtitle": "Tareas asignadas, urgentes, voy al súper y recordatorios",
+      "error": "No pudimos guardar el cambio. Inténtalo de nuevo."
+    }
   },
   "shopping": {
     "empty": {

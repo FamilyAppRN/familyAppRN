@@ -8,6 +8,7 @@ export const AuthMapper = {
       email: rawUser.email,
       name: rawUser.name,
       plan: rawUser.plan,
+      notificationsEnabled: rawUser.notifications_enabled ?? true,
     };
   },
 };

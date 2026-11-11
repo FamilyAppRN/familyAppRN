@@ -23,6 +23,10 @@ export class AuthApi {
     return this.client.get<unknown>('/api/users/me', config);
   }
 
+  updatePreferences(body: { notifications_enabled: boolean }) {
+    return this.client.patch<unknown>('/api/users/me', body);
+  }
+
   registerPushToken(body: { token: string; device_label?: string }) {
     return this.client.patch<unknown>('/api/users/me/push-token', body);
   }

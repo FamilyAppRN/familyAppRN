@@ -110,7 +110,12 @@
     },
     "title": "My profile",
     "preferences": "Preferences",
-    "language": "Language"
+    "language": "Language",
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Assigned tasks, urgent items, going shopping and reminders",
+      "error": "We couldn’t save the change. Try again."
+    }
   },
   "shopping": {
     "empty": {

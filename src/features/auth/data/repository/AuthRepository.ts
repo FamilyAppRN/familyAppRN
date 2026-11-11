@@ -49,6 +49,10 @@ export class AuthRepository {
     await this.session.clear();
   }
 
+  async setNotificationsEnabled(enabled: boolean): Promise<void> {
+    await this.api.updatePreferences({ notifications_enabled: enabled });
+  }
+
   /** Avisa al backend a qué dispositivo mandar los avisos push de este usuario. */
   async registerPushToken(token: string, deviceLabel?: string): Promise<void> {
     await this.api.registerPushToken({ token, ...(deviceLabel ? { device_label: deviceLabel } : {}) });
