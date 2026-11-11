@@ -21,6 +21,11 @@ export class HouseholdApi {
     return this.client.patch<unknown>(`/api/households/${householdId}`, body);
   }
 
+  /** Avisa al resto del hogar que vas al supermercado. */
+  goingShopping(householdId: string) {
+    return this.client.post<unknown>(`/api/households/${householdId}/going-shopping`);
+  }
+
   /** Un admin quita a otro miembro, o el propio usuario sale del hogar. */
   removeMember(householdId: string, userId: string) {
     return this.client.delete<unknown>(`/api/households/${householdId}/members/${userId}`);

@@ -164,7 +164,8 @@
     "goingShopping": {
       "title": "Going shopping",
       "description": "Let your family know so they can add what’s missing",
-      "soon": "Soon"
+      "sent": "We let your family know",
+      "error": "We couldn’t notify them. Tap to try again."
     },
     "quickAdd": {
       "milk": "Milk",

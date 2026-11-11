@@ -38,6 +38,10 @@ export function ShoppingScreen() {
     inviteCode,
     isAlone,
     shareInvite,
+    goingShopping,
+    isGoingShoppingPending,
+    goingShoppingSent,
+    goingShoppingError,
   } = useShopping();
 
   const goToNewItem = () => router.push('/(modals)/new-shopping-item');
@@ -76,21 +80,28 @@ export function ShoppingScreen() {
               </Text>
             </View>
 
-            {/* "Voy al súper": el aviso a la familia llega con las notificaciones (A5). */}
-            <View
-              accessibilityLabel={`${t('shopping.goingShopping.title')}. ${t('shopping.goingShopping.soon')}`}
-              className="flex-row items-center gap-3 rounded-card border border-line bg-chip p-3">
+            {/* "Voy al súper": avisa por push al resto del hogar. */}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ disabled: goingShoppingSent || isGoingShoppingPending }}
+              onPress={goingShopping}
+              disabled={goingShoppingSent || isGoingShoppingPending}
+              className="flex-row items-center gap-3 rounded-card border border-line bg-chip p-3 active:opacity-80">
               <View className="h-10 w-10 items-center justify-center rounded-button bg-brand-600">
                 <Navigation size={20} color={palette.neutral[0]} />
               </View>
               <View className="flex-1">
                 <Text className="text-body font-jakarta-bold text-foreground">{t('shopping.goingShopping.title')}</Text>
-                <Text className="text-caption font-sans text-muted">{t('shopping.goingShopping.description')}</Text>
+                <Text className={`text-caption font-sans ${goingShoppingError ? 'text-danger-700' : 'text-muted'}`}>
+                  {goingShoppingSent
+                    ? t('shopping.goingShopping.sent')
+                    : goingShoppingError
+                      ? t('shopping.goingShopping.error')
+                      : t('shopping.goingShopping.description')}
+                </Text>
               </View>
-              <View className="rounded-badge bg-surface px-2 py-0.5">
-                <Text className="text-caption font-jakarta-bold text-muted">{t('shopping.goingShopping.soon')}</Text>
-              </View>
-            </View>
+              {isGoingShoppingPending ? <ActivityIndicator color={palette.brand[600]} /> : goingShoppingSent ? <Check size={20} color={semanticColors[scheme].emphasis} /> : null}
+            </Pressable>
 
             {sections.map((section) => (
               <CategorySection

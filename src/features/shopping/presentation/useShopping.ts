@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Share } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -13,6 +13,10 @@ import {
 } from '@features/shopping/domain/categories';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
+import { getHouseholdRepository } from '@features/household/data/householdFactory';
+
+/** Tras avisar, el botón espera esto antes de dejar avisar otra vez. */
+const GOING_SHOPPING_COOLDOWN_MS = 10 * 60 * 1000;
 
 /**
  * Ítem con la lista a la que pertenece. La UI agrupa por categoría mezclando
@@ -116,6 +120,20 @@ export function useShopping() {
     },
   });
 
+  // "Voy al súper": un aviso por salida, no uno por toque.
+  // Se guarda el hogar: al cambiar de hogar el botón vuelve a estar disponible.
+  const [goingSent, setGoingSent] = useState<{ householdId: string } | null>(null);
+  useEffect(() => {
+    if (!goingSent) return;
+    const timer = setTimeout(() => setGoingSent(null), GOING_SHOPPING_COOLDOWN_MS);
+    return () => clearTimeout(timer);
+  }, [goingSent]);
+
+  const goingShoppingMutation = useMutation({
+    mutationFn: () => getHouseholdRepository().notifyGoingShopping(householdId as string),
+    onSuccess: () => setGoingSent({ householdId: householdId as string }),
+  });
+
   const quickAddMutation = useMutation({
     mutationFn: (item: { name: string; category: ShoppingCategory }) =>
       getShoppingRepository().addItemToDefaultList(householdId as string, {
@@ -148,6 +166,10 @@ export function useShopping() {
         itemId: item.id,
         isCompleted: !item.is_completed,
       }),
+    goingShopping: () => goingShoppingMutation.mutate(),
+    isGoingShoppingPending: goingShoppingMutation.isPending,
+    goingShoppingSent: goingSent?.householdId === householdId,
+    goingShoppingError: goingShoppingMutation.isError,
     quickAdd: (name: string, category: ShoppingCategory) => quickAddMutation.mutate({ name, category }),
     isQuickAdding: quickAddMutation.isPending,
     inviteCode,

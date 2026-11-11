@@ -41,6 +41,15 @@ export class HouseholdRepository {
     }
   }
 
+  async notifyGoingShopping(householdId: string): Promise<void> {
+    try {
+      await this.api.goingShopping(householdId);
+    } catch (error) {
+      Logger.error('Error avisando que vas al súper', error);
+      throw error;
+    }
+  }
+
   async removeMember(householdId: string, userId: string): Promise<void> {
     try {
       await this.api.removeMember(householdId, userId);

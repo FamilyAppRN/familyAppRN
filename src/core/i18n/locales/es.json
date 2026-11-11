@@ -165,7 +165,8 @@
     "goingShopping": {
       "title": "Voy al súper",
       "description": "Avisa a tu familia para que agregue lo que falta",
-      "soon": "Pronto"
+      "sent": "Avisamos a tu familia",
+      "error": "No pudimos avisar. Toca para intentar de nuevo."
     },
     "quickAdd": {
       "milk": "Leche",
