@@ -186,7 +186,7 @@
       "inviteBody": "Invite the people you live with so they can see and fill the list.",
       "invite": "Invite",
       "codeLabel": "Invite code: {{code}}",
-      "shareMessage": "Join {{household}} on Gestia with this code: {{code}}"
+      "shareMessage": "Join {{household}} on Gestia with this code: {{code}}\nIf you have the app, open: {{link}}"
     },
     "urgent": "Urgent"
   },
@@ -370,7 +370,14 @@
     "invite": {
       "title": "Invite your family",
       "body": "Share this code. Whoever uses it joins as a member.",
-      "share": "Share code"
+      "share": "Share code",
+      "byEmail": "By email",
+      "emailLabel": "Their email",
+      "emailPlaceholder": "name@email.com",
+      "send": "Send invitation",
+      "sent": "Invitation sent to {{email}}",
+      "emailError": "We couldn’t send the invitation. Check the email and try again.",
+      "regenerate": "Generate a new code"
     },
     "members": {
       "title": "Members",
@@ -399,7 +406,10 @@
       "cancel": "Cancel",
       "remove": "Remove",
       "leave": "Leave",
-      "error": "That didn’t work. Check your connection and try again."
+      "error": "That didn’t work. Check your connection and try again.",
+      "regenerateTitle": "Generate a new code?",
+      "regenerateBody": "The current code stops working. People already in the home are not affected.",
+      "regenerate": "Generate"
     }
   },
   "switcher": {

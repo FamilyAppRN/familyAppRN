@@ -21,6 +21,16 @@ export class HouseholdApi {
     return this.client.patch<unknown>(`/api/households/${householdId}`, body);
   }
 
+  /** Solo admin. Manda el código por email. */
+  sendInvitation(householdId: string, body: { email: string }) {
+    return this.client.post<unknown>(`/api/households/${householdId}/invitations`, body);
+  }
+
+  /** Solo admin. El código anterior deja de servir. */
+  regenerateInviteCode(householdId: string) {
+    return this.client.post<unknown>(`/api/households/${householdId}/invite-code/regenerate`);
+  }
+
   /** Avisa al resto del hogar que vas al supermercado. */
   goingShopping(householdId: string) {
     return this.client.post<unknown>(`/api/households/${householdId}/going-shopping`);

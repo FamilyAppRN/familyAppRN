@@ -41,6 +41,24 @@ export class HouseholdRepository {
     }
   }
 
+  async sendInvitation(householdId: string, email: string): Promise<void> {
+    try {
+      await this.api.sendInvitation(householdId, { email });
+    } catch (error) {
+      Logger.error('Error enviando la invitación por email', error);
+      throw error;
+    }
+  }
+
+  async regenerateInviteCode(householdId: string): Promise<Household> {
+    try {
+      return householdResponseSchema.parse(await this.api.regenerateInviteCode(householdId)).data;
+    } catch (error) {
+      Logger.error('Error renovando el código de invitación', error);
+      throw error;
+    }
+  }
+
   async notifyGoingShopping(householdId: string): Promise<void> {
     try {
       await this.api.goingShopping(householdId);

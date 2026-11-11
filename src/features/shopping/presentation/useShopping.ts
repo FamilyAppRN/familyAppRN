@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Share } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -14,6 +13,7 @@ import {
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
 import { getHouseholdRepository } from '@features/household/data/householdFactory';
+import { shareInvite } from '@features/household/invite/shareInvite';
 
 /** Tras avisar, el botón espera esto antes de dejar avisar otra vez. */
 const GOING_SHOPPING_COOLDOWN_MS = 10 * 60 * 1000;
@@ -176,7 +176,7 @@ export function useShopping() {
     isAlone: members.length <= 1,
     shareInvite: () => {
       if (!inviteCode) return;
-      void Share.share({ message: t('shopping.emptyState.shareMessage', { household: household?.name ?? '', code: inviteCode }) });
+      shareInvite(t, household?.name ?? '', inviteCode);
     },
     finalizePurchase: () => {
       const activeList = lists.find((l) => l.items.length > 0);

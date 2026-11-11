@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Share } from 'react-native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -9,9 +8,16 @@ import { householdQueryKeys } from '@features/household/data/queryKeys';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers, type ResolvedMember } from '@features/household/useHouseholdMembers';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { shareInvite } from '@features/household/invite/shareInvite';
 
 /** Acción destructiva esperando confirmación en la propia pantalla. */
-export type PendingConfirm = { kind: 'remove'; member: ResolvedMember } | { kind: 'leave' } | null;
+export type PendingConfirm =
+  | { kind: 'remove'; member: ResolvedMember }
+  | { kind: 'leave' }
+  | { kind: 'regenerate' }
+  | null;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Pestaña Hogar: miembros, código para invitar y ajustes. Reglas del backend:
@@ -31,6 +37,8 @@ export function useHouseholdHome() {
 
   const [editingName, setEditingName] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<PendingConfirm>(null);
+  const [inviteEmail, setInviteEmail] = useState<string | null>(null);
+  const [invitedEmail, setInvitedEmail] = useState<string | null>(null);
 
   const isAdmin = members.find((m) => m.id === userId)?.role === 'admin';
   const isOwner = !!userId && userId === ownerId;
@@ -74,7 +82,24 @@ export function useHouseholdHome() {
     },
   });
 
+  const emailMutation = useMutation({
+    mutationFn: (email: string) => getHouseholdRepository().sendInvitation(householdId, email),
+    onSuccess: (_result, email) => {
+      setInvitedEmail(email);
+      setInviteEmail(null);
+    },
+  });
+
+  const regenerateMutation = useMutation({
+    mutationFn: () => getHouseholdRepository().regenerateInviteCode(householdId),
+    onSuccess: (updated) => {
+      queryClient.setQueryData(detailKey, updated);
+      setConfirm(null);
+    },
+  });
+
   const trimmedName = editingName?.trim() ?? '';
+  const trimmedEmail = inviteEmail?.trim() ?? '';
 
   return {
     householdName: household?.name ?? '',
@@ -86,11 +111,28 @@ export function useHouseholdHome() {
     inviteCode,
     isLoading,
     shareInvite: () => {
-      if (!inviteCode) return;
-      void Share.share({
-        message: t('shopping.emptyState.shareMessage', { household: household?.name ?? '', code: inviteCode }),
-      });
+      if (inviteCode) shareInvite(t, household?.name ?? '', inviteCode);
     },
+
+    // Invitar por email (solo admin)
+    inviteEmail,
+    startEmailInvite: () => {
+      setInvitedEmail(null);
+      setInviteEmail('');
+    },
+    setInviteEmail,
+    cancelEmailInvite: () => {
+      setInviteEmail(null);
+      emailMutation.reset();
+    },
+    canSendEmail: EMAIL_PATTERN.test(trimmedEmail) && !emailMutation.isPending,
+    sendEmailInvite: () => emailMutation.mutate(trimmedEmail),
+    isSendingEmail: emailMutation.isPending,
+    emailError: emailMutation.isError,
+    invitedEmail,
+
+    // Código nuevo (solo admin)
+    askRegenerate: () => setConfirm({ kind: 'regenerate' }),
 
     // Renombrar (solo admin)
     editingName,
@@ -114,12 +156,14 @@ export function useHouseholdHome() {
       setConfirm(null);
       removeMutation.reset();
       leaveMutation.reset();
+      regenerateMutation.reset();
     },
     confirmAction: () => {
       if (confirm?.kind === 'remove') removeMutation.mutate(confirm.member.id);
       if (confirm?.kind === 'leave') leaveMutation.mutate();
+      if (confirm?.kind === 'regenerate') regenerateMutation.mutate();
     },
-    isConfirming: removeMutation.isPending || leaveMutation.isPending,
-    confirmError: removeMutation.isError || leaveMutation.isError,
+    isConfirming: removeMutation.isPending || leaveMutation.isPending || regenerateMutation.isPending,
+    confirmError: removeMutation.isError || leaveMutation.isError || regenerateMutation.isError,
   };
 }

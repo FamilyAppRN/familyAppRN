@@ -187,7 +187,7 @@
       "inviteBody": "Invita a quienes viven contigo para que vean y llenen la lista.",
       "invite": "Invitar",
       "codeLabel": "Código de invitación: {{code}}",
-      "shareMessage": "Únete a {{household}} en Gestia con este código: {{code}}"
+      "shareMessage": "Únete a {{household}} en Gestia con este código: {{code}}\nSi tienes la app, abre: {{link}}"
     },
     "urgent": "Urgente"
   },
@@ -371,7 +371,14 @@
     "invite": {
       "title": "Invita a tu familia",
       "body": "Comparte este código. Quien lo use entra como miembro.",
-      "share": "Compartir código"
+      "share": "Compartir código",
+      "byEmail": "Por email",
+      "emailLabel": "Correo de la persona",
+      "emailPlaceholder": "nombre@correo.com",
+      "send": "Enviar invitación",
+      "sent": "Invitación enviada a {{email}}",
+      "emailError": "No pudimos enviar la invitación. Revisa el correo e inténtalo de nuevo.",
+      "regenerate": "Generar un código nuevo"
     },
     "members": {
       "title": "Miembros",
@@ -400,7 +407,10 @@
       "cancel": "Cancelar",
       "remove": "Quitar",
       "leave": "Salir",
-      "error": "No se pudo completar. Revisa tu conexión e inténtalo de nuevo."
+      "error": "No se pudo completar. Revisa tu conexión e inténtalo de nuevo.",
+      "regenerateTitle": "¿Generar un código nuevo?",
+      "regenerateBody": "El código actual deja de servir. Quienes ya están en el hogar no se ven afectados.",
+      "regenerate": "Generar"
     }
   },
   "switcher": {
