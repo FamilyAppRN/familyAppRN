@@ -50,7 +50,16 @@ export function ShoppingItemRow({ item, addedBy, onToggle, divider = false }: Sh
           style={done ? { textDecorationLine: 'line-through' } : undefined}>
           {item.name}
         </Text>
-        {!done ? <Text className="text-caption font-sans text-muted">{quantityLabel}</Text> : null}
+        {!done ? (
+          <View className="flex-row items-center gap-1.5">
+            {item.is_urgent ? (
+              <View className="rounded-badge bg-danger-soft px-2 py-0.5">
+                <Text className="text-[11px] font-jakarta-bold text-danger-700">{t('shopping.urgent')}</Text>
+              </View>
+            ) : null}
+            <Text className="text-caption font-sans text-muted">{quantityLabel}</Text>
+          </View>
+        ) : null}
       </View>
 
       {!done && addedBy ? (

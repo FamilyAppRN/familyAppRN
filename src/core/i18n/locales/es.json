@@ -147,7 +147,9 @@
       "done": "Listo",
       "added": "Agregado: {{items}}",
       "keepsOpen": "La pantalla sigue abierta para que agregues varios seguidos.",
-      "error": "No pudimos agregar el producto. Inténtalo de nuevo."
+      "error": "No pudimos agregar el producto. Inténtalo de nuevo.",
+      "urgentLabel": "Es urgente",
+      "urgentHint": "Avisa a todos con una notificación"
     },
     "title": "Compras",
     "unitShort": "u",
@@ -180,7 +182,8 @@
       "invite": "Invitar",
       "codeLabel": "Código de invitación: {{code}}",
       "shareMessage": "Únete a {{household}} en Gestia con este código: {{code}}"
-    }
+    },
+    "urgent": "Urgente"
   },
   "tasks": {
     "empty": {

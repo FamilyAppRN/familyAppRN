@@ -26,7 +26,7 @@ export function useNewShoppingItem() {
 
   const form = useForm<NewItemFormData>({
     resolver: zodResolver(newItemFormSchema),
-    defaultValues: { name: '', quantity: 1, unit: 'unit', category: 'other' },
+    defaultValues: { name: '', quantity: 1, unit: 'unit', category: 'other', isUrgent: false },
     mode: 'onChange', // valida en vivo: habilita/deshabilita el botón
   });
 
@@ -38,13 +38,14 @@ export function useNewShoppingItem() {
         // 'unit' = piezas: se manda null para no guardar una unidad falsa.
         unit: data.unit === 'unit' ? null : data.unit,
         category: data.category,
+        is_urgent: data.isUrgent,
       }),
     onSuccess: (_list, data) => {
       void queryClient.invalidateQueries({
         queryKey: shoppingQueryKeys.byHousehold(householdId as string),
       });
       setAdded((prev) => [data.name.trim(), ...prev]);
-      form.reset({ ...data, name: '', quantity: 1 });
+      form.reset({ ...data, name: '', quantity: 1, isUrgent: false });
     },
   });
 

@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Switch, Text, View } from 'react-native';
 import { Controller, type Control } from 'react-hook-form';
 import { ShoppingBasket } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
@@ -109,6 +109,26 @@ export function NewItemForm({
                 />
               ))}
             </View>
+          </View>
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="isUrgent"
+        render={({ field: { onChange, value } }) => (
+          <View className="flex-row items-center gap-3 rounded-card border border-line bg-base px-3.5 py-3">
+            <View className="flex-1">
+              <Text className="text-body font-jakarta-bold text-foreground">{t('shopping.newItem.urgentLabel')}</Text>
+              <Text className="text-caption font-sans text-muted">{t('shopping.newItem.urgentHint')}</Text>
+            </View>
+            <Switch
+              accessibilityLabel={t('shopping.newItem.urgentLabel')}
+              value={value}
+              onValueChange={onChange}
+              trackColor={{ true: palette.danger[700], false: palette.neutral[200] }}
+              thumbColor={palette.neutral[0]}
+            />
           </View>
         )}
       />

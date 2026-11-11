@@ -8,6 +8,7 @@ export const newItemFormSchema = z.object({
   quantity: z.number().int().min(1, 'validation.quantityMin'),
   unit: z.enum(SHOPPING_UNITS),
   category: z.enum(SHOPPING_CATEGORIES),
+  isUrgent: z.boolean(),
 });
 
 export type NewItemFormData = z.infer<typeof newItemFormSchema>;

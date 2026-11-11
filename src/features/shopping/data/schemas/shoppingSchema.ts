@@ -10,6 +10,7 @@ export const shoppingItemSchema = z.object({
   // la pantalla entera. La UI cae a 'general' (→ "Otros") y sin unidad.
   unit: z.string().nullable().optional(),
   category: z.string().optional(),
+  is_urgent: z.boolean().optional(),
   is_completed: z.boolean(),
   added_by: z.string(),
   checked_by: z.string().nullable().optional(),
