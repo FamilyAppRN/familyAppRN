@@ -49,6 +49,15 @@ export class AuthRepository {
     await this.session.clear();
   }
 
+  /** Avisa al backend a qué dispositivo mandar los avisos push de este usuario. */
+  async registerPushToken(token: string, deviceLabel?: string): Promise<void> {
+    await this.api.registerPushToken({ token, ...(deviceLabel ? { device_label: deviceLabel } : {}) });
+  }
+
+  async unregisterPushToken(token: string): Promise<void> {
+    await this.api.unregisterPushToken(token);
+  }
+
   /**
    * Restaura la sesión al abrir la app: lee la sesión guardada localmente y,
    * si existe, valida el accessToken contra el backend trayendo /me (mismo

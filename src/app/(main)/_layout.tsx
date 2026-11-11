@@ -7,6 +7,7 @@ import { TabButton } from '@shared/ui/organisms/TabButton';
 import { semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { useRealtimeSync } from '@features/household/realtime/useRealtimeSync';
+import { usePushRegistration } from '@features/auth/push/usePushRegistration';
 
 // Tab bar propio construido con los componentes headless de Expo Router
 // (expo-router/ui). Sin @react-navigation directo.
@@ -21,6 +22,7 @@ const TABS = [
 export default function MainLayout() {
   // Tiempo real para todas las pestañas: una conexión mientras se está aquí.
   useRealtimeSync();
+  usePushRegistration();
   const insets = useSafeAreaInsets();
   const scheme = useAppColorScheme();
 

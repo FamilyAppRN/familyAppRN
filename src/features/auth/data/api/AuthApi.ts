@@ -22,4 +22,12 @@ export class AuthApi {
       : undefined;
     return this.client.get<unknown>('/api/users/me', config);
   }
+
+  registerPushToken(body: { token: string; device_label?: string }) {
+    return this.client.patch<unknown>('/api/users/me/push-token', body);
+  }
+
+  unregisterPushToken(token: string) {
+    return this.client.delete<unknown>('/api/users/me/push-token', { data: { token } });
+  }
 }
