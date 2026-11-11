@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { getHouseholdRepository } from '@features/household/data/householdFactory';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { INVITE_CODE_LENGTH } from '@features/household/domain/inviteCode';
 import { logout } from '@features/auth/logout';
+import { usePendingInvite } from '@features/household/invite/usePendingInvite';
 
-export const INVITE_CODE_LENGTH = 6;
 
 export function useHouseholdOnboarding() {
   const router = useRouter();
@@ -20,7 +21,9 @@ export function useHouseholdOnboarding() {
     hasHouseholds ? router.dismissTo('/(main)/shopping') : router.replace('/(main)/shopping');
 
   const [householdName, setHouseholdName] = useState('');
-  const [inviteCode, setInviteCode] = useState('');
+  // Si se llegó por un enlace de invitación, el código ya viene puesto.
+  const [linkCode] = useState(() => usePendingInvite.getState().take());
+  const [inviteCode, setInviteCode] = useState(linkCode ?? '');
 
   const createMutation = useMutation({
     mutationFn: (name: string) => householdRepo.createHousehold(name),
@@ -65,6 +68,16 @@ export function useHouseholdOnboarding() {
       joinMutation.mutate(value);
     }
   };
+
+  // ...y se usa una vez, sin que tenga que tocar nada.
+  const triedLinkCode = useRef(false);
+  useEffect(() => {
+    if (linkCode && !triedLinkCode.current) {
+      triedLinkCode.current = true;
+      handleJoin(linkCode);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [linkCode]);
 
   return {
     /** Ya tiene hogares: vino desde el selector, así que puede volver. */

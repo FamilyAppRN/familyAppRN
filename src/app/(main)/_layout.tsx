@@ -9,6 +9,7 @@ import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { useRealtimeSync } from '@features/household/realtime/useRealtimeSync';
 import { usePushRegistration } from '@features/auth/push/usePushRegistration';
 import { usePushNavigation } from '@features/household/push/usePushNavigation';
+import { usePendingInviteRedirect } from '@features/household/invite/usePendingInviteRedirect';
 
 // Tab bar propio construido con los componentes headless de Expo Router
 // (expo-router/ui). Sin @react-navigation directo.
@@ -25,6 +26,7 @@ export default function MainLayout() {
   useRealtimeSync();
   usePushRegistration();
   usePushNavigation();
+  usePendingInviteRedirect();
   const insets = useSafeAreaInsets();
   const scheme = useAppColorScheme();
 
