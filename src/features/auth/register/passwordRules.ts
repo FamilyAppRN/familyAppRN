@@ -2,7 +2,7 @@
  * Validación de contraseña alineada 1:1 con el backend
  * (family-backend/src/shared/domain/constants.ts).
  *
- * Fuente única para el schema de Zod (validez) y el <PasswordStrengthMeter>
+ * Fuente única para el schema de Zod (validez) y el <PasswordStrengthMeter> (lista de requisitos)
  * (hint visual). Si el backend cambia el regex, se ajusta aquí una sola vez.
  */
 

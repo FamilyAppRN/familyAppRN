@@ -6,6 +6,10 @@ import type { Href } from 'expo-router';
 import { TabButton } from '@shared/ui/organisms/TabButton';
 import { semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
+import { useRealtimeSync } from '@features/household/realtime/useRealtimeSync';
+import { usePushRegistration } from '@features/auth/push/usePushRegistration';
+import { usePushNavigation } from '@features/household/push/usePushNavigation';
+import { usePendingInviteRedirect } from '@features/household/invite/usePendingInviteRedirect';
 
 // Tab bar propio construido con los componentes headless de Expo Router
 // (expo-router/ui). Sin @react-navigation directo.
@@ -14,10 +18,15 @@ const TABS = [
   { name: 'tasks', href: '/tasks' },
   { name: 'notes', href: '/notes' },
   { name: 'calendar', href: '/calendar' },
-  { name: 'settings', href: '/settings' },
+  { name: 'household', href: '/household' },
 ] as const;
 
 export default function MainLayout() {
+  // Tiempo real para todas las pestañas: una conexión mientras se está aquí.
+  useRealtimeSync();
+  usePushRegistration();
+  usePushNavigation();
+  usePendingInviteRedirect();
   const insets = useSafeAreaInsets();
   const scheme = useAppColorScheme();
 
@@ -38,12 +47,15 @@ export default function MainLayout() {
           ahí). Sin shadow-* acá, este patrón es seguro.
         */}
         <View
-          className="flex-row items-center justify-around pt-2"
           style={{
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            paddingHorizontal: 4,
+            paddingTop: 8,
             borderTopWidth: 1,
             borderTopColor: semanticColors[scheme].border,
-            backgroundColor: semanticColors[scheme].bgBase,
-            paddingBottom: insets.bottom > 0 ? insets.bottom : 12,
+            backgroundColor: semanticColors[scheme].bgSurface,
+            paddingBottom: insets.bottom > 0 ? insets.bottom : 16,
           }}>
           {TABS.map((tab) => (
             <TabTrigger key={tab.name} name={tab.name} href={tab.href as Href} asChild>

@@ -43,5 +43,7 @@ export function useRegister() {
     // El back siempre va a Welcome (no se anida Login↔Register entre sí).
     goBack: () => router.replace('/(auth)/welcome'),
     goToLogin: () => router.navigate('/(auth)/login'),
+    onGoogle: () => {}, // TODO: OAuth Google (endpoint listo en el backend)
+    onApple: () => {}, // TODO: OAuth Apple (endpoint listo en el backend)
   };
 }

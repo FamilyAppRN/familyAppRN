@@ -5,6 +5,8 @@ export interface NewItemBody {
   quantity: number;
   unit?: string | null;
   category?: string;
+  /** Avisa a todo el hogar con una notificación. */
+  is_urgent?: boolean;
 }
 
 export class ShoppingApi {

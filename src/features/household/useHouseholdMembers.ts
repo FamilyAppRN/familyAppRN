@@ -1,24 +1,21 @@
 import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { palette } from '@shared/theme/tokens';
+import { avatarColors } from '@shared/theme/tokens';
 import { getHouseholdRepository } from '@features/household/data/householdFactory';
 import { householdQueryKeys } from '@features/household/data/queryKeys';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 
-/** Colores de avatar por miembro (verde/coral de marca, alternados). */
-const MEMBER_COLORS = [
-  palette.brand[500],
-  palette.accent[500],
-  palette.brand[700],
-  palette.accent[600],
-] as const;
 
 export interface ResolvedMember {
   id: string;
   name: string;
   initials: string;
+  /** Fondo del avatar. */
   color: string;
+  /** Letra del avatar (contrasta con `color`). */
+  textColor: string;
+  role: 'admin' | 'member';
 }
 
 function toInitials(name: string): string {
@@ -46,7 +43,9 @@ export function useHouseholdMembers() {
     id: m.user_id,
     name: m.display_name,
     initials: toInitials(m.display_name),
-    color: MEMBER_COLORS[index % MEMBER_COLORS.length],
+    color: avatarColors[index % avatarColors.length].bg,
+    textColor: avatarColors[index % avatarColors.length].fg,
+    role: m.role,
   }));
 
   /** Resuelve el id de usuario de un ítem al miembro; null si ya no pertenece. */
@@ -58,5 +57,13 @@ export function useHouseholdMembers() {
     [query.data],
   );
 
-  return { members, resolveMember, isLoading: query.isLoading };
+  return {
+    members,
+    resolveMember,
+    /** Código para invitar (lo ve cualquier miembro). */
+    inviteCode: query.data?.invite_code,
+    /** Quien creó el hogar: no puede salir ni ser quitado. */
+    ownerId: query.data?.admin_id,
+    isLoading: query.isLoading,
+  };
 }

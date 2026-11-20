@@ -21,3 +21,10 @@ export const notesResponseSchema = z.object({
   message: z.string().optional(),
   data: z.array(noteSchema),
 });
+
+/** POST /api/notes/:householdId y PATCH /api/notes/:householdId/:noteId */
+export const noteResponseSchema = z.object({
+  success: z.boolean(),
+  message: z.string().optional(),
+  data: noteSchema,
+});

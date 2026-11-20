@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getShoppingRepository } from '@features/shopping/data/shoppingFactory';
@@ -10,6 +11,12 @@ import {
   type ShoppingCategory,
 } from '@features/shopping/domain/categories';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
+import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
+import { getHouseholdRepository } from '@features/household/data/householdFactory';
+import { shareInvite } from '@features/household/invite/shareInvite';
+
+/** Tras avisar, el botón espera esto antes de dejar avisar otra vez. */
+const GOING_SHOPPING_COOLDOWN_MS = 10 * 60 * 1000;
 
 /**
  * Ítem con la lista a la que pertenece. La UI agrupa por categoría mezclando
@@ -35,6 +42,8 @@ export function useShopping() {
   const household = useCurrentHousehold();
   const householdId = household?.id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
+  const { inviteCode, members } = useHouseholdMembers();
   const queryKey = shoppingQueryKeys.byHousehold(householdId as string);
 
   const query = useQuery({
@@ -45,16 +54,22 @@ export function useShopping() {
 
   const lists = useMemo(() => query.data ?? [], [query.data]);
 
-  /** Ítems de todas las listas, agrupados por categoría (sin secciones vacías). */
+  const allItems = useMemo<ShoppingItemWithList[]>(
+    () => lists.flatMap((list) => list.items.map((item) => ({ ...item, listId: list.id }))),
+    [lists],
+  );
+
+  /** Pendientes agrupados por categoría (sin secciones vacías). */
   const sections = useMemo<CategorySection[]>(() => {
-    const allItems: ShoppingItemWithList[] = lists.flatMap((list) =>
-      list.items.map((item) => ({ ...item, listId: list.id })),
-    );
+    const pending = allItems.filter((item) => !item.is_completed);
     return SHOPPING_CATEGORIES.map((category) => ({
       category,
-      items: allItems.filter((item) => normalizeCategory(item.category) === category),
+      items: pending.filter((item) => normalizeCategory(item.category) === category),
     })).filter((section) => section.items.length > 0);
-  }, [lists]);
+  }, [allItems]);
+
+  /** Lo ya marcado: va a la sección "En el carrito". */
+  const cartItems = useMemo(() => allItems.filter((item) => item.is_completed), [allItems]);
 
   const totalItems = useMemo(
     () => lists.reduce((count, list) => count + list.items.length, 0),
@@ -105,9 +120,38 @@ export function useShopping() {
     },
   });
 
+  // "Voy al súper": un aviso por salida, no uno por toque.
+  // Se guarda el hogar: al cambiar de hogar el botón vuelve a estar disponible.
+  const [goingSent, setGoingSent] = useState<{ householdId: string } | null>(null);
+  useEffect(() => {
+    if (!goingSent) return;
+    const timer = setTimeout(() => setGoingSent(null), GOING_SHOPPING_COOLDOWN_MS);
+    return () => clearTimeout(timer);
+  }, [goingSent]);
+
+  const goingShoppingMutation = useMutation({
+    mutationFn: () => getHouseholdRepository().notifyGoingShopping(householdId as string),
+    onSuccess: () => setGoingSent({ householdId: householdId as string }),
+  });
+
+  const quickAddMutation = useMutation({
+    mutationFn: (item: { name: string; category: ShoppingCategory }) =>
+      getShoppingRepository().addItemToDefaultList(householdId as string, {
+        name: item.name,
+        quantity: 1,
+        unit: null,
+        category: item.category,
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
   return {
     householdName: household?.name,
     sections,
+    cartItems,
+    pendingCount: totalItems - cartItems.length,
     history,
     canFinalize,
     totalItems,
@@ -122,6 +166,18 @@ export function useShopping() {
         itemId: item.id,
         isCompleted: !item.is_completed,
       }),
+    goingShopping: () => goingShoppingMutation.mutate(),
+    isGoingShoppingPending: goingShoppingMutation.isPending,
+    goingShoppingSent: goingSent?.householdId === householdId,
+    goingShoppingError: goingShoppingMutation.isError,
+    quickAdd: (name: string, category: ShoppingCategory) => quickAddMutation.mutate({ name, category }),
+    isQuickAdding: quickAddMutation.isPending,
+    inviteCode,
+    isAlone: members.length <= 1,
+    shareInvite: () => {
+      if (!inviteCode) return;
+      shareInvite(t, household?.name ?? '', inviteCode);
+    },
     finalizePurchase: () => {
       const activeList = lists.find((l) => l.items.length > 0);
       if (activeList) {

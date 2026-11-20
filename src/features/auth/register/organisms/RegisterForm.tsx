@@ -114,14 +114,14 @@ export function RegisterForm({ control, onSubmit, isPending, isValid, errorMessa
               <Text className="flex-1 text-caption font-sans text-muted">{t('register.terms')}</Text>
             </View>
             {error?.message ? (
-              <Text className="ml-8 text-caption font-sans text-danger-500">{t(error.message)}</Text>
+              <Text className="ml-8 text-caption font-sans text-danger-700">{t(error.message)}</Text>
             ) : null}
           </View>
         )}
       />
 
       {errorMessage ? (
-        <Text className="text-caption font-sans text-danger-500">{errorMessage}</Text>
+        <Text className="text-caption font-sans text-danger-700">{errorMessage}</Text>
       ) : null}
 
       <Button

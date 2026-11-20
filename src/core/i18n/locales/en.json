@@ -1,32 +1,46 @@
 {
   "welcome": {
     "brand": "Gestia",
-    "title": "Organize your home effortlessly",
-    "subtitle": "The warm, safe digital space to coordinate tasks and connect with your family.",
-    "login": "Log In",
-    "register": "Sign Up"
+    "title": "A tidy home, together.",
+    "subtitle": "Shopping, tasks and notes shared with your family, instantly.",
+    "login": "I already have an account",
+    "register": "Create account",
+    "benefits": {
+      "shopping": {
+        "title": "One shopping list for everyone",
+        "description": "If someone adds milk, you see it at the store."
+      },
+      "tasks": {
+        "title": "Shared chores",
+        "description": "Assign, remind and check off what’s done."
+      },
+      "homes": {
+        "title": "One home or several",
+        "description": "Your place, your parents’ place, the shared flat."
+      }
+    }
   },
   "login": {
     "brand": "Gestia",
     "title": "Welcome back",
-    "subtitle": "We're glad to see you here",
+    "subtitle": "Sign in to see what your family added today.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@email.com",
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
-    "forgot": "Forgot my password",
+    "forgot": "Forgot your password?",
     "submit": "Log in",
     "divider": "Or continue with",
-    "noAccount": "Don't have an account? ",
-    "createFamily": "Create family"
+    "noAccount": "No account yet? ",
+    "createFamily": "Create account"
   },
   "register": {
     "brand": "Gestia",
-    "title": "Create your family account",
-    "subtitle": "Start organizing your home today.",
-    "nameLabel": "Full name",
+    "title": "Create your account",
+    "subtitle": "Next you choose whether to create a home or join one.",
+    "nameLabel": "Your name",
     "namePlaceholder": "E.g. Ana García",
-    "emailLabel": "Email address",
+    "emailLabel": "Email",
     "emailPlaceholder": "you@email.com",
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
@@ -38,10 +52,18 @@
       "good": "Good",
       "strong": "Strong"
     },
-    "terms": "I accept the Terms of Service and the Privacy Policy.",
+    "terms": "I accept the Terms and the Privacy Policy.",
     "submit": "Create account",
     "haveAccount": "Already have an account? ",
-    "login": "Log in"
+    "login": "Sign in",
+    "rules": {
+      "length": "8 characters",
+      "case": "Upper and lower case",
+      "number": "A number",
+      "symbol": "A symbol (@$!%*?&)",
+      "met": "met",
+      "missing": "missing"
+    }
   },
   "home": {
     "title": "You're home! 🏡",
@@ -52,13 +74,16 @@
     "shopping": "Shopping",
     "tasks": "Tasks",
     "notes": "Notes",
-    "calendar": "Family",
-    "settings": "Profile"
+    "calendar": "Calendar",
+    "household": "Home"
   },
   "profile": {
     "plan": {
-      "free": "Free Plan",
-      "premium": "Premium Plan"
+      "free": "Free plan",
+      "premium": "Premium plan",
+      "freeLimits": "1 home of your own · up to 4 members per home",
+      "premiumLimits": "Several homes · up to 15 members per home",
+      "upgrade": "Upgrade"
     },
     "members": {
       "title": "Family members",
@@ -82,6 +107,14 @@
     "social": {
       "title": "Social Media",
       "subtitle": "Connect with us"
+    },
+    "title": "My profile",
+    "preferences": "Preferences",
+    "language": "Language",
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Assigned tasks, urgent items, going shopping and reminders",
+      "error": "We couldn’t save the change. Try again."
     }
   },
   "shopping": {
@@ -107,14 +140,55 @@
       "ml": "ml"
     },
     "newItem": {
-      "title": "New product",
+      "title": "Add to the list",
       "nameLabel": "Product name",
       "namePlaceholder": "E.g. Whole milk",
       "quantityLabel": "Quantity",
       "unitLabel": "Unit",
       "categoryLabel": "Category",
-      "submit": "Add to list"
-    }
+      "submit": "Add",
+      "close": "Close",
+      "done": "Done",
+      "added": "Added: {{items}}",
+      "keepsOpen": "This screen stays open so you can add several in a row.",
+      "error": "We couldn’t add the item. Try again.",
+      "urgentLabel": "It’s urgent",
+      "urgentHint": "Notifies everyone"
+    },
+    "title": "Shopping",
+    "unitShort": "pcs",
+    "pendingCount_one": "{{count}} to buy",
+    "pendingCount_other": "{{count}} to buy",
+    "inCart": "In the cart · {{count}}",
+    "finalize": "Finish shopping",
+    "finalizeMissing_one": "{{count}} left to check",
+    "finalizeMissing_other": "{{count}} left to check",
+    "history": "Past trips",
+    "historyLine_one": "{{count}} item · {{name}}",
+    "historyLine_other": "{{count}} items · {{name}}",
+    "goingShopping": {
+      "title": "Going shopping",
+      "description": "Let your family know so they can add what’s missing",
+      "sent": "We let your family know",
+      "error": "We couldn’t notify them. Tap to try again."
+    },
+    "quickAdd": {
+      "milk": "Milk",
+      "bread": "Bread",
+      "eggs": "Eggs",
+      "fruit": "Fruit",
+      "toiletPaper": "Toilet paper"
+    },
+    "emptyState": {
+      "quickHint": "Tap to add the usual, or use the + button for something new.",
+      "addOne": "Add {{name}}",
+      "inviteTitle": "Gestia works better as a family",
+      "inviteBody": "Invite the people you live with so they can see and fill the list.",
+      "invite": "Invite",
+      "codeLabel": "Invite code: {{code}}",
+      "shareMessage": "Join {{household}} on Gestia with this code: {{code}}\nIf you have the app, open: {{link}}"
+    },
+    "urgent": "Urgent"
   },
   "tasks": {
     "empty": {
@@ -122,7 +196,69 @@
       "description": "Create the first task and share the household responsibilities.",
       "cta": "Create task"
     },
-    "loadError": "We couldn't load the tasks."
+    "loadError": "We couldn't load the tasks.",
+    "title": "Tasks",
+    "new": "New task",
+    "filters": {
+      "mine": "Mine",
+      "all": "All",
+      "done": "Done"
+    },
+    "groups": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "noDate": "No date",
+      "done": "Done"
+    },
+    "due": {
+      "today": "Today",
+      "todayAt": "Today, {{time}}",
+      "tomorrow": "Tomorrow",
+      "overdue": "Was due {{date}}"
+    },
+    "unassigned": "Unassigned",
+    "assign": "Assign task",
+    "complete": "Complete: {{title}}",
+    "reopen": "Reopen: {{title}}",
+    "emptyFilter": {
+      "mine": "You have no pending tasks.",
+      "all": "No pending tasks in the household.",
+      "done": "No completed tasks yet."
+    },
+    "form": {
+      "titleLabel": "What needs doing",
+      "titlePlaceholder": "For example, take out the trash",
+      "descriptionLabel": "Details",
+      "descriptionPlaceholder": "Optional",
+      "who": "Who",
+      "me": "Me",
+      "nobody": "Nobody",
+      "when": "When",
+      "noDate": "No date",
+      "create": "Create task",
+      "save": "Save changes",
+      "createError": "We couldn’t save the task. Check your connection and try again.",
+      "editTitle": "Edit task"
+    },
+    "detail": {
+      "status": {
+        "pending": "Pending",
+        "done": "Done"
+      },
+      "assignedTo": "Assigned to",
+      "when": "When",
+      "createdBy": "Created by",
+      "edit": "Edit",
+      "markDone": "Mark as done",
+      "reopen": "Mark as pending",
+      "delete": "Delete task",
+      "confirmTitle": "Delete this task?",
+      "confirmBody": "It disappears for the whole household and can’t be recovered.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "notFound": "This task no longer exists."
+    }
   },
   "notes": {
     "empty": {
@@ -130,27 +266,75 @@
       "description": "Leave reminders, codes or ideas for the whole family."
     },
     "inputPlaceholder": "Write a quick note…",
-    "loadError": "We couldn't load the notes."
+    "loadError": "We couldn't load the notes.",
+    "title": "Notes",
+    "pinnedSection": "Pinned",
+    "recentSection": "Recent",
+    "new": "New note",
+    "pin": "Pin note",
+    "unpin": "Unpin note",
+    "publish": "Post note",
+    "publishError": "We couldn’t post the note. Try again.",
+    "byline": "{{name}} · {{date}}",
+    "someone": "Someone",
+    "colors": {
+      "white": "White",
+      "amber": "Yellow",
+      "green": "Green",
+      "blue": "Blue",
+      "coral": "Coral"
+    },
+    "editor": {
+      "newTitle": "New note",
+      "editTitle": "Edit note",
+      "titleLabel": "Title",
+      "titlePlaceholder": "For example, Mateo’s vaccine",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Write the note for the family",
+      "color": "Color",
+      "pinned": "Pinned",
+      "notPinned": "Pin",
+      "save": "Save",
+      "visibility": "Visible to the whole household",
+      "readOnly": "Only the author or an admin can edit it.",
+      "saveError": "We couldn’t save the note. Try again.",
+      "delete": "Delete",
+      "confirmTitle": "Delete this note?",
+      "confirmBody": "It disappears for the whole household and can’t be recovered.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "notFound": "This note no longer exists."
+    }
   },
   "calendar": {
     "empty": {
       "title": "No scheduled events",
       "description": "Add appointments, birthdays or family to-dos."
-    }
+    },
+    "today": "Today",
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "allDay": "All day",
+    "emptyDay": "Nothing scheduled for this day.",
+    "taskOf": "{{name}}’s task",
+    "tasksHint": "Tasks with a due date show up here. Calendar events arrive with Premium."
   },
   "householdOnboarding": {
-    "title": "Welcome home!",
-    "subtitle": "Choose how you'd like to start organizing your family life.",
+    "title": "How do you want to start?",
+    "subtitle": "A home is the space you share with your family.",
     "or": "or",
-    "createCardTitle": "Create my household",
-    "createCardDesc": "Be the admin and organize your family's tasks, groceries, and notes.",
-    "createPlaceholder": "Name of your household (e.g. Garcia Family)",
+    "createCardTitle": "Create my home",
+    "createCardDesc": "You’ll be admin and can invite your family",
+    "createPlaceholder": "For example, The Smiths",
     "createBtnStart": "Start now",
-    "createBtnSubmit": "Create and start →",
-    "joinCardTitle": "Join a household",
-    "joinCardDesc": "Ask the administrator for the 6-digit code and enter it below.",
+    "createBtnSubmit": "Create home",
+    "joinCardTitle": "I was invited",
+    "joinCardDesc": "Enter the code you were given",
     "joinBtnSubmit": "Join",
-    "joinPlaceholder": "Invitation code"
+    "joinPlaceholder": "Invitation code",
+    "greeting": "Hi, {{name}}",
+    "joinHint": "It checks itself once all 6 characters are in.",
+    "createLabel": "Home name"
   },
   "validation": {
     "email": "Enter a valid email",
@@ -162,6 +346,128 @@
     "nameRequired": "Name is required",
     "termsRequired": "You must accept the terms",
     "itemNameRequired": "Enter the product name",
-    "quantityMin": "Quantity must be at least 1"
+    "quantityMin": "Quantity must be at least 1",
+    "taskTitleRequired": "Write what needs doing",
+    "noteTitleRequired": "Write a title",
+    "noteContentRequired": "Write the content"
+  },
+  "auth": {
+    "social": {
+      "google": "Continue with Google",
+      "apple": "Continue with Apple",
+      "divider": "or with your email"
+    }
+  },
+  "householdHeader": {
+    "members_one": "{{count}} member",
+    "members_other": "{{count}} members",
+    "profile": "My profile",
+    "switch": "Switch home. Current home: {{name}}",
+    "online": "Online"
+  },
+  "household": {
+    "title": "Home",
+    "invite": {
+      "title": "Invite your family",
+      "body": "Share this code. Whoever uses it joins as a member.",
+      "share": "Share code",
+      "byEmail": "By email",
+      "emailLabel": "Their email",
+      "emailPlaceholder": "name@email.com",
+      "send": "Send invitation",
+      "sent": "Invitation sent to {{email}}",
+      "emailError": "We couldn’t send the invitation. Check the email and try again.",
+      "regenerate": "Generate a new code"
+    },
+    "members": {
+      "title": "Members",
+      "you": "{{name}} · you",
+      "admin": "Admin",
+      "member": "Member",
+      "owner": "Created the home",
+      "remove": "Remove",
+      "removeLabel": "Remove {{name}} from the home"
+    },
+    "settings": {
+      "title": "Home settings",
+      "nameLabel": "Home name",
+      "change": "Change",
+      "save": "Save",
+      "cancel": "Cancel",
+      "renameError": "We couldn’t change the name. Try again.",
+      "leave": "Leave home",
+      "ownerCannotLeave": "You created this home, so you can’t leave it."
+    },
+    "confirm": {
+      "removeTitle": "Remove {{name}}?",
+      "removeBody": "They stop seeing this home’s shopping, tasks and notes. They can come back with the code.",
+      "leaveTitle": "Leave {{household}}?",
+      "leaveBody": "You stop seeing its shopping, tasks and notes. To come back you’ll need the code again.",
+      "cancel": "Cancel",
+      "remove": "Remove",
+      "leave": "Leave",
+      "error": "That didn’t work. Check your connection and try again.",
+      "regenerateTitle": "Generate a new code?",
+      "regenerateBody": "The current code stops working. People already in the home are not affected.",
+      "regenerate": "Generate"
+    }
+  },
+  "switcher": {
+    "title": "Your homes",
+    "close": "Close",
+    "create": "Create another home",
+    "createLimit": "The free plan allows 1 home of your own",
+    "join": "Join with a code",
+    "joinLimit": "The free plan allows being in 2 homes",
+    "premium": "Premium",
+    "seePremium": "See Premium"
+  },
+  "premium": {
+    "brand": "Gestia Premium",
+    "close": "Close",
+    "title": "For families living in more than one home",
+    "subtitle": "More homes, more members and tools for the whole family.",
+    "soon": "Soon",
+    "features": {
+      "homes": {
+        "title": "Several homes",
+        "description": "Your place, your parents’ and the beach house. Free: 1 of your own."
+      },
+      "members": {
+        "title": "Up to 15 members",
+        "description": "Free: up to 4 per home."
+      },
+      "calendar": {
+        "title": "Family calendar",
+        "description": "Appointments, birthdays and dated tasks in one place."
+      },
+      "points": {
+        "title": "Points for kids",
+        "description": "They complete, you verify, and points add up."
+      },
+      "ai": {
+        "title": "Weekly AI menu",
+        "description": "Plan the week and fill the list automatically."
+      }
+    },
+    "periods": {
+      "yearly": {
+        "name": "Yearly",
+        "price": "$49.99",
+        "perMonth": "$4.17 a month",
+        "saving": "2 months free"
+      },
+      "monthly": {
+        "name": "Monthly",
+        "price": "$4.99"
+      }
+    },
+    "subscribe": {
+      "yearly": "Subscribe for $49.99 a year",
+      "monthly": "Subscribe for $4.99 a month"
+    },
+    "comingSoon": "Available soon",
+    "renewal": "Renews automatically. You’ll be able to cancel anytime from the store.",
+    "alreadyPremium": "You already have Premium. Thank you!"
   }
 }
