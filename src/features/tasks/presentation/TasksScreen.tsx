@@ -1,7 +1,7 @@
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, type Href } from 'expo-router';
-import { ListChecks, Plus } from 'lucide-react-native';
+import { ListChecks, Plus, Trophy } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@shared/ui/molecules/EmptyState';
@@ -28,7 +28,7 @@ const selectedTabShadow = {
 export function TasksScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { resolveMember } = useHouseholdMembers();
+  const { resolveMember, isPremium } = useHouseholdMembers();
   const {
     filter,
     setFilter,
@@ -40,10 +40,14 @@ export function TasksScreen() {
     isRefreshing,
     refresh,
     toggleDone,
+    canVerify,
+    verify,
+    verifyingId,
   } = useTasks();
 
   const goToNewTask = () => router.push('/(modals)/new-task' as Href);
   const openTask = (id: string) => router.push(`/(modals)/task/${id}` as Href);
+  const openPoints = () => router.push('/(modals)/points' as Href);
 
   return (
     <ThemeVarsProvider>
@@ -69,7 +73,19 @@ export function TasksScreen() {
         ) : (
           <>
             <View className="px-4 pb-3">
-              <Text className="mb-3 text-h1 font-jakarta-bold text-foreground">{t('tasks.title')}</Text>
+              <View className="mb-3 flex-row items-center justify-between">
+                <Text className="text-h1 font-jakarta-bold text-foreground">{t('tasks.title')}</Text>
+                {isPremium ? (
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={t('points.openLabel')}
+                    onPress={openPoints}
+                    className="h-9 flex-row items-center gap-1.5 rounded-badge bg-chip px-3 active:opacity-80">
+                    <Trophy size={16} color={palette.brand[600]} />
+                    <Text className="text-caption font-jakarta-bold text-emphasis">{t('points.open')}</Text>
+                  </Pressable>
+                ) : null}
+              </View>
               <View accessibilityRole="tablist" className="flex-row gap-1 rounded-button bg-surface-2 p-1">
                 {FILTERS.map((key) => {
                   const selected = filter === key;
@@ -122,6 +138,8 @@ export function TasksScreen() {
                         assignee={resolveMember(task.assignee_id)}
                         isOverdue={group.key === 'overdue'}
                         onToggle={() => toggleDone(task)}
+                        onVerify={canVerify(task) ? () => verify(task) : undefined}
+                        isVerifying={verifyingId === task.id}
                         onOpen={() => openTask(task.id)}
                       />
                     ))}

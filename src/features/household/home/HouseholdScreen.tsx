@@ -1,6 +1,6 @@
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LogOut, Mail, Pencil, RefreshCw, Share2 } from 'lucide-react-native';
+import { ChevronRight, LogOut, Mail, Pencil, RefreshCw, Share2, Trophy } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@shared/ui/molecules/Avatar';
@@ -9,7 +9,15 @@ import { palette, semanticColors } from '@shared/theme/tokens';
 import { useAppColorScheme } from '@shared/theme/useAppColorScheme';
 import { ThemeVarsProvider } from '@core/theme/ThemeVarsProvider';
 import { HouseholdHeader } from '@features/household/HouseholdHeader';
-import { useHouseholdHome } from '@features/household/home/useHouseholdHome';
+import { useHouseholdHome, type MemberRole } from '@features/household/home/useHouseholdHome';
+
+const ROLES: MemberRole[] = ['admin', 'member', 'kid'];
+
+const ROLE_STYLE: Record<MemberRole, { bg: string; text: string }> = {
+  admin: { bg: 'bg-chip', text: 'text-emphasis' },
+  member: { bg: 'bg-surface-2', text: 'text-muted' },
+  kid: { bg: 'bg-accent-soft', text: 'text-foreground' },
+};
 
 export function HouseholdScreen() {
   const { t } = useTranslation();
@@ -150,35 +158,91 @@ export function HouseholdScreen() {
                 <View className="overflow-hidden rounded-card border border-line bg-surface">
                   {home.members.map((member, index) => {
                     const isMe = member.id === home.userId;
-                    const isAdmin = member.role === 'admin';
+                    const roleStyle = ROLE_STYLE[member.role];
+                    const canChangeRole = home.canChangeRole(member);
+                    const editingRole = home.roleEditingFor === member.id;
+                    const subtitle = [
+                      member.id === home.ownerId ? t('household.members.owner') : null,
+                      home.isPremium && home.pointsOf(member.id) > 0
+                        ? t('household.members.points', { count: home.pointsOf(member.id) })
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ');
+                    const rolePill = (
+                      <View className={`rounded-badge px-2.5 py-1 ${roleStyle.bg}`}>
+                        <Text className={`text-caption font-jakarta-bold ${roleStyle.text}`}>
+                          {t(`household.members.${member.role}`)}
+                        </Text>
+                      </View>
+                    );
                     return (
-                      <View
-                        key={member.id}
-                        className={`min-h-[60px] flex-row items-center gap-3 px-3.5 py-2.5 ${
-                          index < home.members.length - 1 ? 'border-b border-line' : ''
-                        }`}>
-                        <Avatar name={member.name} size={38} color={member.color} textColor={member.textColor} bordered={false} />
-                        <View className="flex-1">
-                          <Text className="text-body font-jakarta-semibold text-foreground" numberOfLines={1}>
-                            {isMe ? t('household.members.you', { name: member.name }) : member.name}
-                          </Text>
-                          {member.id === home.ownerId ? (
-                            <Text className="text-caption font-sans text-muted">{t('household.members.owner')}</Text>
+                      <View key={member.id} className={index < home.members.length - 1 ? 'border-b border-line' : ''}>
+                        <View className="min-h-[60px] flex-row items-center gap-3 px-3.5 py-2.5">
+                          <Avatar name={member.name} size={38} color={member.color} textColor={member.textColor} bordered={false} />
+                          <View className="flex-1">
+                            <Text className="text-body font-jakarta-semibold text-foreground" numberOfLines={1}>
+                              {isMe ? t('household.members.you', { name: member.name }) : member.name}
+                            </Text>
+                            {subtitle ? <Text className="text-caption font-sans text-muted">{subtitle}</Text> : null}
+                          </View>
+                          {canChangeRole ? (
+                            <Pressable
+                              accessibilityRole="button"
+                              accessibilityLabel={t('household.roles.changeLabel', { name: member.name })}
+                              accessibilityState={{ expanded: editingRole }}
+                              onPress={() => home.toggleRoleEditor(member.id)}
+                              className="min-h-[44px] justify-center">
+                              {rolePill}
+                            </Pressable>
+                          ) : (
+                            rolePill
+                          )}
+                          {home.canRemove(member) ? (
+                            <Pressable
+                              accessibilityRole="button"
+                              accessibilityLabel={t('household.members.removeLabel', { name: member.name })}
+                              onPress={() => home.askRemove(member)}
+                              className="h-11 justify-center pl-1">
+                              <Text className="text-caption font-jakarta-bold text-danger-700">{t('household.members.remove')}</Text>
+                            </Pressable>
                           ) : null}
                         </View>
-                        <View className={`rounded-badge px-2.5 py-1 ${isAdmin ? 'bg-chip' : 'bg-surface-2'}`}>
-                          <Text className={`text-caption font-jakarta-bold ${isAdmin ? 'text-emphasis' : 'text-muted'}`}>
-                            {t(isAdmin ? 'household.members.admin' : 'household.members.member')}
-                          </Text>
-                        </View>
-                        {home.canRemove(member) ? (
-                          <Pressable
-                            accessibilityRole="button"
-                            accessibilityLabel={t('household.members.removeLabel', { name: member.name })}
-                            onPress={() => home.askRemove(member)}
-                            className="h-11 justify-center pl-1">
-                            <Text className="text-caption font-jakarta-bold text-danger-700">{t('household.members.remove')}</Text>
-                          </Pressable>
+
+                        {editingRole ? (
+                          <View className="gap-2 px-3.5 pb-3">
+                            <View accessibilityRole="radiogroup" className="flex-row flex-wrap gap-2">
+                              {ROLES.map((role) => {
+                                const locked = role === 'kid' && !home.isPremium;
+                                const selected = member.role === role;
+                                return (
+                                  <Pressable
+                                    key={role}
+                                    accessibilityRole="radio"
+                                    accessibilityState={{ selected, disabled: locked || home.isChangingRole }}
+                                    disabled={locked || selected || home.isChangingRole}
+                                    onPress={() => home.changeRole(member.id, role)}
+                                    className={`h-10 flex-row items-center gap-1.5 rounded-badge px-3.5 ${
+                                      selected ? 'border-[1.5px] border-brand-600 bg-chip' : 'border border-line bg-surface'
+                                    } ${locked ? 'opacity-50' : ''}`}>
+                                    <Text
+                                      className={`text-caption ${
+                                        selected ? 'font-jakarta-bold text-emphasis' : 'font-jakarta-semibold text-foreground'
+                                      }`}>
+                                      {t(`household.members.${role}`)}
+                                    </Text>
+                                    {locked ? (
+                                      <Text className="text-[11px] font-jakarta-bold text-muted">{t('switcher.premium')}</Text>
+                                    ) : null}
+                                  </Pressable>
+                                );
+                              })}
+                              {home.isChangingRole ? <ActivityIndicator color={palette.brand[600]} /> : null}
+                            </View>
+                            <Text className={`text-caption font-sans ${home.roleError ? 'text-danger-700' : 'text-muted'}`}>
+                              {home.roleError ? t('household.roles.error') : t('household.roles.kidHint')}
+                            </Text>
+                          </View>
                         ) : null}
                       </View>
                     );
@@ -186,6 +250,20 @@ export function HouseholdScreen() {
                 </View>
               )}
             </View>
+
+            {home.isPremium ? (
+              <Pressable
+                accessibilityRole="button"
+                onPress={home.openPoints}
+                className="min-h-[56px] flex-row items-center gap-3 rounded-card border border-line bg-surface px-3.5 py-2.5 active:opacity-70">
+                <Trophy size={18} color={palette.brand[600]} />
+                <View className="flex-1">
+                  <Text className="text-body font-jakarta-semibold text-foreground">{t('points.householdLink')}</Text>
+                  <Text className="text-caption font-sans text-muted">{t('points.householdLinkHint')}</Text>
+                </View>
+                <ChevronRight size={18} color={semanticColors[scheme].textSecondary} />
+              </Pressable>
+            ) : null}
 
             <View className="gap-2">
               <Text accessibilityRole="header" className="text-body font-jakarta-bold text-foreground">

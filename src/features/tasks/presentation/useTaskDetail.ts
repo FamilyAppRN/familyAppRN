@@ -8,12 +8,15 @@ import type { Task } from '@features/tasks/data/schemas/tasksSchema';
 import { dueDateOf, isDone } from '@features/tasks/domain/taskGroups';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
+import { useAuthStore } from '@features/auth/store/useAuthStore';
 
 export function useTaskDetail(taskId: string) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const householdId = useCurrentHousehold()?.id as string;
-  const { resolveMember } = useHouseholdMembers();
+  const { members, resolveMember } = useHouseholdMembers();
+  const userId = useAuthStore((s) => s.user?.id);
+  const isAdmin = members.find((m) => m.id === userId)?.role === 'admin';
   const queryKey = tasksQueryKeys.byHousehold(householdId);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
@@ -28,6 +31,11 @@ export function useTaskDetail(taskId: string) {
 
   const statusMutation = useMutation({
     mutationFn: (current: Task) => getTasksRepository().setStatus(current.id, isDone(current) ? 'pending' : 'completed'),
+    onSuccess: () => void queryClient.invalidateQueries({ queryKey }),
+  });
+
+  const verifyMutation = useMutation({
+    mutationFn: (approve: boolean) => getTasksRepository().verify(taskId, approve),
     onSuccess: () => void queryClient.invalidateQueries({ queryKey }),
   });
 
@@ -47,6 +55,13 @@ export function useTaskDetail(taskId: string) {
     assignee: resolveMember(task?.assignee_id),
     creator: resolveMember(task?.creator_id),
     toggleDone: () => task && statusMutation.mutate(task),
+    waiting: task?.status === 'waiting_verification',
+    points: task?.points ?? 0,
+    canVerify: isAdmin && task?.status === 'waiting_verification',
+    approve: () => verifyMutation.mutate(true),
+    sendBack: () => verifyMutation.mutate(false),
+    isVerifying: verifyMutation.isPending,
+    verifyError: verifyMutation.isError,
     isTogglingDone: statusMutation.isPending,
     edit: () => router.push(`/(modals)/new-task?id=${taskId}` as Href),
     confirmingDelete,

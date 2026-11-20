@@ -15,7 +15,7 @@ export interface ResolvedMember {
   color: string;
   /** Letra del avatar (contrasta con `color`). */
   textColor: string;
-  role: 'admin' | 'member';
+  role: 'admin' | 'member' | 'kid';
 }
 
 function toInitials(name: string): string {
@@ -64,6 +64,8 @@ export function useHouseholdMembers() {
     inviteCode: query.data?.invite_code,
     /** Quien creó el hogar: no puede salir ni ser quitado. */
     ownerId: query.data?.admin_id,
+    /** Calendario y puntos: el hogar es Premium si su dueño lo es. */
+    isPremium: query.data?.is_premium ?? false,
     isLoading: query.isLoading,
   };
 }

@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { getHouseholdRepository } from '@features/household/data/householdFactory';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
 import { INVITE_CODE_LENGTH } from '@features/household/domain/inviteCode';
+import { planLimitCode } from '@features/household/domain/planErrors';
 import { logout } from '@features/auth/logout';
 import { usePendingInvite } from '@features/household/invite/usePendingInvite';
 
 
 export function useHouseholdOnboarding() {
   const router = useRouter();
+  const { t } = useTranslation();
   const addHousehold = useAuthStore((s) => s.addHousehold);
   const hasHouseholds = useAuthStore((s) => s.households.length > 0);
   const userName = useAuthStore((s) => s.user?.name);
@@ -89,13 +92,20 @@ export function useHouseholdOnboarding() {
     canCreate: householdName.trim().length > 0,
     onCreateHousehold: handleCreate,
     isCreating: createMutation.isPending,
-    createError: createMutation.error?.message,
+    // Límite del plan: mensaje propio y acceso a Premium; otros errores, el del backend.
+    createError: planLimitCode(createMutation.error)
+      ? t(`planLimits.${planLimitCode(createMutation.error)}`)
+      : createMutation.error?.message,
 
     inviteCode,
     setInviteCode,
     onJoinHousehold: handleJoin,
     isJoining: joinMutation.isPending,
-    joinError: joinMutation.error?.message,
+    joinError: planLimitCode(joinMutation.error)
+      ? t(`planLimits.${planLimitCode(joinMutation.error)}`)
+      : joinMutation.error?.message,
+    hitPlanLimit: !!planLimitCode(createMutation.error) || !!planLimitCode(joinMutation.error),
+    openPremium: () => router.push('/(modals)/premium' as Href),
 
     onLogout: async () => {
       await logout();

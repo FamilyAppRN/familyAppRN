@@ -21,6 +21,11 @@ export class HouseholdApi {
     return this.client.patch<unknown>(`/api/households/${householdId}`, body);
   }
 
+  /** Solo admin. Niño requiere hogar Premium. */
+  changeMemberRole(householdId: string, userId: string, role: 'admin' | 'member' | 'kid') {
+    return this.client.patch<unknown>(`/api/households/${householdId}/members/${userId}/role`, { role });
+  }
+
   /** Solo admin. Manda el código por email. */
   sendInvitation(householdId: string, body: { email: string }) {
     return this.client.post<unknown>(`/api/households/${householdId}/invitations`, body);

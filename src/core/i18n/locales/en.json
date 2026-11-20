@@ -239,7 +239,16 @@
       "create": "Create task",
       "save": "Save changes",
       "createError": "We couldn’t save the task. Check your connection and try again.",
-      "editTitle": "Edit task"
+      "editTitle": "Edit task",
+      "points": "Points",
+      "noPoints": "No points",
+      "pointsValue": "+{{count}} pts",
+      "pointsPremiumTitle": "Give points for this task",
+      "pointsPremiumBody": "Great for kids. Available with Premium.",
+      "pickDate": "Other date…",
+      "time": "Time",
+      "allDay": "All day",
+      "addTime": "Pick a time…"
     },
     "detail": {
       "status": {
@@ -258,6 +267,15 @@
       "cancel": "Cancel",
       "confirm": "Delete",
       "notFound": "This task no longer exists."
+    },
+    "waitingVerification": "To verify",
+    "verify": {
+      "short": "Verify",
+      "approveLabel": "Approve: {{title}}",
+      "approve": "Approve and give {{count}} points",
+      "sendBack": "Send back to pending",
+      "waitingNote": "Waiting for an admin to approve it.",
+      "error": "We couldn’t save the verification. Try again."
     }
   },
   "notes": {
@@ -317,7 +335,51 @@
     "allDay": "All day",
     "emptyDay": "Nothing scheduled for this day.",
     "taskOf": "{{name}}’s task",
-    "tasksHint": "Tasks with a due date show up here. Calendar events arrive with Premium."
+    "tasksHint": "Events and tasks with a due date show up here.",
+    "until": "until {{time}}",
+    "newEvent": "New event",
+    "premiumTitle": "Calendar events",
+    "premiumBody": "Appointments, birthdays and activities for the whole home. Available with Premium.",
+    "repeat": {
+      "none": "Just once",
+      "daily": "Every day",
+      "weekly": "Every week",
+      "monthly": "Every month"
+    },
+    "form": {
+      "newTitle": "New event",
+      "editTitle": "Edit event",
+      "notFound": "This event no longer exists.",
+      "titleLabel": "What is it",
+      "titlePlaceholder": "For example, grandma’s birthday",
+      "descriptionLabel": "Details",
+      "descriptionPlaceholder": "Optional",
+      "startLabel": "Starts",
+      "earlier": "15 minutes earlier",
+      "later": "15 minutes later",
+      "durationLabel": "Duration",
+      "durations": {
+        "30": "30 min",
+        "60": "1 hour",
+        "120": "2 hours",
+        "180": "3 hours"
+      },
+      "repeatLabel": "Repeats",
+      "seriesNote": "Changes apply to every repetition.",
+      "create": "Create event",
+      "save": "Save changes",
+      "readOnly": "Only whoever created the event or an admin can change it.",
+      "saveError": "We couldn’t save the event. Try again.",
+      "delete": "Delete event",
+      "confirmTitle": "Delete this event?",
+      "confirmBody": "If it repeats, every repetition is deleted. It can’t be recovered.",
+      "dayLabel": "Day",
+      "change": "Change",
+      "changeDay": "Opens the calendar to pick the day",
+      "pickTime": "Opens the time picker",
+      "endLabel": "Ends",
+      "nextDay": "Next day"
+    }
   },
   "householdOnboarding": {
     "title": "How do you want to start?",
@@ -386,7 +448,10 @@
       "member": "Member",
       "owner": "Created the home",
       "remove": "Remove",
-      "removeLabel": "Remove {{name}} from the home"
+      "removeLabel": "Remove {{name}} from the home",
+      "kid": "Kid",
+      "points_one": "{{count}} point",
+      "points_other": "{{count}} points"
     },
     "settings": {
       "title": "Home settings",
@@ -410,6 +475,11 @@
       "regenerateTitle": "Generate a new code?",
       "regenerateBody": "The current code stops working. People already in the home are not affected.",
       "regenerate": "Generate"
+    },
+    "roles": {
+      "changeLabel": "Change {{name}}’s role",
+      "kidHint": "An admin approves a Kid’s tasks with points.",
+      "error": "We couldn’t change the role. Try again."
     }
   },
   "switcher": {
@@ -469,5 +539,56 @@
     "comingSoon": "Available soon",
     "renewal": "Renews automatically. You’ll be able to cancel anytime from the store.",
     "alreadyPremium": "You already have Premium. Thank you!"
+  },
+  "planLimits": {
+    "LIMIT_REACHED_CREATE_HOUSEHOLD": "The free plan allows 1 home of your own. Premium lets you create more.",
+    "LIMIT_REACHED_JOIN_HOUSEHOLD": "The free plan allows being in 2 homes. Premium has no limit.",
+    "HOUSEHOLD_FULL": "That home already has the most members its plan allows. Its owner can upgrade to Premium.",
+    "PLAN_REQUIRED": "This is part of Premium."
+  },
+  "points": {
+    "title": "Family points",
+    "period": {
+      "week": "This week",
+      "total": "All time"
+    },
+    "mine": {
+      "week": "Your points this week",
+      "total": "Your points all time",
+      "adultNote": "Adults earn points too, but aren’t listed in the table"
+    },
+    "pending_one": "{{name}} finished it · +{{count}} to verify",
+    "pending_other": "{{name}} finished it · +{{count}} to verify",
+    "someone": "Someone",
+    "table": {
+      "title": "Kids’ leaderboard",
+      "since": {
+        "week": "since Monday",
+        "total": "since the start"
+      },
+      "noKids": "There are no kids in this household yet. Give someone the Kid role in Household to list them here.",
+      "rowLabel": "Place {{position}}: {{name}}, {{count}} points"
+    },
+    "earned": {
+      "title": "Earned {{period}}",
+      "plus": "+{{count}}"
+    },
+    "note": {
+      "week": "The week runs Monday to Sunday and resets every Monday. Only tasks approved by an admin count.",
+      "total": "Only tasks approved by an admin count. To list someone in the table, give them the Kid role in Household."
+    },
+    "premium": {
+      "title": "Points are Premium",
+      "description": "Put points on tasks and see how the kids are doing week by week.",
+      "cta": "See Premium"
+    },
+    "loadError": "We couldn’t load the points. Pull to retry.",
+    "open": "Points",
+    "openLabel": "See the family points",
+    "householdLink": "Family points",
+    "householdLinkHint": "Kids’ leaderboard, this week and all time"
+  },
+  "common": {
+    "done": "Done"
   }
 }

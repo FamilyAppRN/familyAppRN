@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { getHouseholdRepository } from '@features/household/data/householdFactory';
@@ -9,6 +9,10 @@ import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers, type ResolvedMember } from '@features/household/useHouseholdMembers';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
 import { shareInvite } from '@features/household/invite/shareInvite';
+import { getTasksRepository } from '@features/tasks/data/tasksFactory';
+import { tasksQueryKeys } from '@features/tasks/data/queryKeys';
+
+export type MemberRole = 'admin' | 'member' | 'kid';
 
 /** Acción destructiva esperando confirmación en la propia pantalla. */
 export type PendingConfirm =
@@ -33,7 +37,8 @@ export function useHouseholdHome() {
   const userId = useAuthStore((s) => s.user?.id);
   const renameInSession = useAuthStore((s) => s.renameHousehold);
   const removeFromSession = useAuthStore((s) => s.removeHousehold);
-  const { members, inviteCode, ownerId, isLoading } = useHouseholdMembers();
+  const { members, inviteCode, ownerId, isPremium, isLoading } = useHouseholdMembers();
+  const [roleEditingFor, setRoleEditingFor] = useState<string | null>(null);
 
   const [editingName, setEditingName] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<PendingConfirm>(null);
@@ -82,6 +87,22 @@ export function useHouseholdHome() {
     },
   });
 
+  // Puntos por miembro (Premium); se refrescan con los avisos de tareas.
+  const pointsQuery = useQuery({
+    queryKey: tasksQueryKeys.points(householdId),
+    queryFn: () => getTasksRepository().pointsSummary(householdId),
+    enabled: !!householdId && isPremium,
+  });
+
+  const roleMutation = useMutation({
+    mutationFn: ({ memberId, role }: { memberId: string; role: MemberRole }) =>
+      getHouseholdRepository().changeMemberRole(householdId, memberId, role),
+    onSuccess: (updated) => {
+      queryClient.setQueryData(detailKey, updated);
+      setRoleEditingFor(null);
+    },
+  });
+
   const emailMutation = useMutation({
     mutationFn: (email: string) => getHouseholdRepository().sendInvitation(householdId, email),
     onSuccess: (_result, email) => {
@@ -113,6 +134,20 @@ export function useHouseholdHome() {
     shareInvite: () => {
       if (inviteCode) shareInvite(t, household?.name ?? '', inviteCode);
     },
+
+    // Roles y puntos
+    isPremium,
+    pointsOf: (memberId: string) => pointsQuery.data?.[memberId] ?? 0,
+    openPoints: () => router.push('/(modals)/points' as Href),
+    canChangeRole: (member: ResolvedMember) => isAdmin && member.id !== ownerId && member.id !== userId,
+    roleEditingFor,
+    toggleRoleEditor: (memberId: string) => {
+      roleMutation.reset();
+      setRoleEditingFor((current) => (current === memberId ? null : memberId));
+    },
+    changeRole: (memberId: string, role: MemberRole) => roleMutation.mutate({ memberId, role }),
+    isChangingRole: roleMutation.isPending,
+    roleError: roleMutation.isError,
 
     // Invitar por email (solo admin)
     inviteEmail,

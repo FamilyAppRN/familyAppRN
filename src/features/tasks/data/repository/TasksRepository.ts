@@ -2,6 +2,7 @@ import type { ApiClient } from '@core/network/apiClient';
 import { Logger } from '@core/logger/Logger';
 import { TasksApi, type NewTaskBody, type UpdateTaskBody } from '@features/tasks/data/api/TasksApi';
 import {
+  pointsSummaryResponseSchema,
   taskResponseSchema,
   tasksResponseSchema,
   type Task,
@@ -47,6 +48,26 @@ export class TasksRepository {
       return taskResponseSchema.parse(await this.api.updateStatus(taskId, status)).data;
     } catch (error) {
       Logger.error('Error cambiando estado de tarea', error);
+      throw error;
+    }
+  }
+
+  async verify(taskId: string, approve: boolean): Promise<Task> {
+    try {
+      return taskResponseSchema.parse(await this.api.verify(taskId, approve)).data;
+    } catch (error) {
+      Logger.error('Error verificando tarea', error);
+      throw error;
+    }
+  }
+
+  /** Puntos por persona (user_id → puntos). */
+  async pointsSummary(householdId: string, since?: Date): Promise<Record<string, number>> {
+    try {
+      const rows = pointsSummaryResponseSchema.parse(await this.api.pointsSummary(householdId, since?.toISOString())).data;
+      return Object.fromEntries(rows.map((row) => [row.user_id, row.points]));
+    } catch (error) {
+      Logger.error('Error obteniendo los puntos', error);
       throw error;
     }
   }

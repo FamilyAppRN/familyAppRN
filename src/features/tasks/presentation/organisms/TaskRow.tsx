@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { Check, Clock, Plus } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -15,12 +15,17 @@ interface TaskRowProps {
   isOverdue: boolean;
   onToggle: () => void;
   onOpen: () => void;
+  /** Admin: botón para aprobar una tarea que marcó un niño. */
+  onVerify?: () => void;
+  isVerifying?: boolean;
 }
 
-export function TaskRow({ task, assignee, isOverdue, onToggle, onOpen }: TaskRowProps) {
+export function TaskRow({ task, assignee, isOverdue, onToggle, onOpen, onVerify, isVerifying = false }: TaskRowProps) {
   const { t, i18n } = useTranslation();
   const scheme = useAppColorScheme();
   const done = isDone(task);
+  const waiting = task.status === 'waiting_verification';
+  const points = task.points ?? 0;
   const due = dueDateOf(task);
   const danger = palette.danger[700];
 
@@ -40,7 +45,7 @@ export function TaskRow({ task, assignee, isOverdue, onToggle, onOpen }: TaskRow
         className="-m-2 h-11 w-11 items-center justify-center">
         <View
           className={`h-[26px] w-[26px] items-center justify-center rounded-full border-2 ${
-            done ? 'border-brand-600 bg-brand-600' : isOverdue ? 'border-danger-700' : 'border-neutral-400'
+            done ? 'border-brand-600 bg-brand-600' : waiting ? 'border-warning-500 bg-warning-100' : isOverdue ? 'border-danger-700' : 'border-neutral-400'
           }`}>
           {done ? <Check size={16} color={palette.neutral[0]} strokeWidth={3} /> : null}
         </View>
@@ -52,6 +57,20 @@ export function TaskRow({ task, assignee, isOverdue, onToggle, onOpen }: TaskRow
           numberOfLines={2}>
           {task.title}
         </Text>
+        {waiting || (points > 0 && !done) ? (
+          <View className="flex-row flex-wrap items-center gap-1.5">
+            {waiting ? (
+              <View className="rounded-badge bg-warning-100 px-2 py-0.5">
+                <Text className="text-[11px] font-jakarta-bold text-neutral-800">{t('tasks.waitingVerification')}</Text>
+              </View>
+            ) : null}
+            {points > 0 ? (
+              <View className="rounded-badge bg-warning-100 px-2 py-0.5">
+                <Text className="text-[11px] font-jakarta-bold text-neutral-800">{t('tasks.form.pointsValue', { count: points })}</Text>
+              </View>
+            ) : null}
+          </View>
+        ) : null}
         {due || !assignee ? (
           <View className="flex-row items-center gap-1.5">
             {due ? (
@@ -72,6 +91,20 @@ export function TaskRow({ task, assignee, isOverdue, onToggle, onOpen }: TaskRow
         ) : null}
       </View>
 
+      {onVerify ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('tasks.verify.approveLabel', { title: task.title })}
+          onPress={onVerify}
+          disabled={isVerifying}
+          className="h-9 justify-center rounded-button bg-brand-700 px-3 active:opacity-90">
+          {isVerifying ? (
+            <ActivityIndicator color={palette.neutral[0]} />
+          ) : (
+            <Text className="text-caption font-jakarta-bold text-white">{t('tasks.verify.short')}</Text>
+          )}
+        </Pressable>
+      ) : null}
       {assignee ? (
         <View
           accessibilityLabel={assignee.name}

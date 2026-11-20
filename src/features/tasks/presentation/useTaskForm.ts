@@ -2,40 +2,22 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 
 import { getTasksRepository } from '@features/tasks/data/tasksFactory';
 import { tasksQueryKeys } from '@features/tasks/data/queryKeys';
 import type { Task } from '@features/tasks/data/schemas/tasksSchema';
 import { dueDateOf } from '@features/tasks/domain/taskGroups';
-import { taskFormSchema, type TaskFormData, type TaskWhen } from '@features/tasks/presentation/taskFormSchema';
+import { taskFormSchema, type TaskFormData } from '@features/tasks/presentation/taskFormSchema';
+import { dateFromKey, dayKeyFromToday, dayKeyOf, timeOf } from '@features/tasks/domain/dueDate';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
 
-function dayOffset(days: number): Date {
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  date.setDate(date.getDate() + days);
-  return date;
-}
-
-function whenOf(task: Task): TaskWhen {
-  const due = dueDateOf(task);
-  if (!due) return 'none';
-  const day = new Date(due);
-  day.setHours(0, 0, 0, 0);
-  if (day.getTime() === dayOffset(0).getTime()) return 'today';
-  if (day.getTime() === dayOffset(1).getTime()) return 'tomorrow';
-  return 'keep';
-}
-
-/** ISO de la fecha elegida; undefined = no tocar la fecha al editar. */
-function dueDateFor(when: TaskWhen): string | null | undefined {
-  if (when === 'today') return dayOffset(0).toISOString();
-  if (when === 'tomorrow') return dayOffset(1).toISOString();
-  if (when === 'none') return null;
-  return undefined;
+/** ISO de la fecha límite elegida (día + hora opcional); null = sin fecha. */
+function dueDateFor(data: TaskFormData): string | null {
+  if (!data.dueDay) return null;
+  return dateFromKey(data.dueDay, data.dueTime).toISOString();
 }
 
 /** Formulario de tarea. Con `taskId` edita esa tarea; sin él, crea una nueva. */
@@ -45,7 +27,7 @@ export function useTaskForm(taskId?: string) {
   const household = useCurrentHousehold();
   const householdId = household?.id as string;
   const userId = useAuthStore((s) => s.user?.id);
-  const { members } = useHouseholdMembers();
+  const { members, isPremium } = useHouseholdMembers();
   const queryKey = tasksQueryKeys.byHousehold(householdId);
 
   const editing = taskId
@@ -54,18 +36,28 @@ export function useTaskForm(taskId?: string) {
 
   const form = useForm<TaskFormData>({
     resolver: zodResolver(taskFormSchema),
-    defaultValues: { title: '', description: '', assigneeId: userId ?? null, when: 'today' },
+    defaultValues: {
+      title: '',
+      description: '',
+      assigneeId: userId ?? null,
+      dueDay: dayKeyFromToday(0),
+      dueTime: null,
+      points: 0,
+    },
     mode: 'onChange',
   });
 
   // Rellena el formulario una vez con la tarea a editar.
   useEffect(() => {
     if (editing) {
+      const due = dueDateOf(editing);
       form.reset({
         title: editing.title,
         description: editing.description ?? '',
         assigneeId: editing.assignee_id ?? null,
-        when: whenOf(editing),
+        dueDay: due ? dayKeyOf(due) : null,
+        dueTime: due ? timeOf(due) : null,
+        points: editing.points ?? 0,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,14 +65,18 @@ export function useTaskForm(taskId?: string) {
 
   const mutation = useMutation({
     mutationFn: (data: TaskFormData) => {
-      const dueDate = dueDateFor(data.when);
+      const dueDate = dueDateFor(data);
+      const originalDue = editing ? (dueDateOf(editing)?.toISOString() ?? null) : null;
       const description = data.description.trim();
       if (taskId) {
         return getTasksRepository().update(taskId, {
           title: data.title.trim(),
           description: description || null,
           assignee_id: data.assigneeId,
-          ...(dueDate !== undefined ? { due_date: dueDate } : {}),
+          // Sin Premium no se tocan: el backend rechazaría puntos > 0.
+          ...(isPremium ? { points: data.points } : {}),
+          // Solo si cambió: el backend reinicia el recordatorio al recibir una fecha.
+          ...(dueDate !== originalDue ? { due_date: dueDate } : {}),
         });
       }
       return getTasksRepository().create({
@@ -89,6 +85,7 @@ export function useTaskForm(taskId?: string) {
         ...(description ? { description } : {}),
         ...(data.assigneeId ? { assignee_id: data.assigneeId } : {}),
         ...(dueDate ? { due_date: dueDate } : {}),
+        ...(isPremium && data.points > 0 ? { points: data.points } : {}),
       });
     },
     onSuccess: () => {
@@ -99,9 +96,10 @@ export function useTaskForm(taskId?: string) {
 
   return {
     isEditing: !!taskId,
-    keepDate: editing ? dueDateOf(editing) : null,
     members,
     userId,
+    isPremium,
+    openPremium: () => router.push('/(modals)/premium' as Href),
     control: form.control,
     onSubmit: form.handleSubmit((data) => mutation.mutate(data)),
     isPending: mutation.isPending,

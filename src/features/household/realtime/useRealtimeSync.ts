@@ -12,8 +12,9 @@ import { householdQueryKeys } from '@features/household/data/queryKeys';
 import { shoppingQueryKeys } from '@features/shopping/data/queryKeys';
 import { tasksQueryKeys } from '@features/tasks/data/queryKeys';
 import { notesQueryKeys } from '@features/notes/data/queryKeys';
+import { calendarQueryKeys } from '@features/calendar/data/queryKeys';
 
-type Scope = 'shopping' | 'tasks' | 'notes' | 'household';
+type Scope = 'shopping' | 'tasks' | 'notes' | 'calendar' | 'household';
 
 interface HouseholdUpdatedEvent {
   householdId: string;
@@ -34,12 +35,14 @@ function keysFor(scope: Scope, householdId: string): QueryKey[] {
       return [tasksQueryKeys.byHousehold(householdId)];
     case 'notes':
       return [notesQueryKeys.byHousehold(householdId)];
+    case 'calendar':
+      return [calendarQueryKeys.byHousehold(householdId)];
     case 'household':
       return [householdQueryKeys.details(householdId)];
   }
 }
 
-const ALL_SCOPES: Scope[] = ['shopping', 'tasks', 'notes', 'household'];
+const ALL_SCOPES: Scope[] = ['shopping', 'tasks', 'notes', 'calendar', 'household'];
 
 /**
  * Mantiene la app al día con lo que hace el resto de la familia. Se monta una

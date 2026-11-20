@@ -7,6 +7,7 @@ import type { Task } from '@features/tasks/data/schemas/tasksSchema';
 import { filterTasks, groupTasks, isDone, type TaskFilter } from '@features/tasks/domain/taskGroups';
 import { useCurrentHousehold } from '@features/household/useCurrentHousehold';
 import { useAuthStore } from '@features/auth/store/useAuthStore';
+import { useHouseholdMembers } from '@features/household/useHouseholdMembers';
 
 export function useTasks() {
   const household = useCurrentHousehold();
@@ -15,6 +16,8 @@ export function useTasks() {
   const queryClient = useQueryClient();
   const queryKey = tasksQueryKeys.byHousehold(householdId as string);
   const [filter, setFilter] = useState<TaskFilter>('mine');
+  const { members } = useHouseholdMembers();
+  const isAdmin = members.find((m) => m.id === userId)?.role === 'admin';
 
   const query = useQuery({
     queryKey,
@@ -62,8 +65,19 @@ export function useTasks() {
     },
   });
 
+  const verifyMutation = useMutation({
+    mutationFn: (task: Task) => getTasksRepository().verify(task.id, true),
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
   return {
     householdName: household?.name,
+    /** Un admin aprueba desde la fila las tareas que marcó un niño. */
+    canVerify: (task: Task) => isAdmin && task.status === 'waiting_verification',
+    verify: (task: Task) => verifyMutation.mutate(task),
+    verifyingId: verifyMutation.isPending ? verifyMutation.variables?.id : undefined,
     userId,
     filter,
     setFilter,
