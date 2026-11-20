@@ -68,10 +68,23 @@ export function TaskDetailScreen() {
           <>
             <ScrollView contentContainerStyle={{ padding: 24, gap: 20 }}>
               <View className="gap-2">
-                <View className={`self-start rounded-badge px-3 py-1 ${detail.done ? 'bg-chip' : 'bg-surface-2'}`}>
-                  <Text className={`text-caption font-jakarta-bold ${detail.done ? 'text-emphasis' : 'text-muted'}`}>
-                    {t(detail.done ? 'tasks.detail.status.done' : 'tasks.detail.status.pending')}
-                  </Text>
+                <View className="flex-row flex-wrap gap-2">
+                  <View
+                    className={`self-start rounded-badge px-3 py-1 ${
+                      detail.done ? 'bg-chip' : detail.waiting ? 'bg-warning-100' : 'bg-surface-2'
+                    }`}>
+                    <Text
+                      className={`text-caption font-jakarta-bold ${
+                        detail.done ? 'text-emphasis' : detail.waiting ? 'text-neutral-800' : 'text-muted'
+                      }`}>
+                      {t(detail.done ? 'tasks.detail.status.done' : detail.waiting ? 'tasks.waitingVerification' : 'tasks.detail.status.pending')}
+                    </Text>
+                  </View>
+                  {detail.points > 0 ? (
+                    <View className="self-start rounded-badge bg-warning-100 px-3 py-1">
+                      <Text className="text-caption font-jakarta-bold text-neutral-800">{t('tasks.form.pointsValue', { count: detail.points })}</Text>
+                    </View>
+                  ) : null}
                 </View>
                 <Text className="text-h1 font-jakarta-bold text-foreground">{task.title}</Text>
                 {task.description ? (
@@ -121,6 +134,21 @@ export function TaskDetailScreen() {
                 </View>
               ) : (
                 <>
+                  {detail.canVerify ? (
+                    <View className="gap-2">
+                      {detail.verifyError ? (
+                        <Text className="text-caption font-sans text-danger-700">{t('tasks.verify.error')}</Text>
+                      ) : null}
+                      <Button
+                        title={t('tasks.verify.approve', { count: detail.points })}
+                        onPress={detail.approve}
+                        isLoading={detail.isVerifying}
+                      />
+                      <Button title={t('tasks.verify.sendBack')} onPress={detail.sendBack} variant="secondary" disabled={detail.isVerifying} />
+                    </View>
+                  ) : detail.waiting ? (
+                    <Text className="text-center text-caption font-sans text-muted">{t('tasks.verify.waitingNote')}</Text>
+                  ) : (
                   <Button
                     title={t(detail.done ? 'tasks.detail.reopen' : 'tasks.detail.markDone')}
                     onPress={detail.toggleDone}
@@ -128,6 +156,7 @@ export function TaskDetailScreen() {
                     variant={detail.done ? 'secondary' : 'primary'}
                     rightIcon={detail.done ? undefined : <Check size={18} color={palette.neutral[0]} />}
                   />
+                  )}
                   <Pressable
                     accessibilityRole="button"
                     onPress={detail.askDelete}

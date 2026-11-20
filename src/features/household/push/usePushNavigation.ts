@@ -9,6 +9,7 @@ export function routeForPush(data: PushData): Href | null {
   switch (data.type) {
     case 'task_assigned':
     case 'task_reminder':
+    case 'task_verify':
       return data.taskId ? (`/(modals)/task/${data.taskId}` as Href) : ('/tasks' as Href);
     case 'urgent_item':
     case 'going_shopping':

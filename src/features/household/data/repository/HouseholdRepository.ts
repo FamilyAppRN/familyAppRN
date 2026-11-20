@@ -41,6 +41,15 @@ export class HouseholdRepository {
     }
   }
 
+  async changeMemberRole(householdId: string, userId: string, role: 'admin' | 'member' | 'kid'): Promise<Household> {
+    try {
+      return householdResponseSchema.parse(await this.api.changeMemberRole(householdId, userId, role)).data;
+    } catch (error) {
+      Logger.error('Error cambiando el rol del miembro', error);
+      throw error;
+    }
+  }
+
   async sendInvitation(householdId: string, email: string): Promise<void> {
     try {
       await this.api.sendInvitation(householdId, { email });

@@ -115,6 +115,15 @@ export function HouseholdOnboardingScreen() {
               />
             </View>
 
+            {onboarding.hitPlanLimit ? (
+              <Pressable
+                accessibilityRole="button"
+                onPress={onboarding.openPremium}
+                className="h-[52px] items-center justify-center rounded-button bg-accent-500 active:opacity-90">
+                <Text className="text-button font-jakarta-bold text-neutral-950">{t('switcher.seePremium')}</Text>
+              </Pressable>
+            ) : null}
+
             <Pressable
               accessibilityRole="button"
               onPress={onboarding.onLogout}

@@ -44,10 +44,12 @@ export type AuthResponse = z.infer<typeof authResponseSchema>;
 export const householdSummarySchema = z.object({
   id: z.string(),
   name: z.string(),
-  role: z.enum(['admin', 'member']),
+  role: z.enum(['admin', 'member', 'kid']),
   is_owner: z.boolean(),
   invite_code: z.string().nullable().optional(),
   members_count: z.number(),
+  /** Premium del hogar (lo decide el plan de su dueño). */
+  is_premium: z.boolean().optional(),
 });
 
 export type HouseholdSummary = z.infer<typeof householdSummarySchema>;

@@ -9,7 +9,8 @@ import { StorageService } from '@core/storage/StorageService';
 export interface SessionHousehold {
   id: string;
   name: string;
-  role?: 'admin' | 'member';
+  role?: 'admin' | 'member' | 'kid';
+  is_premium?: boolean;
   is_owner?: boolean;
   members_count?: number;
 }

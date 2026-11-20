@@ -1,6 +1,6 @@
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, ChevronRight, SquareCheckBig } from 'lucide-react-native';
+import { CalendarDays, ChevronLeft, ChevronRight, Plus, SquareCheckBig } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@shared/ui/molecules/Avatar';
@@ -92,7 +92,7 @@ export function CalendarScreen() {
           ))}
         </View>
 
-        <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32, gap: 10 }}>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 112, gap: 10 }}>
           <Text accessibilityRole="header" className="text-body font-jakarta-bold capitalize text-foreground">
             {dayTitle}
           </Text>
@@ -102,12 +102,46 @@ export function CalendarScreen() {
           ) : calendar.agenda.length === 0 ? (
             <Text className="py-6 text-center text-caption font-sans text-muted">{t('calendar.emptyDay')}</Text>
           ) : (
-            calendar.agenda.map(({ task, due, hasTime }) => {
+            calendar.agenda.map((entry) => {
+              const time = entry.allDay
+                ? t('calendar.allDay')
+                : entry.start.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+
+              if (entry.kind === 'event') {
+                const { occurrence } = entry;
+                const until = entry.end && !entry.allDay
+                  ? t('calendar.until', { time: entry.end.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }) })
+                  : null;
+                const details = [until, occurrence.recurrence ? t(`calendar.repeat.${occurrence.recurrence.freq}`) : null]
+                  .filter(Boolean)
+                  .join(' · ');
+                return (
+                  <View key={entry.key} className="flex-row items-start gap-3">
+                    <Text className="w-14 pt-3.5 text-caption font-jakarta-bold text-muted" style={{ fontVariant: ['tabular-nums'] }}>
+                      {time}
+                    </Text>
+                    <Pressable
+                      accessibilityRole="button"
+                      onPress={() => calendar.openEvent(occurrence)}
+                      className="flex-1 flex-row items-center gap-2.5 rounded-card border border-line bg-surface p-3 active:opacity-80">
+                      <View className="h-2.5 w-2.5 rounded-full bg-brand-600" />
+                      <View className="flex-1">
+                        <Text className="text-body font-jakarta-bold text-foreground" numberOfLines={2}>
+                          {occurrence.title}
+                        </Text>
+                        {details ? <Text className="text-caption font-sans text-muted">{details}</Text> : null}
+                      </View>
+                    </Pressable>
+                  </View>
+                );
+              }
+
+              const { task } = entry;
               const assignee = resolveMember(task.assignee_id);
               return (
-                <View key={task.id} className="flex-row items-start gap-3">
+                <View key={entry.key} className="flex-row items-start gap-3">
                   <Text className="w-14 pt-3.5 text-caption font-jakarta-bold text-muted" style={{ fontVariant: ['tabular-nums'] }}>
-                    {hasTime ? due.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }) : t('calendar.allDay')}
+                    {time}
                   </Text>
                   <Pressable
                     accessibilityRole="button"
@@ -133,8 +167,32 @@ export function CalendarScreen() {
             })
           )}
 
-          <Text className="pt-2 text-center text-caption font-sans text-muted">{t('calendar.tasksHint')}</Text>
+          {calendar.isPremium ? (
+            <Text className="pt-2 text-center text-caption font-sans text-muted">{t('calendar.tasksHint')}</Text>
+          ) : (
+            <Pressable
+              accessibilityRole="button"
+              onPress={calendar.openPremium}
+              className="mt-2 flex-row items-center gap-3 rounded-card border border-line bg-accent-soft p-3.5 active:opacity-80">
+              <CalendarDays size={20} color={semanticColors[scheme].textPrimary} />
+              <View className="flex-1">
+                <Text className="text-body font-jakarta-bold text-foreground">{t('calendar.premiumTitle')}</Text>
+                <Text className="text-caption font-sans text-muted">{t('calendar.premiumBody')}</Text>
+              </View>
+              <Text className="text-caption font-jakarta-bold text-foreground">{t('switcher.premium')}</Text>
+            </Pressable>
+          )}
         </ScrollView>
+
+        {calendar.isPremium ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('calendar.newEvent')}
+            onPress={calendar.newEvent}
+            className="absolute bottom-5 right-4 h-14 w-14 items-center justify-center rounded-[18px] bg-brand-600 active:opacity-90">
+            <Plus size={26} color={palette.neutral[0]} />
+          </Pressable>
+        ) : null}
       </SafeAreaView>
     </ThemeVarsProvider>
   );

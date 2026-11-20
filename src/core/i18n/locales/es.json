@@ -240,7 +240,16 @@
       "create": "Crear tarea",
       "save": "Guardar cambios",
       "createError": "No pudimos guardar la tarea. Revisa tu conexión e inténtalo de nuevo.",
-      "editTitle": "Editar tarea"
+      "editTitle": "Editar tarea",
+      "points": "Puntos",
+      "noPoints": "Sin puntos",
+      "pointsValue": "+{{count}} pts",
+      "pointsPremiumTitle": "Dar puntos por esta tarea",
+      "pointsPremiumBody": "Ideal para los niños. Disponible en Premium.",
+      "pickDate": "Otra fecha…",
+      "time": "Hora",
+      "allDay": "Todo el día",
+      "addTime": "Elegir hora…"
     },
     "detail": {
       "status": {
@@ -259,6 +268,15 @@
       "cancel": "Cancelar",
       "confirm": "Eliminar",
       "notFound": "Esta tarea ya no existe."
+    },
+    "waitingVerification": "Por verificar",
+    "verify": {
+      "short": "Verificar",
+      "approveLabel": "Aprobar: {{title}}",
+      "approve": "Aprobar y dar {{count}} puntos",
+      "sendBack": "Devolver a pendiente",
+      "waitingNote": "Esperando que un admin la apruebe.",
+      "error": "No pudimos guardar la verificación. Inténtalo de nuevo."
     }
   },
   "notes": {
@@ -318,7 +336,51 @@
     "allDay": "Todo el día",
     "emptyDay": "Nada programado para este día.",
     "taskOf": "Tarea de {{name}}",
-    "tasksHint": "Aquí aparecen las tareas con fecha. Los eventos del calendario llegan con Premium."
+    "tasksHint": "Aquí aparecen los eventos y las tareas con fecha.",
+    "until": "hasta {{time}}",
+    "newEvent": "Nuevo evento",
+    "premiumTitle": "Eventos del calendario",
+    "premiumBody": "Citas, cumpleaños y actividades para todo el hogar. Disponible en Premium.",
+    "repeat": {
+      "none": "Solo una vez",
+      "daily": "Cada día",
+      "weekly": "Cada semana",
+      "monthly": "Cada mes"
+    },
+    "form": {
+      "newTitle": "Nuevo evento",
+      "editTitle": "Editar evento",
+      "notFound": "Este evento ya no existe.",
+      "titleLabel": "Qué es",
+      "titlePlaceholder": "Por ejemplo, cumpleaños de la abuela",
+      "descriptionLabel": "Detalles",
+      "descriptionPlaceholder": "Opcional",
+      "startLabel": "Empieza",
+      "earlier": "15 minutos antes",
+      "later": "15 minutos después",
+      "durationLabel": "Duración",
+      "durations": {
+        "30": "30 min",
+        "60": "1 hora",
+        "120": "2 horas",
+        "180": "3 horas"
+      },
+      "repeatLabel": "Se repite",
+      "seriesNote": "Los cambios se aplican a todas las repeticiones.",
+      "create": "Crear evento",
+      "save": "Guardar cambios",
+      "readOnly": "Solo quien creó el evento o un admin puede cambiarlo.",
+      "saveError": "No pudimos guardar el evento. Inténtalo de nuevo.",
+      "delete": "Eliminar evento",
+      "confirmTitle": "¿Eliminar este evento?",
+      "confirmBody": "Si se repite, se borran todas las repeticiones. No se puede recuperar.",
+      "dayLabel": "Día",
+      "change": "Cambiar",
+      "changeDay": "Abre el calendario para elegir el día",
+      "pickTime": "Abre el selector de hora",
+      "endLabel": "Termina",
+      "nextDay": "Al día siguiente"
+    }
   },
   "householdOnboarding": {
     "title": "¿Cómo quieres empezar?",
@@ -387,7 +449,10 @@
       "member": "Miembro",
       "owner": "Creó el hogar",
       "remove": "Quitar",
-      "removeLabel": "Quitar a {{name}} del hogar"
+      "removeLabel": "Quitar a {{name}} del hogar",
+      "kid": "Niño",
+      "points_one": "{{count}} punto",
+      "points_other": "{{count}} puntos"
     },
     "settings": {
       "title": "Ajustes del hogar",
@@ -411,6 +476,11 @@
       "regenerateTitle": "¿Generar un código nuevo?",
       "regenerateBody": "El código actual deja de servir. Quienes ya están en el hogar no se ven afectados.",
       "regenerate": "Generar"
+    },
+    "roles": {
+      "changeLabel": "Cambiar el rol de {{name}}",
+      "kidHint": "Las tareas con puntos de un Niño las aprueba un admin.",
+      "error": "No pudimos cambiar el rol. Inténtalo de nuevo."
     }
   },
   "switcher": {
@@ -470,5 +540,56 @@
     "comingSoon": "Disponible pronto",
     "renewal": "Se renueva solo. Podrás cancelar cuando quieras desde la tienda.",
     "alreadyPremium": "Ya tienes Premium. ¡Gracias!"
+  },
+  "planLimits": {
+    "LIMIT_REACHED_CREATE_HOUSEHOLD": "Con el plan gratis puedes tener 1 hogar propio. Con Premium puedes crear más.",
+    "LIMIT_REACHED_JOIN_HOUSEHOLD": "Con el plan gratis puedes estar en 2 hogares. Con Premium no hay límite.",
+    "HOUSEHOLD_FULL": "Ese hogar ya tiene el máximo de miembros de su plan. Su dueño puede pasarse a Premium.",
+    "PLAN_REQUIRED": "Esto es parte de Premium."
+  },
+  "points": {
+    "title": "Puntos de la familia",
+    "period": {
+      "week": "Esta semana",
+      "total": "Total"
+    },
+    "mine": {
+      "week": "Tus puntos esta semana",
+      "total": "Tus puntos en total",
+      "adultNote": "Los adultos suman, pero no aparecen en la tabla"
+    },
+    "pending_one": "{{name}} la completó · +{{count}} por verificar",
+    "pending_other": "{{name}} la completó · +{{count}} por verificar",
+    "someone": "Alguien",
+    "table": {
+      "title": "Tabla de los niños",
+      "since": {
+        "week": "desde el lunes",
+        "total": "desde el principio"
+      },
+      "noKids": "Todavía no hay niños en el hogar. Dale el rol Niño a alguien desde Hogar para que aparezca aquí.",
+      "rowLabel": "Puesto {{position}}: {{name}}, {{count}} puntos"
+    },
+    "earned": {
+      "title": "Ganados {{period}}",
+      "plus": "+{{count}}"
+    },
+    "note": {
+      "week": "La semana va de lunes a domingo y vuelve a cero cada lunes. Solo cuentan las tareas aprobadas por un admin.",
+      "total": "Solo cuentan las tareas aprobadas por un admin. Para que un miembro aparezca en la tabla, dale el rol Niño en Hogar."
+    },
+    "premium": {
+      "title": "Los puntos son Premium",
+      "description": "Pon puntos a las tareas y mira cómo van los niños de la casa semana a semana.",
+      "cta": "Ver Premium"
+    },
+    "loadError": "No pudimos cargar los puntos. Desliza para reintentar.",
+    "open": "Puntos",
+    "openLabel": "Ver los puntos de la familia",
+    "householdLink": "Puntos de la familia",
+    "householdLinkHint": "Tabla de los niños, esta semana y en total"
+  },
+  "common": {
+    "done": "Listo"
   }
 }
